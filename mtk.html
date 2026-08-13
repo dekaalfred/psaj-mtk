@@ -1,0 +1,3269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MathQuest — Matematika, Tapi Jadi Game</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+           ROOT & RESET
+           ============================================================ */
+        :root {
+            --purple: #6C63FF;
+            --purple-dark: #4B3FDB;
+            --blue: #00C2FF;
+            --yellow: #FFD166;
+            --pink: #FF6B9D;
+            --green: #5DD39E;
+            --orange: #FF9A6B;
+            --ink: #1A1533;
+            --ink-soft: #4A4468;
+            --bg: #F6F4FF;
+            --bg-card: #FFFFFF;
+            --bg-dark: #120C2E;
+            --bg-dark-2: #1B1345;
+            --line: #E4E0FA;
+            --radius: 22px;
+            --shadow-soft: 0 10px 30px -12px rgba(76, 63, 219, .25);
+            --shadow-pop: 0 16px 40px -14px rgba(76, 63, 219, .4);
+            font-size: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            overflow-x: hidden;
+            padding-bottom: 74px;
+        }
+
+        @media (min-width: 900px) {
+            body {
+                padding-bottom: 0;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        .display {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            letter-spacing: -.01em;
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        ::selection {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .001ms !important;
+            }
+        }
+
+        /* ============================================================
+           LAYOUT HELPERS
+           ============================================================ */
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            position: relative;
+            padding: 80px 0;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .78rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--purple-dark);
+            background: linear-gradient(135deg, #EDE9FF, #F3F0FF);
+            border: 1.5px solid var(--line);
+            padding: 7px 16px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+
+        .section-head {
+            max-width: 640px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-head h2 {
+            font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+        }
+
+        .section-head p {
+            margin-top: 12px;
+            color: var(--ink-soft);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all .7s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: 1.02rem;
+            background: linear-gradient(135deg, var(--purple), #8B5CF6);
+            color: #fff;
+            padding: 17px 30px;
+            border-radius: 16px;
+            box-shadow: 0 7px 0 var(--purple-dark), var(--shadow-pop);
+            transition: transform .12s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 var(--purple-dark);
+        }
+
+        .btn-secondary {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            background: #fff;
+            color: var(--ink);
+            padding: 14px 24px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            transition: all .15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple);
+            color: var(--purple-dark);
+        }
+
+        .btn-success {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--green), #3FB984);
+            color: #04241a;
+            padding: 13px 26px;
+            border-radius: 14px;
+            box-shadow: 0 6px 0 #24855f;
+        }
+
+        .btn-success:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #24855f;
+        }
+
+        .btn-danger {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pink), #C93E7C);
+            color: #fff;
+            padding: 13px 26px;
+            border-radius: 14px;
+            box-shadow: 0 6px 0 #8f2c58;
+        }
+
+        .btn-danger:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #8f2c58;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: .8rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ============================================================
+           ONBOARDING MODAL
+           ============================================================ */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 6, 30, .85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 20px;
+        }
+
+        .onboarding-overlay.hidden {
+            display: none;
+        }
+
+        .onboarding-card {
+            background: linear-gradient(160deg, #2A1E63, #1B1345);
+            color: #fff;
+            border-radius: 32px;
+            padding: 48px 40px;
+            max-width: 460px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, .14);
+            text-align: center;
+            animation: floatIn .6s cubic-bezier(.34, 1.56, .64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes floatIn {
+            0% {
+                transform: scale(.8) translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .onboarding-card .logo-big {
+            font-size: 4rem;
+            margin-bottom: 8px;
+        }
+
+        .onboarding-card h1 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 2.2rem;
+            background: linear-gradient(100deg, var(--purple), var(--pink) 60%, var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .onboarding-card p {
+            color: #B9B3E8;
+            margin: 12px 0 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .onboarding-card .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .onboarding-card .input-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-align: center;
+            transition: border-color .3s;
+        }
+
+        .onboarding-card .input-group input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        .onboarding-card .input-group input::placeholder {
+            color: #6a64a0;
+        }
+
+        .onboarding-card .input-group .btn-start {
+            width: 100%;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--purple), #8B5CF6);
+            color: #fff;
+            padding: 16px;
+            border-radius: 14px;
+            box-shadow: 0 7px 0 var(--purple-dark);
+            transition: transform .12s;
+            margin-top: 4px;
+        }
+
+        .onboarding-card .input-group .btn-start:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 var(--purple-dark);
+        }
+
+        .onboarding-card .input-group .btn-start:disabled {
+            opacity: .5;
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 var(--purple-dark);
+            cursor: not-allowed;
+        }
+
+        .onboarding-card .avatar-preview-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 12px 0 4px;
+        }
+
+        .onboarding-card .avatar-preview-wrap .preview-box {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(255, 255, 255, .2);
+            box-shadow: 0 0 30px rgba(108, 99, 255, .3);
+        }
+
+        .onboarding-card .avatar-preview-wrap .preview-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Baloo 2', sans-serif;
+            color: #fff;
+        }
+
+        .onboarding-card .skip-option {
+            margin-top: 14px;
+            font-size: .82rem;
+            color: #6a64a0;
+            cursor: pointer;
+            transition: color .2s;
+        }
+
+        .onboarding-card .skip-option:hover {
+            color: #B9B3E8;
+        }
+
+        /* ============================================================
+           TOP NAV
+           ============================================================ */
+        .topnav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(246, 244, 255, .82);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topnav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+        }
+
+        .logo-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.15rem;
+            transform: rotate(-6deg);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .navlinks {
+            display: none;
+            gap: 6px;
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .navlinks {
+                display: flex;
+            }
+        }
+
+        .navlinks a {
+            font-weight: 700;
+            font-size: .92rem;
+            color: var(--ink-soft);
+            padding: 9px 16px;
+            border-radius: 100px;
+            transition: all .2s;
+        }
+
+        .navlinks a:hover {
+            background: #EDE9FF;
+            color: var(--purple-dark);
+        }
+
+        .nav-cta {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .92rem;
+            background: var(--ink);
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 100px;
+            box-shadow: 0 6px 0 #000;
+            transition: transform .12s;
+        }
+
+        .nav-cta:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #000;
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 60px 0 50px;
+            background:
+                radial-gradient(600px 340px at 88% -6%, rgba(0, 194, 255, .20), transparent 60%),
+                radial-gradient(560px 360px at 8% 8%, rgba(255, 107, 157, .16), transparent 60%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (min-width: 980px) {
+            .hero-grid {
+                grid-template-columns: 1.05fr .95fr;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            line-height: 1.02;
+            color: var(--ink);
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(100deg, var(--purple), var(--pink) 60%, var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p.lead {
+            margin-top: 18px;
+            font-size: 1.08rem;
+            color: var(--ink-soft);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 28px;
+            margin-top: 34px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat b {
+            display: block;
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.4rem;
+            color: var(--ink);
+        }
+
+        .hero-stat span {
+            font-size: .78rem;
+            color: var(--ink-soft);
+            font-weight: 600;
+        }
+
+        .hero-stage {
+            position: relative;
+            height: 380px;
+        }
+
+        .stage-blob {
+            position: absolute;
+            inset: 6% 4%;
+            border-radius: 44% 56% 58% 42% / 48% 42% 58% 52%;
+            background: linear-gradient(150deg, #EDE9FF, #E4F7FF);
+            border: 2px dashed #D6CFFC;
+            animation: blobmove 12s ease-in-out infinite;
+        }
+
+        @keyframes blobmove {
+            0%,
+            100% {
+                border-radius: 44% 56% 58% 42% / 48% 42% 58% 52%;
+            }
+            50% {
+                border-radius: 58% 42% 46% 54% / 40% 56% 44% 60%;
+            }
+        }
+
+        .hero-avatar {
+            position: absolute;
+            left: 50%;
+            top: 54%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            font-size: 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: var(--shadow-pop);
+        }
+
+        .float-chip {
+            position: absolute;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .78rem;
+            background: #fff;
+            padding: 8px 14px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--line);
+            animation: chipfloat 5s ease-in-out infinite;
+        }
+
+        @keyframes chipfloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .chip-1 {
+            top: 4%;
+            left: 2%;
+            color: var(--green);
+            animation-delay: .2s;
+        }
+        .chip-2 {
+            top: 0%;
+            right: 2%;
+            color: var(--pink);
+            animation-delay: 1.1s;
+        }
+        .chip-3 {
+            bottom: 18%;
+            left: -2%;
+            color: #F59E0B;
+            animation-delay: 2s;
+        }
+        .chip-4 {
+            bottom: 0%;
+            right: 4%;
+            color: var(--purple);
+            animation-delay: .7s;
+        }
+
+        /* ============================================================
+           DASHBOARD HUD
+           ============================================================ */
+        .hud-section {
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 60px 0;
+        }
+
+        .hud-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(500px 300px at 12% 0%, rgba(108, 99, 255, .35), transparent 60%),
+                radial-gradient(480px 320px at 92% 100%, rgba(0, 194, 255, .28), transparent 60%);
+        }
+
+        .hud-section .section-head p {
+            color: #B9B3E8;
+        }
+
+        .hud-section .eyebrow {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(255, 255, 255, .14);
+            color: #C9C4FF;
+        }
+
+        .hud-card {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(160deg, var(--bg-dark-2), #231A54);
+            border: 1px solid rgba(255, 255, 255, .09);
+            border-radius: 28px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 24px;
+            align-items: center;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+        }
+
+        @media (max-width: 760px) {
+            .hud-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .hud-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            border: 3px solid rgba(255, 255, 255, .18);
+            box-shadow: 0 0 0 6px rgba(108, 99, 255, .15);
+            cursor: pointer;
+            transition: transform .2s;
+            position: relative;
+        }
+
+        .hud-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .hud-avatar .lock-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            font-size: .7rem;
+            background: rgba(0, 0, 0, .7);
+            border-radius: 50%;
+            padding: 2px 4px;
+            line-height: 1;
+        }
+
+        .hud-mid .name-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 760px) {
+            .hud-mid .name-row {
+                justify-content: center;
+            }
+        }
+
+        .hud-mid .name {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
+
+        .hud-mid .title-tag {
+            font-size: .78rem;
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        .level-pill {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: .72rem;
+            background: linear-gradient(135deg, var(--yellow), #F59E0B);
+            color: #3D2A00;
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        .exp-track {
+            margin-top: 12px;
+            height: 14px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, .09);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .exp-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            box-shadow: 0 0 16px rgba(0, 194, 255, .7);
+            transition: width 1.4s cubic-bezier(.16, 1, .3, 1);
+            position: relative;
+        }
+
+        .exp-fill::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .5), transparent);
+            width: 40%;
+            animation: shine 2.2s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-120%);
+            }
+            100% {
+                transform: translateX(340%);
+            }
+        }
+
+        .exp-label {
+            margin-top: 6px;
+            font-size: .75rem;
+            color: #B9B3E8;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .hud-streak {
+            text-align: center;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 16px;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .hud-streak .num {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--yellow);
+        }
+
+        .hud-streak .lbl {
+            font-size: .68rem;
+            color: #B9B3E8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        /* ============================================================
+           CLASS SELECTOR
+           ============================================================ */
+        .class-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .class-btn {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            background: #fff;
+            color: var(--ink-soft);
+            transition: all .2s;
+            font-size: .95rem;
+        }
+
+        .class-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple-dark);
+        }
+
+        .class-btn.active {
+            border-color: var(--purple);
+            background: var(--purple);
+            color: #fff;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .class-btn .emoji {
+            margin-right: 6px;
+        }
+
+        /* ============================================================
+           MATERIAL SELECTOR
+           ============================================================ */
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .material-card {
+            background: #fff;
+            border: 2px solid var(--line);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all .2s;
+            cursor: pointer;
+        }
+
+        .material-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .material-card.active {
+            border-color: var(--purple);
+            background: #EDE9FF;
+        }
+
+        .material-card .icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .material-card h4 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .material-card p {
+            font-size: .78rem;
+            color: var(--ink-soft);
+        }
+
+        .material-card .badge {
+            display: inline-block;
+            font-size: .65rem;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 100px;
+            margin-top: 8px;
+        }
+
+        .badge-sd {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        .badge-smp {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        .badge-sma {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+
+        /* ============================================================
+           MATERI BELAJAR
+           ============================================================ */
+        .materi-section {
+            background: #fff;
+            border-radius: 28px;
+            padding: 36px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-soft);
+            margin-top: 24px;
+        }
+
+        .materi-section .materi-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .materi-section .materi-header .icon {
+            font-size: 2.5rem;
+        }
+
+        .materi-section .materi-header h2 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.6rem;
+        }
+
+        .materi-section .materi-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--ink-soft);
+        }
+
+        .materi-section .materi-body h3 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.2rem;
+            color: var(--ink);
+            margin: 16px 0 8px;
+        }
+
+        .materi-section .materi-body ul {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+
+        .materi-section .materi-body li {
+            margin-bottom: 6px;
+        }
+
+        .materi-section .materi-body .contoh {
+            background: #F6F4FF;
+            border-left: 4px solid var(--purple);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        .materi-section .materi-body .contoh .label {
+            font-weight: 700;
+            color: var(--purple-dark);
+            font-size: .85rem;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .materi-section .materi-body .rumus {
+            background: #FFF6E0;
+            border: 1px solid #FCE7B0;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .materi-section .materi-body .tip {
+            background: #E4F7FF;
+            border-left: 4px solid var(--blue);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: .95rem;
+        }
+
+        /* ============================================================
+           QUIZ
+           ============================================================ */
+        .quiz-section {
+            background: linear-gradient(165deg, #1B1345, #2A1E63);
+            color: #fff;
+            border-radius: 28px;
+            padding: 36px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+            margin-top: 24px;
+        }
+
+        .quiz-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-tag {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            letter-spacing: .03em;
+            font-size: 1rem;
+            color: var(--yellow);
+        }
+
+        .quiz-progress {
+            height: 8px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, .1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue), var(--green));
+            transition: width .6s ease;
+        }
+
+        .quiz-question-num {
+            font-size: .72rem;
+            color: #B9B3E8;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .quiz-question-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 560px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-opt {
+            background: rgba(255, 255, 255, .06);
+            border: 2px solid rgba(255, 255, 255, .12);
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-align: left;
+            color: #fff;
+            font-weight: 700;
+            font-size: .95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .18s;
+        }
+
+        .quiz-opt .k {
+            font-family: 'Baloo 2', sans-serif;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .78rem;
+            flex: none;
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--blue);
+            background: rgba(0, 194, 255, .1);
+        }
+
+        .quiz-opt.correct {
+            border-color: var(--green);
+            background: rgba(93, 211, 158, .22);
+        }
+
+        .quiz-opt.wrong {
+            border-color: var(--pink);
+            background: rgba(255, 107, 157, .2);
+        }
+
+        .quiz-opt.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-feedback {
+            margin-top: 18px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-feedback.correct {
+            color: var(--green);
+        }
+
+        .quiz-feedback.wrong {
+            color: var(--pink);
+        }
+
+        .quiz-feedback .expgain {
+            font-family: 'Space Mono', monospace;
+            background: rgba(93, 211, 158, .15);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: .8rem;
+        }
+
+        .quiz-feedback .explanation {
+            font-size: .85rem;
+            color: #B9B3E8;
+            font-weight: 400;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: block;
+            width: 100%;
+            margin-top: 4px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 10px;
+            border-left: 3px solid var(--yellow);
+        }
+
+        .quiz-next-btn {
+            margin-top: 16px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: var(--yellow);
+            color: #3D2A00;
+            padding: 12px 28px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .quiz-next-btn.show {
+            display: inline-flex;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .quiz-result .big {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 3rem;
+        }
+
+        .quiz-result .sub {
+            font-size: 1.1rem;
+            color: #B9B3E8;
+            margin-top: 6px;
+        }
+
+        /* ============================================================
+           AVATAR SELECTOR MODAL
+           ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 6, 30, .72);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            background: linear-gradient(160deg, #2A1E63, #1B1345);
+            color: #fff;
+            border-radius: 28px;
+            padding: 40px 32px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, .14);
+            transform: scale(.8);
+            opacity: 0;
+            transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+            position: relative;
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.show .modal-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .modal-subtitle {
+            font-size: .85rem;
+            color: #B9B3E8;
+            margin-bottom: 16px;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .avatar-option {
+            font-size: 2rem;
+            padding: 10px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            background: rgba(255, 255, 255, .05);
+            transition: all .2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .avatar-option:hover:not(.locked) {
+            border-color: var(--purple);
+            background: rgba(108, 99, 255, .2);
+        }
+
+        .avatar-option.active {
+            border-color: var(--yellow);
+            background: rgba(255, 209, 102, .2);
+            box-shadow: 0 0 20px rgba(255, 209, 102, .2);
+        }
+
+        .avatar-option.locked {
+            opacity: .4;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        .avatar-option .lock-icon {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: .65rem;
+        }
+
+        .avatar-option .level-req {
+            display: block;
+            font-size: .55rem;
+            color: #B9B3E8;
+            margin-top: 2px;
+        }
+
+        .modal-close-btn {
+            margin-top: 16px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: var(--yellow);
+            color: #3D2A00;
+            padding: 12px 28px;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .custom-avatar-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .custom-avatar-section label {
+            display: block;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #B9B3E8;
+        }
+
+        .custom-avatar-input {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .custom-avatar-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            background: rgba(255, 255, 255, .05);
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .custom-avatar-input input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        .custom-avatar-input input::placeholder {
+            color: #6a64a0;
+        }
+
+        .custom-avatar-preview {
+            font-size: 2.2rem;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            min-width: 56px;
+            text-align: center;
+        }
+
+        .btn-add-custom {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: var(--purple);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: .85rem;
+            transition: all .2s;
+        }
+
+        .btn-add-custom:hover {
+            background: var(--purple-dark);
+        }
+
+        /* ============================================================
+           LEVEL UP MODAL
+           ============================================================ */
+        .modal-level {
+            background: linear-gradient(160deg, #2A1E63, #1B1345);
+            color: #fff;
+            border-radius: 28px;
+            padding: 40px 32px;
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, .14);
+            transform: scale(.8);
+            opacity: 0;
+            transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .modal-overlay.show .modal-level {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-sparkle {
+            font-size: 1.4rem;
+            letter-spacing: 6px;
+            color: var(--yellow);
+        }
+
+        .modal-lvl {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin: 8px 0 2px;
+        }
+
+        .modal-sub {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .modal-rewards {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .modal-rewards div {
+            background: rgba(255, 255, 255, .08);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: .85rem;
+            font-weight: 600;
+        }
+
+        /* ============================================================
+           BOSS
+           ============================================================ */
+        .boss-card {
+            background: linear-gradient(160deg, #3A1030, #1B1345);
+            color: #fff;
+            border-radius: 28px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+        }
+
+        .boss-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 10px 20px rgba(255, 107, 157, .4));
+            animation: bossfloat 3s ease-in-out infinite;
+        }
+
+        @keyframes bossfloat {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-8px) rotate(2deg);
+            }
+        }
+
+        .boss-name {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .boss-sub {
+            color: #E8B6D0;
+            font-size: .85rem;
+            margin-top: 2px;
+            margin-bottom: 18px;
+        }
+
+        .hp-wrap {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .hp-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: .72rem;
+            font-weight: 700;
+            color: #E8B6D0;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .hp-track {
+            height: 18px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, .1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .hp-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--pink), #FF9A6B);
+            transition: width .7s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .boss-note {
+            margin-top: 10px;
+            font-size: .78rem;
+            color: #C9A9C0;
+        }
+
+        .boss-attack-btn {
+            margin-top: 16px;
+        }
+
+        /* ============================================================
+           ACHIEVEMENTS
+           ============================================================ */
+        .ach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .ach-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 18px 14px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: transform .18s;
+        }
+
+        .ach-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .ach-icon {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+
+        .ach-card h4 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: .88rem;
+            margin-bottom: 4px;
+        }
+
+        .ach-card p {
+            font-size: .72rem;
+            color: var(--ink-soft);
+            line-height: 1.4;
+        }
+
+        .ach-card.locked {
+            background: #F1EFFB;
+        }
+
+        .ach-card.locked .ach-icon {
+            filter: grayscale(1) brightness(.6);
+            opacity: .5;
+        }
+
+        .ach-card.locked h4,
+        .ach-card.locked p {
+            color: #A199CC;
+        }
+
+        /* ============================================================
+           PROFILE
+           ============================================================ */
+        .profile-card {
+            background: linear-gradient(150deg, #fff, #F3F0FF);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 24px;
+            align-items: center;
+            box-shadow: var(--shadow-pop);
+        }
+
+        @media (max-width: 700px) {
+            .profile-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+            }
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+            box-shadow: 0 0 0 6px #fff, 0 0 0 8px var(--line);
+        }
+
+        .profile-name {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+        }
+
+        .profile-title {
+            color: var(--purple-dark);
+            font-weight: 700;
+            font-size: .88rem;
+            margin-top: 2px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 500px) {
+            .profile-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .pstat {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 12px 14px;
+        }
+
+        .pstat b {
+            display: block;
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .pstat span {
+            font-size: .68rem;
+            color: var(--ink-soft);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        /* ============================================================
+           FINAL CTA
+           ============================================================ */
+        .final-cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--purple), #8B5CF6 55%, var(--blue));
+            border-radius: 32px;
+            padding: 56px 30px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+        }
+
+        .final-cta p {
+            margin-top: 12px;
+            color: #E4E0FF;
+            max-width: 460px;
+            margin-inline: auto;
+        }
+
+        .final-cta .btn-primary {
+            margin-top: 24px;
+            background: #fff;
+            color: var(--purple-dark);
+            box-shadow: 0 7px 0 #C9C2F0;
+        }
+
+        footer {
+            padding: 34px 24px;
+            text-align: center;
+            color: var(--ink-soft);
+            font-size: .82rem;
+        }
+
+        /* ============================================================
+           MOBILE BOTTOM NAV
+           ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 60;
+            background: #fff;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px 12px;
+            box-shadow: 0 -8px 24px rgba(76, 63, 219, .1);
+        }
+
+        @media (min-width: 900px) {
+            .bottom-nav {
+                display: none;
+            }
+        }
+
+        .bn-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: .62rem;
+            font-weight: 700;
+            color: var(--ink-soft);
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+
+        .bn-item.active {
+            color: var(--purple);
+            background: #F1EEFF;
+        }
+
+        .bn-item .ic {
+            font-size: 1.2rem;
+        }
+
+        /* ============================================================
+           CONFETTI
+           ============================================================ */
+        .confetti-piece {
+            position: fixed;
+            top: -20px;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            z-index: 120;
+            pointer-events: none;
+            animation: confettifall 2.4s linear forwards;
+        }
+
+        @keyframes confettifall {
+            to {
+                transform: translateY(105vh) rotate(540deg);
+                opacity: .2;
+            }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        .section-title-center {
+            text-align: center;
+        }
+
+        .section-title-center .section-head {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mt-2 {
+            margin-top: 16px;
+        }
+        .mt-3 {
+            margin-top: 24px;
+        }
+        .gap-2 {
+            gap: 12px;
+        }
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        .mathfloat {
+            position: absolute;
+            pointer-events: none;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            color: var(--purple);
+            opacity: .12;
+            user-select: none;
+            animation: drift 9s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-18px) rotate(4deg);
+            }
+        }
+
+        .modal-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, .05);
+            border-radius: 4px;
+        }
+        .modal-card::-webkit-scrollbar-thumb {
+            background: var(--purple);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================
+    ONBOARDING MODAL
+    ================================================================ -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-card">
+            <div class="logo-big">✦</div>
+            <h1>MathQuest</h1>
+            <p>Selamat datang di petualangan matematika!<br>Siapa nama pahlawan matematika kita hari ini?</p>
+
+            <div class="avatar-preview-wrap">
+                <div class="preview-box" id="onboardingAvatarPreview">🧑‍🚀</div>
+                <div class="preview-name" id="onboardingNamePreview">Pemain</div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="onboardingNameInput" placeholder="Masukkan namamu..." maxlength="20" autofocus />
+                <button class="btn-start" id="onboardingStartBtn">🚀 Mulai Petualangan!</button>
+            </div>
+
+            <div class="skip-option" id="onboardingSkipBtn">Lewati →</div>
+        </div>
+    </div>
+
+    <!-- ===== FLOATING SYMBOLS ===== -->
+    <div class="mathfloat" style="top:120px;left:4%;font-size:2.2rem;animation-delay:.2s;">x²</div>
+    <div class="mathfloat" style="top:260px;right:6%;font-size:1.6rem;animation-delay:1.4s;">√25</div>
+    <div class="mathfloat" style="top:700px;left:3%;font-size:1.8rem;animation-delay:.8s;">π</div>
+    <div class="mathfloat" style="top:1500px;right:4%;font-size:2rem;animation-delay:2s;">∑</div>
+    <div class="mathfloat" style="top:2300px;left:5%;font-size:1.7rem;animation-delay:1.1s;">÷</div>
+
+    <!-- ===== TOP NAV ===== -->
+    <nav class="topnav">
+        <div class="wrap">
+            <div class="logo"><span class="logo-badge">✦</span>MathQuest</div>
+            <div class="navlinks">
+                <a href="#dashboard">Dashboard</a>
+                <a href="#kelas">Kelas & Materi</a>
+                <a href="#belajar">Belajar</a>
+                <a href="#latihan">Latihan</a>
+                <a href="#profile">Profil</a>
+            </div>
+            <a href="#kelas" class="nav-cta">Mulai →</a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+        <div class="wrap hero-grid">
+            <div>
+                <span class="eyebrow">⚡ Math Adventure Platform</span>
+                <h1>MATEMATIKA,<br><span class="accent">TAPI JADI GAME.</span></h1>
+                <p class="lead">Pilih kelas, pelajari materi, kerjakan soal, kumpulkan EXP, buka avatar keren, dan naik level!</p>
+                <div class="hero-cta">
+                    <a href="#kelas" class="btn-primary">🚀 Pilih Kelas & Materi</a>
+                    <a href="#latihan" class="btn-secondary">⚔️ Mulai Latihan</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><b id="heroLevel">1</b><span>Level</span></div>
+                    <div class="hero-stat"><b id="heroExp">0</b><span>EXP</span></div>
+                    <div class="hero-stat"><b id="heroSoal">0</b><span>Soal Terjawab</span></div>
+                    <div class="hero-stat"><b id="heroAvatarCount">0</b><span>Avatar Terbuka</span></div>
+                </div>
+            </div>
+            <div class="hero-stage">
+                <div class="stage-blob"></div>
+                <div class="float-chip chip-1">⚡ +30 EXP</div>
+                <div class="float-chip chip-2">🔥 Streak 7</div>
+                <div class="float-chip chip-3">🏆 Achievement!</div>
+                <div class="float-chip chip-4">✨ LEVEL UP!</div>
+                <div class="hero-avatar" id="heroAvatarDisplay">🧑‍🚀</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== DASHBOARD HUD ===== -->
+    <section class="hud-section" id="dashboard">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">🎮 Dashboard</span>
+                <h2>Progress kamu, ditampilkan seperti game HUD.</h2>
+                <p>Klik avatar untuk mengganti karaktermu! Buka avatar baru setiap naik level.</p>
+            </div>
+            <div class="hud-card reveal">
+                <div class="hud-avatar" id="hudAvatar" title="Klik untuk ganti avatar">
+                    🧑‍🚀
+                    <span class="lock-badge" id="hudAvatarLock" style="display:none;">🔒</span>
+                </div>
+                <div class="hud-mid">
+                    <div class="name-row">
+                        <span class="name" id="hudName">DEKA</span>
+                        <span class="level-pill" id="hudLevel">LEVEL 01</span>
+                        <span class="title-tag" id="hudTitle">Number Novice</span>
+                    </div>
+                    <div class="exp-track"><div class="exp-fill" id="hudExpFill" style="width:0%"></div></div>
+                    <div class="exp-label" id="hudExpLabel">0 / 100 EXP</div>
+                </div>
+                <div class="hud-streak">
+                    <div class="num">🔥 <span id="hudStreak">7</span></div>
+                    <div class="lbl">Day Streak</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KELAS & MATERI ===== -->
+    <section class="section" id="kelas">
+        <div class="wrap">
+            <div class="section-head reveal section-title-center">
+                <span class="eyebrow">📚 Pilih Kelas & Materi</span>
+                <h2>Pilih jenjangmu, lalu pilih materi yang ingin dipelajari.</h2>
+                <p>Setiap materi punya penjelasan lengkap dan soal latihan yang berbeda.</p>
+            </div>
+
+            <div class="class-selector reveal justify-center">
+                <button class="class-btn active" data-class="sd">🏫 SD Kelas 6</button>
+                <button class="class-btn" data-class="smp">📐 SMP Kelas 9</button>
+                <button class="class-btn" data-class="sma">📊 SMA/SMK 10-12</button>
+            </div>
+
+            <div class="material-grid reveal" id="materialGrid">
+                <!-- Rendered by JS -->
+            </div>
+
+            <div class="flex-wrap gap-2 mt-3 justify-center reveal">
+                <button class="btn-primary" id="startMateriBtn">📖 Buka Materi</button>
+                <button class="btn-success" id="startQuizBtn">⚔️ Mulai Latihan Soal</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MATERI BELAJAR ===== -->
+    <section class="section" id="belajar" style="background:#fff;padding-top:0;">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">📖 Materi Belajar</span>
+                <h2 id="materiTitle">Pilih materi terlebih dahulu</h2>
+                <p id="materiSub">Klik salah satu materi di atas untuk melihat penjelasan lengkapnya.</p>
+            </div>
+            <div class="materi-section reveal" id="materiContent">
+                <div class="text-center" style="padding:40px 20px;color:var(--ink-soft);">
+                    <div style="font-size:3rem;margin-bottom:16px;">📚</div>
+                    <h3 style="font-family:'Baloo 2',sans-serif;font-size:1.4rem;">Belum ada materi yang dipilih</h3>
+                    <p>Pilih kelas dan materi di atas untuk mulai belajar!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LATIHAN SOAL ===== -->
+    <section class="section" id="latihan" style="background:#fff;padding-top:0;">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">⚔️ Latihan Soal</span>
+                <h2 id="latihanTitle">Soal Latihan</h2>
+                <p id="latihanSub">Jawab dengan benar untuk mendapatkan EXP dan naik level!</p>
+            </div>
+
+            <div class="quiz-section reveal">
+                <div class="quiz-head">
+                    <div class="quiz-tag" id="quizTag">📝 LATIHAN SOAL</div>
+                    <div style="font-size:.85rem;color:#B9B3E8;" id="quizScore">Benar: 0 | Salah: 0</div>
+                </div>
+                <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgress" style="width:0%"></div></div>
+                <div class="quiz-question-num" id="quizQNum">SOAL 1 / 10</div>
+                <div class="quiz-question-text" id="quizQuestion">Loading soal...</div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <button class="quiz-next-btn" id="quizNextBtn">➡️ Soal Berikutnya</button>
+                <div class="quiz-result hidden" id="quizResult">
+                    <div class="big">🎉</div>
+                    <div class="sub" id="quizResultText">Kamu hebat!</div>
+                    <button class="btn-success mt-3" id="quizResetBtn">🔄 Ulangi Lagi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BOSS ===== -->
+    <section class="section" id="boss" style="padding-top:0;">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">👾 Boss Battle</span>
+                <h2>Kalahkan Boss untuk mendapat EXP besar!</h2>
+                <p>Setiap jawaban benar mengurangi HP boss. Habiskan HP-nya!</p>
+            </div>
+            <div class="boss-card reveal">
+                <div class="boss-emoji" id="bossEmoji">👾</div>
+                <div class="boss-name" id="bossName">Number Goblin</div>
+                <div class="boss-sub" id="bossSub">"Defeat the Number Goblin!"</div>
+                <div class="hp-wrap">
+                    <div class="hp-label"><span>Boss HP</span><span id="bossHpPct">100%</span></div>
+                    <div class="hp-track"><div class="hp-fill" id="bossHpFill"></div></div>
+                </div>
+                <button class="btn-danger boss-attack-btn" id="bossAttackBtn">⚔️ Serang Boss (−10 HP)</button>
+                <div class="boss-note" id="bossNote">Kalahkan boss untuk mendapat +100 EXP!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ACHIEVEMENTS ===== -->
+    <section class="section" id="achievement" style="background:#fff;">
+        <div class="wrap">
+            <div class="section-head reveal section-title-center">
+                <span class="eyebrow">🏆 Collectibles</span>
+                <h2>Achievement, dikoleksi seperti kartu game.</h2>
+                <p>Yang belum diraih tampil sebagai silhouette — memancing rasa penasaran.</p>
+            </div>
+            <div class="ach-grid reveal" id="achGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== PROFILE ===== -->
+    <section class="section" id="profile">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">👤 Character Profile</span>
+                <h2>Profil kamu, lengkap dengan statistik.</h2>
+            </div>
+            <div class="profile-card reveal">
+                <div class="profile-avatar" id="profileAvatar">🧑‍🚀</div>
+                <div>
+                    <div class="profile-name" id="profileName">DEKA</div>
+                    <div class="profile-title" id="profileTitle">LEVEL 01 · Number Novice</div>
+                    <div class="profile-stats">
+                        <div class="pstat"><b id="pExp">⚡ 0</b><span>EXP</span></div>
+                        <div class="pstat"><b id="pSoal">🎯 0</b><span>Soal</span></div>
+                        <div class="pstat"><b id="pBenar">✅ 0</b><span>Benar</span></div>
+                        <div class="pstat"><b id="pAch">🏆 0</b><span>Achievement</span></div>
+                        <div class="pstat"><b id="pLevel">📈 1</b><span>Level</span></div>
+                        <div class="pstat"><b id="pAvatarCount">👤 0</b><span>Avatar</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="section">
+        <div class="wrap">
+            <div class="final-cta reveal">
+                <h2>Siap jadi Math Master?</h2>
+                <p>Pilih kelas → Pelajari materi → Kerjakan soal → Kumpulkan EXP → Buka avatar keren → Naik level!</p>
+                <a href="#kelas" class="btn-primary">🚀 Mulai Sekarang</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>© 2026 MathQuest. Belajar matematika, satu quest pada satu waktu.</footer>
+
+    <!-- ===== MOBILE BOTTOM NAV ===== -->
+    <nav class="bottom-nav">
+        <a class="bn-item active" href="#dashboard"><span class="ic">🏠</span>Home</a>
+        <a class="bn-item" href="#kelas"><span class="ic">📚</span>Kelas</a>
+        <a class="bn-item" href="#belajar"><span class="ic">📖</span>Belajar</a>
+        <a class="bn-item" href="#latihan"><span class="ic">⚔️</span>Latihan</a>
+        <a class="bn-item" href="#profile"><span class="ic">👤</span>Profil</a>
+    </nav>
+
+    <!-- ===== AVATAR SELECTOR MODAL ===== -->
+    <div class="modal-overlay" id="avatarModal">
+        <div class="modal-card">
+            <div class="modal-title">🎨 Pilih Avatar</div>
+            <div class="modal-subtitle">Buka avatar baru setiap naik level! Klik avatar untuk memilih.</div>
+            <div class="avatar-grid" id="avatarGrid"></div>
+            <div class="custom-avatar-section">
+                <label>✨ Buat Avatar Custom</label>
+                <div class="custom-avatar-input">
+                    <input type="text" id="customAvatarInput" placeholder="Masukkan emoji atau karakter..." maxlength="2" />
+                    <span class="custom-avatar-preview" id="customAvatarPreview">😎</span>
+                    <button class="btn-add-custom" id="addCustomAvatarBtn">Tambah</button>
+                </div>
+                <div style="font-size:.7rem;color:#6a64a0;margin-top:4px;">Masukkan emoji (😎) atau karakter (⚡) untuk avatar custom</div>
+            </div>
+            <button class="modal-close-btn" id="avatarCloseBtn">Pilih Avatar</button>
+        </div>
+    </div>
+
+    <!-- ===== LEVEL UP MODAL ===== -->
+    <div class="modal-overlay" id="levelModal">
+        <div class="modal-level">
+            <div class="modal-sparkle">✨ ✨ ✨</div>
+            <div class="modal-lvl">LEVEL UP!</div>
+            <div class="mono" style="font-size:1.2rem;font-weight:700;" id="levelModalLevel">LEVEL 02</div>
+            <div class="modal-sub" id="levelModalTitle">"Number Explorer"</div>
+            <div class="modal-rewards" id="levelModalRewards">
+                <div>🏆 New Badge Unlocked</div>
+                <div>🔓 Avatar Baru Tersedia!</div>
+                <div>+50 Bonus EXP</div>
+            </div>
+            <button class="modal-close-btn" id="levelModalClose">Lanjutkan</button>
+        </div>
+    </div>
+
+    <!-- ================================================================
+    JAVASCRIPT
+    ================================================================ -->
+    <script>
+        // ================================================================
+        // 1. DATA
+        // ================================================================
+
+        const LEVEL_DATA = [
+            { level: 1, expNeeded: 100, title: 'Number Novice' },
+            { level: 2, expNeeded: 150, title: 'Counting Champion' },
+            { level: 3, expNeeded: 200, title: 'Math Adventurer' },
+            { level: 4, expNeeded: 280, title: 'Algebra Apprentice' },
+            { level: 5, expNeeded: 350, title: 'Geometry Explorer' },
+            { level: 6, expNeeded: 450, title: 'Function Fighter' },
+            { level: 7, expNeeded: 550, title: 'Trigonometry Titan' },
+            { level: 8, expNeeded: 650, title: 'Logarithm Lord' },
+            { level: 9, expNeeded: 750, title: 'Matrix Master' },
+            { level: 10, expNeeded: 850, title: 'Calculus Crusader' },
+            { level: 11, expNeeded: 950, title: 'Integral Invoker' },
+            { level: 12, expNeeded: 1050, title: 'Probability Prophet' },
+            { level: 13, expNeeded: 1150, title: 'Statistics Sage' },
+            { level: 14, expNeeded: 1250, title: 'Math Knight' },
+            { level: 15, expNeeded: 1350, title: 'Math Master' },
+        ];
+
+        const AVATAR_DATA = [
+            { emoji: '🧑‍🚀', name: 'Astronot', levelReq: 1 },
+            { emoji: '🧙', name: 'Penyihir', levelReq: 2 },
+            { emoji: '🦸', name: 'Pahlawan', levelReq: 3 },
+            { emoji: '🧝', name: 'Elf', levelReq: 4 },
+            { emoji: '🧛', name: 'Vampir', levelReq: 5 },
+            { emoji: '🦹', name: 'Penjahat', levelReq: 6 },
+            { emoji: '🤖', name: 'Robot', levelReq: 7 },
+            { emoji: '👾', name: 'Monster', levelReq: 8 },
+            { emoji: '🎅', name: 'Sinterklas', levelReq: 9 },
+            { emoji: '🧜', name: 'Putri Duyung', levelReq: 10 },
+            { emoji: '🧚', name: 'Peri', levelReq: 12 },
+            { emoji: '🐱', name: 'Kucing', levelReq: 14 },
+            { emoji: '⭐', name: 'Bintang', levelReq: 15 },
+        ];
+
+        const ACHIEVEMENTS = [
+            { id: 1, icon: '🏆', name: 'FIRST STEP', desc: 'Jawab 1 soal pertama', unlocked: false },
+            { id: 2, icon: '🔥', name: 'STREAK MASTER', desc: '7 hari streak', unlocked: false },
+            { id: 3, icon: '🎯', name: 'PERFECT', desc: 'Nilai 100% di quiz', unlocked: false },
+            { id: 4, icon: '⚡', name: 'SPEED SOLVER', desc: 'Jawab 50 soal', unlocked: false },
+            { id: 5, icon: '👑', name: 'MATH MASTER', desc: 'Level 10+', unlocked: false },
+            { id: 6, icon: '🎨', name: 'AVATAR COLLECTOR', desc: 'Buka 5 avatar', unlocked: false },
+        ];
+
+        // ================================================================
+        // 2. MATERI & SOAL
+        // ================================================================
+
+        const MATERI_DATA = {
+            sd: {
+                'sd1': {
+                    name: 'Operasi Bilangan',
+                    icon: '🔢',
+                    desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian bilangan bulat.',
+                    content: `
+                        <h3>📌 Apa itu Operasi Bilangan?</h3>
+                        <p>Operasi bilangan adalah cara kita menghitung dengan angka. Ada 4 operasi dasar:</p>
+                        <ul>
+                            <li><b>Penjumlahan (+)</b>: Menggabungkan dua atau lebih angka.</li>
+                            <li><b>Pengurangan (−)</b>: Mengambil sebagian dari angka.</li>
+                            <li><b>Perkalian (×)</b>: Penjumlahan berulang.</li>
+                            <li><b>Pembagian (÷)</b>: Membagi angka menjadi bagian yang sama.</li>
+                        </ul>
+                        <h3>📝 Contoh Soal</h3>
+                        <div class="contoh"><div class="label">Contoh 1:</div><p><b>25 + 37 = ?</b></p><p>Jawab: 25 + 37 = 62</p></div>
+                        <div class="contoh"><div class="label">Contoh 2:</div><p><b>84 - 29 = ?</b></p><p>Jawab: 84 - 29 = 55</p></div>
+                        <div class="tip">💡 <b>Tips:</b> Untuk perkalian dengan 10, cukup tambahkan nol di belakang angka.</div>
+                    `
+                },
+                'sd2': {
+                    name: 'Pecahan',
+                    icon: '🍕',
+                    desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian pecahan.',
+                    content: `
+                        <h3>📌 Apa itu Pecahan?</h3>
+                        <p>Pecahan adalah bagian dari keseluruhan. Pecahan ditulis sebagai <b>a/b</b>.</p>
+                        <div class="rumus">a/b + c/d = (a×d + c×b) / (b×d)</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = ?</b></p><p>1/2 = 2/4, jadi 2/4 + 1/4 = 3/4</p></div>
+                        <div class="tip">💡 <b>Tips:</b> Untuk menjumlahkan pecahan, samakan penyebutnya terlebih dahulu!</div>
+                    `
+                },
+                'sd3': {
+                    name: 'Persentase',
+                    icon: '💯',
+                    desc: 'Pelajari cara menghitung persentase dalam kehidupan sehari-hari.',
+                    content: `
+                        <h3>📌 Apa itu Persentase?</h3>
+                        <p>Persentase adalah cara menyatakan pecahan dengan penyebut 100. Simbol persentase adalah <b>%</b>.</p>
+                        <div class="rumus">Persentase = (Nilai / Total) × 100%</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = ?</b></p><p>80 × 25/100 = 20</p></div>
+                        <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat, 10% = sepersepuluh.</div>
+                    `
+                }
+            },
+            smp: {
+                'smp1': {
+                    name: 'Aljabar',
+                    icon: '🧮',
+                    desc: 'Pelajari persamaan linear satu variabel dan cara menyelesaikannya.',
+                    content: `
+                        <h3>📌 Apa itu Aljabar?</h3>
+                        <p>Aljabar menggunakan huruf untuk mewakili angka yang belum diketahui.</p>
+                        <div class="rumus">ax + b = c  →  x = (c - b) / a</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16, berapakah x?</b></p><p>2x = 10 → x = 5</p></div>
+                        <div class="tip">💡 <b>Tips:</b> Pindahkan angka ke sisi lain dengan operasi kebalikannya!</div>
+                    `
+                },
+                'smp2': {
+                    name: 'Geometri',
+                    icon: '📐',
+                    desc: 'Pelajari rumus luas dan keliling bangun datar.',
+                    content: `
+                        <h3>📌 Bangun Datar</h3>
+                        <div class="rumus">Persegi: L = s², K = 4s</div>
+                        <div class="rumus">Persegi Panjang: L = p×l, K = 2(p+l)</div>
+                        <div class="rumus">Segitiga: L = ½×a×t</div>
+                        <div class="rumus">Lingkaran: L = πr², K = 2πr</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Luas persegi dengan sisi 8 cm adalah...</b></p><p>L = 8² = 64 cm²</p></div>
+                        <div class="tip">💡 <b>Tips:</b> π (pi) ≈ 3.14 atau 22/7</div>
+                    `
+                },
+                'smp3': {
+                    name: 'Statistika',
+                    icon: '📊',
+                    desc: 'Pelajari mean, median, dan modus dari sekumpulan data.',
+                    content: `
+                        <h3>📌 Ukuran Pemusatan Data</h3>
+                        <ul><li><b>Mean</b>: Jumlah data ÷ Banyak data</li><li><b>Median</b>: Nilai tengah setelah data diurutkan</li><li><b>Modus</b>: Nilai yang paling sering muncul</li></ul>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Data: 5, 7, 8, 6, 9. Mean?</b></p><p>(5+7+8+6+9)/5 = 35/5 = 7</p></div>
+                    `
+                }
+            },
+            sma: {
+                'sma1': {
+                    name: 'Fungsi & Limit',
+                    icon: '📈',
+                    desc: 'Pelajari konsep fungsi dan limit dalam matematika.',
+                    content: `
+                        <h3>📌 Fungsi</h3>
+                        <p>Fungsi adalah hubungan antara input (x) dan output (f(x)).</p>
+                        <div class="rumus">f(x) = ax + b</div>
+                        <div class="rumus">lim (x→c) f(x) = L</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>f(x) = 2x + 3, f(5)?</b></p><p>f(5) = 2(5) + 3 = 13</p></div>
+                    `
+                },
+                'sma2': {
+                    name: 'Trigonometri',
+                    icon: '🌀',
+                    desc: 'Pelajari sinus, cosinus, dan tangen pada segitiga siku-siku.',
+                    content: `
+                        <h3>📌 Perbandingan Trigonometri</h3>
+                        <ul><li><b>sin θ</b> = depan / miring</li><li><b>cos θ</b> = samping / miring</li><li><b>tan θ</b> = depan / samping</li></ul>
+                        <div class="rumus">sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1</div>
+                    `
+                },
+                'sma3': {
+                    name: 'Matriks',
+                    icon: '🧩',
+                    desc: 'Pelajari operasi dasar pada matriks.',
+                    content: `
+                        <h3>📌 Matriks</h3>
+                        <p>Matriks adalah susunan bilangan dalam baris dan kolom.</p>
+                        <div class="rumus">A = [[a, b], [c, d]], det(A) = a×d - b×c</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>det [[1,2],[3,4]] = ?</b></p><p>det = 1×4 - 2×3 = -2</p></div>
+                    `
+                }
+            }
+        };
+
+        // Soal generators
+        function generateSoalSD1() {
+            return [
+                { q: 'Berapakah 25 + 37?', o: ['62', '52', '72', '61'], c: 0, exp: '25 + 37 = 62' },
+                { q: 'Berapakah 84 - 29?', o: ['55', '65', '45', '54'], c: 0, exp: '84 - 29 = 55' },
+                { q: 'Berapakah 13 × 8?', o: ['94', '104', '114', '98'], c: 1, exp: '13 × 8 = 104' },
+                { q: 'Berapakah 96 ÷ 6?', o: ['14', '16', '18', '15'], c: 1, exp: '96 ÷ 6 = 16' },
+                { q: 'Berapakah 7 × 9 + 8?', o: ['71', '72', '73', '63'], c: 0, exp: '7×9=63, 63+8=71' },
+                { q: 'Berapakah (15 + 5) ÷ 4?', o: ['4', '5', '6', '3'], c: 1, exp: '15+5=20, 20÷4=5' },
+                { q: 'Berapakah 2/3 + 1/3?', o: ['1', '2/3', '3/6', '1/3'], c: 0, exp: '2/3+1/3=3/3=1' },
+                { q: 'Berapakah 3/4 - 1/4?', o: ['1/2', '1/4', '2/4', '3/8'], c: 0, exp: '3/4-1/4=2/4=1/2' },
+                { q: 'Berapakah 15% dari 200?', o: ['20', '30', '40', '25'], c: 1, exp: '200×15/100=30' },
+                { q: 'Berapakah 120 × 5?', o: ['500', '600', '700', '550'], c: 1, exp: '120×5=600' },
+            ];
+        }
+
+        function generateSoalSD2() {
+            return [
+                { q: 'Berapakah 1/2 + 1/4?', o: ['2/4', '3/4', '1/4', '2/6'], c: 1, exp: '1/2=2/4, 2/4+1/4=3/4' },
+                { q: 'Berapakah 3/5 - 1/5?', o: ['2/5', '2/10', '4/5', '1/5'], c: 0, exp: '3/5-1/5=2/5' },
+                { q: 'Berapakah 2/3 × 3/4?', o: ['6/12', '1/2', '5/7', '3/6'], c: 1, exp: '2/3×3/4=6/12=1/2' },
+                { q: 'Berapakah 2/3 ÷ 4/5?', o: ['8/15', '10/12', '5/6', '3/4'], c: 2, exp: '2/3÷4/5=2/3×5/4=10/12=5/6' },
+                { q: 'Berapakah 1 1/2 + 2 1/3?', o: ['3 5/6', '3 1/5', '4 1/6', '3 2/5'], c: 0,
+                    exp: '1 1/2=3/2, 2 1/3=7/3, 3/2+7/3=9/6+14/6=23/6=3 5/6' },
+                { q: 'Berapakah 2 1/4 - 1 1/2?', o: ['3/4', '1/4', '1 3/4', '2/4'], c: 0,
+                    exp: '2 1/4=9/4, 1 1/2=3/2=6/4, 9/4-6/4=3/4' },
+                { q: 'Berapakah 3/8 + 5/8?', o: ['1', '6/8', '7/8', '1/2'], c: 0, exp: '3/8+5/8=8/8=1' },
+                { q: 'Berapakah 7/10 - 3/10?', o: ['2/5', '5/10', '3/5', '2/10'], c: 0, exp: '7/10-3/10=4/10=2/5' },
+            ];
+        }
+
+        function generateSoalSD3() {
+            return [
+                { q: 'Berapakah 25% dari 80?', o: ['15', '20', '25', '30'], c: 1, exp: '80×25/100=20' },
+                { q: 'Berapakah 10% dari 250?', o: ['15', '20', '25', '30'], c: 2, exp: '250×10/100=25' },
+                { q: 'Berapakah 50% dari 360?', o: ['160', '170', '180', '190'], c: 2, exp: '360×50/100=180' },
+                { q: 'Berapakah 75% dari 120?', o: ['80', '85', '90', '95'], c: 2, exp: '120×75/100=90' },
+                { q: 'Berapakah 15% dari 300?', o: ['35', '40', '45', '50'], c: 2, exp: '300×15/100=45' },
+                { q: 'Berapakah 5% dari 600?', o: ['20', '25', '30', '35'], c: 2, exp: '600×5/100=30' },
+                { q: 'Berapakah 120% dari 50?', o: ['50', '55', '60', '65'], c: 2, exp: '50×120/100=60' },
+                { q: 'Berapakah 8% dari 150?', o: ['10', '11', '12', '13'], c: 2, exp: '150×8/100=12' },
+            ];
+        }
+
+        function generateSoalSMP1() {
+            return [
+                { q: 'Jika 2x + 6 = 16, berapakah x?', o: ['3', '4', '5', '6'], c: 2, exp: '2x=10 → x=5' },
+                { q: 'Jika 3x - 7 = 14, berapakah x?', o: ['5', '6', '7', '8'], c: 2, exp: '3x=21 → x=7' },
+                { q: 'Jika 4x + 5 = 25, berapakah x?', o: ['4', '5', '6', '7'], c: 1, exp: '4x=20 → x=5' },
+                { q: 'Jika 5x - 3 = 22, berapakah x?', o: ['4', '5', '6', '7'], c: 1, exp: '5x=25 → x=5' },
+                { q: 'Jika 2x + 3x = 25, berapakah x?', o: ['3', '4', '5', '6'], c: 2, exp: '5x=25 → x=5' },
+                { q: 'Jika 6x - 4 = 2x + 12, berapakah x?', o: ['2', '3', '4', '5'], c: 2, exp: '4x=16 → x=4' },
+                { q: 'Jika x/3 + 2 = 7, berapakah x?', o: ['12', '13', '14', '15'], c: 3, exp: 'x/3=5 → x=15' },
+                { q: 'Jika 2x/3 = 8, berapakah x?', o: ['10', '11', '12', '13'], c: 2, exp: '2x=24 → x=12' },
+            ];
+        }
+
+        function generateSoalSMP2() {
+            return [
+                { q: 'Luas persegi dengan sisi 8 cm adalah...', o: ['48 cm²', '56 cm²', '64 cm²', '72 cm²'], c: 2,
+                    exp: 'L=s²=8²=64 cm²' },
+                { q: 'Keliling persegi panjang p=12cm, l=5cm adalah...', o: ['30 cm', '32 cm', '34 cm', '36 cm'], c: 2,
+                    exp: 'K=2(12+5)=34 cm' },
+                { q: 'Luas segitiga alas 10cm, tinggi 6cm adalah...', o: ['25 cm²', '30 cm²', '35 cm²', '40 cm²'], c: 1,
+                    exp: 'L=½×10×6=30 cm²' },
+                { q: 'Luas lingkaran r=7cm (π=22/7) adalah...', o: ['143 cm²', '150 cm²', '154 cm²', '160 cm²'], c: 2,
+                    exp: 'L=22/7×7²=154 cm²' },
+                { q: 'Keliling lingkaran r=14cm (π=22/7) adalah...', o: ['66 cm', '77 cm', '88 cm', '99 cm'], c: 2,
+                    exp: 'K=2×22/7×14=88 cm' },
+                { q: 'Volume kubus rusuk 5cm adalah...', o: ['100 cm³', '115 cm³', '125 cm³', '135 cm³'], c: 2,
+                    exp: 'V=5³=125 cm³' },
+                { q: 'Luas permukaan balok 6×4×3 cm adalah...', o: ['88 cm²', '98 cm²', '108 cm²', '118 cm²'], c: 2,
+                    exp: 'L=2(24+18+12)=108 cm²' },
+            ];
+        }
+
+        function generateSoalSMP3() {
+            return [
+                { q: 'Data: 5,7,8,6,9. Mean?', o: ['6', '7', '8', '9'], c: 1, exp: '(5+7+8+6+9)/5=35/5=7' },
+                { q: 'Data: 3,4,5,5,6,7. Median?', o: ['4', '5', '5.5', '6'], c: 1, exp: 'Urutan: 3,4,5,5,6,7 → median=5' },
+                { q: 'Data: 2,3,3,4,4,4,5. Modus?', o: ['2', '3', '4', '5'], c: 2, exp: 'Nilai terbanyak adalah 4' },
+                { q: 'Data: 10,12,14,16,18. Mean?', o: ['12', '13', '14', '15'], c: 2, exp: '(10+12+14+16+18)/5=70/5=14' },
+                { q: 'Data: 1,2,2,3,3,3,4,4. Modus?', o: ['1', '2', '3', '4'], c: 2, exp: 'Nilai terbanyak adalah 3' },
+                { q: 'Data: 5,6,7,8,9,10. Median?', o: ['6.5', '7', '7.5', '8'], c: 2, exp: 'Median=(7+8)/2=7.5' },
+            ];
+        }
+
+        function generateSoalSMA1() {
+            return [
+                { q: 'f(x)=2x+3, f(5)=?', o: ['10', '11', '12', '13'], c: 3, exp: 'f(5)=2(5)+3=13' },
+                { q: 'f(x)=x²-4, f(3)=?', o: ['3', '4', '5', '6'], c: 2, exp: 'f(3)=9-4=5' },
+                { q: 'f(g(2)) jika f(x)=3x-2, g(x)=x+1?', o: ['5', '6', '7', '8'], c: 2, exp: 'g(2)=3, f(3)=7' },
+                { q: 'lim x→2 (x²+3x-2)=?', o: ['6', '7', '8', '9'], c: 2, exp: '4+6-2=8' },
+                { q: 'lim x→1 (x²-1)/(x-1)=?', o: ['0', '1', '2', '3'], c: 2, exp: '(x²-1)/(x-1)=x+1, limit=2' },
+                { q: 'f(x)=x³-2x, f(-1)=?', o: ['0', '1', '2', '3'], c: 1, exp: '(-1)³-2(-1)=-1+2=1' },
+            ];
+        }
+
+        function generateSoalSMA2() {
+            return [
+                { q: 'sin 30° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 1, exp: 'sin 30°=1/2' },
+                { q: 'cos 60° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 1, exp: 'cos 60°=1/2' },
+                { q: 'tan 45° = ?', o: ['0', '1/2', '1', '√3'], c: 2, exp: 'tan 45°=1' },
+                { q: 'sin θ=3/5, cos θ=? (sudut lancip)', o: ['2/5', '3/5', '4/5', '5/4'], c: 2,
+                    exp: 'cos²θ=1-(3/5)²=16/25, cosθ=4/5' },
+                { q: 'sin 45° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 2, exp: 'sin 45°=1/√2' },
+                { q: 'cos 30° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 3, exp: 'cos 30°=√3/2' },
+            ];
+        }
+
+        function generateSoalSMA3() {
+            return [
+                { q: 'det [[1,2],[3,4]] = ?', o: ['-2', '2', '-1', '1'], c: 0, exp: 'det=1×4-2×3=-2' },
+                { q: 'A=[[1,2],[3,4]], A+A = ?', o: ['[[2,4],[6,8]]', '[[2,3],[4,5]]', '[[1,2],[3,4]]', '[[0,0],[0,0]]'],
+                    c: 0, exp: 'A+A=[[2,4],[6,8]]' },
+                { q: 'A=[[1,2],[3,4]], 2A = ?', o: ['[[1,2],[3,4]]', '[[2,4],[6,8]]', '[[3,6],[9,12]]', '[[0,0],[0,0]]'],
+                    c: 1, exp: '2A=[[2,4],[6,8]]' },
+                { q: '[[1,0],[0,1]] disebut?', o: ['Matriks Nol', 'Matriks Identitas', 'Matriks Diagonal',
+                        'Matriks Segitiga'
+                    ], c: 1, exp: 'Matriks identitas 2×2' },
+                { q: 'det [[2,1],[4,3]] = ?', o: ['1', '2', '3', '4'], c: 1, exp: 'det=2×3-1×4=2' },
+                { q: 'A+B dengan A=[[1,2],[3,4]], B=[[5,6],[7,8]]', o: ['[[6,8],[10,12]]', '[[5,12],[21,32]]',
+                        '[[6,8],[8,10]]', '[[4,6],[8,10]]'
+                    ], c: 0, exp: 'A+B=[[6,8],[10,12]]' },
+            ];
+        }
+
+        const SOAL_MAP = {
+            sd1: generateSoalSD1,
+            sd2: generateSoalSD2,
+            sd3: generateSoalSD3,
+            smp1: generateSoalSMP1,
+            smp2: generateSoalSMP2,
+            smp3: generateSoalSMP3,
+            sma1: generateSoalSMA1,
+            sma2: generateSoalSMA2,
+            sma3: generateSoalSMA3,
+        };
+
+        function getSoalForMaterial(materialId) {
+            if (SOAL_MAP[materialId]) return SOAL_MAP[materialId]();
+            return [];
+        }
+
+        // ================================================================
+        // 3. STATE
+        // ================================================================
+
+        let state = {
+            name: 'DEKA',
+            level: 1,
+            exp: 80,
+            avatar: '🧑‍🚀',
+            customAvatars: [],
+            streak: 7,
+            soalTerjawab: 0,
+            soalBenar: 0,
+            unlockedAchievements: [],
+            unlockedAvatars: ['🧑‍🚀'],
+            kelas: 'sd',
+            materialId: 'sd1',
+            bossHP: 100,
+            bossDefeated: false,
+            quizIndex: 0,
+            quizAnswered: false,
+            quizCorrect: 0,
+            quizWrong: 0,
+            isOnboarded: false,
+        };
+
+        // ================================================================
+        // 4. DOM REFS
+        // ================================================================
+
+        const $ = (s) => document.querySelector(s);
+        const $$ = (s) => document.querySelectorAll(s);
+
+        const dom = {
+            // Onboarding
+            onboardingOverlay: $('#onboardingOverlay'),
+            onboardingNameInput: $('#onboardingNameInput'),
+            onboardingStartBtn: $('#onboardingStartBtn'),
+            onboardingSkipBtn: $('#onboardingSkipBtn'),
+            onboardingAvatarPreview: $('#onboardingAvatarPreview'),
+            onboardingNamePreview: $('#onboardingNamePreview'),
+
+            heroLevel: $('#heroLevel'),
+            heroExp: $('#heroExp'),
+            heroSoal: $('#heroSoal'),
+            heroAvatarCount: $('#heroAvatarCount'),
+            heroAvatar: $('#heroAvatarDisplay'),
+
+            hudAvatar: $('#hudAvatar'),
+            hudAvatarLock: $('#hudAvatarLock'),
+            hudName: $('#hudName'),
+            hudLevel: $('#hudLevel'),
+            hudTitle: $('#hudTitle'),
+            hudExpFill: $('#hudExpFill'),
+            hudExpLabel: $('#hudExpLabel'),
+            hudStreak: $('#hudStreak'),
+
+            classBtns: $$('.class-btn'),
+            materialGrid: $('#materialGrid'),
+            startMateriBtn: $('#startMateriBtn'),
+            startQuizBtn: $('#startQuizBtn'),
+
+            materiTitle: $('#materiTitle'),
+            materiSub: $('#materiSub'),
+            materiContent: $('#materiContent'),
+
+            latihanTitle: $('#latihanTitle'),
+            latihanSub: $('#latihanSub'),
+            quizTag: $('#quizTag'),
+            quizScore: $('#quizScore'),
+            quizProgress: $('#quizProgress'),
+            quizQNum: $('#quizQNum'),
+            quizQuestion: $('#quizQuestion'),
+            quizOptions: $('#quizOptions'),
+            quizFeedback: $('#quizFeedback'),
+            quizNextBtn: $('#quizNextBtn'),
+            quizResult: $('#quizResult'),
+            quizResultText: $('#quizResultText'),
+            quizResetBtn: $('#quizResetBtn'),
+
+            bossEmoji: $('#bossEmoji'),
+            bossName: $('#bossName'),
+            bossSub: $('#bossSub'),
+            bossHpFill: $('#bossHpFill'),
+            bossHpPct: $('#bossHpPct'),
+            bossNote: $('#bossNote'),
+            bossAttackBtn: $('#bossAttackBtn'),
+
+            achGrid: $('#achGrid'),
+
+            profileAvatar: $('#profileAvatar'),
+            profileName: $('#profileName'),
+            profileTitle: $('#profileTitle'),
+            pExp: $('#pExp'),
+            pSoal: $('#pSoal'),
+            pBenar: $('#pBenar'),
+            pAch: $('#pAch'),
+            pLevel: $('#pLevel'),
+            pAvatarCount: $('#pAvatarCount'),
+
+            avatarModal: $('#avatarModal'),
+            avatarGrid: $('#avatarGrid'),
+            customAvatarInput: $('#customAvatarInput'),
+            customAvatarPreview: $('#customAvatarPreview'),
+            addCustomAvatarBtn: $('#addCustomAvatarBtn'),
+            avatarCloseBtn: $('#avatarCloseBtn'),
+
+            levelModal: $('#levelModal'),
+            levelModalLevel: $('#levelModalLevel'),
+            levelModalTitle: $('#levelModalTitle'),
+            levelModalRewards: $('#levelModalRewards'),
+            levelModalClose: $('#levelModalClose'),
+        };
+
+        // ================================================================
+        // 5. CORE FUNCTIONS
+        // ================================================================
+
+        function getLevelData(level) {
+            return LEVEL_DATA.find(l => l.level === level) || LEVEL_DATA[0];
+        }
+
+        function getCurrentMateriData() {
+            const kelasData = MATERI_DATA[state.kelas] || {};
+            return kelasData[state.materialId] || null;
+        }
+
+        function getMateriList() {
+            return Object.keys(MATERI_DATA[state.kelas] || {}).map(id => ({
+                id: id,
+                ...MATERI_DATA[state.kelas][id]
+            }));
+        }
+
+        function getTotalExpForLevel(level) {
+            let total = 0;
+            for (let i = 1; i <= level; i++) total += getLevelData(i).expNeeded;
+            return total;
+        }
+
+        function getExpProgress() {
+            const data = getLevelData(state.level);
+            if (!data) return 0;
+            const prevExp = state.level > 1 ? getTotalExpForLevel(state.level - 1) : 0;
+            const currentExp = getTotalExpForLevel(state.level);
+            const expInLevel = state.exp - prevExp;
+            const needed = currentExp - prevExp;
+            return Math.min(100, (expInLevel / needed) * 100);
+        }
+
+        function getUnlockedAvatars() {
+            const unlocked = [...state.unlockedAvatars];
+            state.customAvatars.forEach(a => { if (!unlocked.includes(a)) unlocked.push(a); });
+            return unlocked;
+        }
+
+        function getAvatarCount() { return getUnlockedAvatars().length; }
+
+        function isAvatarUnlocked(avatar) {
+            if (state.customAvatars.includes(avatar)) return true;
+            const data = AVATAR_DATA.find(a => a.emoji === avatar);
+            if (!data) return false;
+            return state.level >= data.levelReq;
+        }
+
+        function addExp(amount) {
+            state.exp += amount;
+            updateUI();
+            let leveled = false;
+            while (true) {
+                const nextData = getLevelData(state.level + 1);
+                if (!nextData) break;
+                const totalNeeded = getTotalExpForLevel(state.level + 1);
+                if (state.exp >= totalNeeded) {
+                    state.level++;
+                    const newAvatars = AVATAR_DATA.filter(a => a.levelReq === state.level);
+                    newAvatars.forEach(a => {
+                        if (!state.unlockedAvatars.includes(a.emoji)) state.unlockedAvatars.push(a.emoji);
+                    });
+                    showLevelUpModal(state.level);
+                    leveled = true;
+                    if (state.level >= 10 && !state.unlockedAchievements.includes(5))
+                        state.unlockedAchievements.push(5);
+                    if (getAvatarCount() >= 5 && !state.unlockedAchievements.includes(6))
+                        state.unlockedAchievements.push(6);
+                } else break;
+            }
+            updateUI();
+            return leveled;
+        }
+
+        // ================================================================
+        // 6. ONBOARDING
+        // ================================================================
+
+        function startOnboarding() {
+            dom.onboardingOverlay.classList.remove('hidden');
+
+            // Update preview on input
+            dom.onboardingNameInput.addEventListener('input', function() {
+                const name = this.value.trim() || 'Pemain';
+                dom.onboardingNamePreview.textContent = name;
+            });
+
+            // Start button
+            dom.onboardingStartBtn.addEventListener('click', function() {
+                const name = dom.onboardingNameInput.value.trim() || 'Pemain';
+                completeOnboarding(name);
+            });
+
+            // Enter key
+            dom.onboardingNameInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const name = this.value.trim() || 'Pemain';
+                    completeOnboarding(name);
+                }
+            });
+
+            // Skip button
+            dom.onboardingSkipBtn.addEventListener('click', function() {
+                completeOnboarding('Pemain');
+            });
+
+            // Focus input
+            setTimeout(() => dom.onboardingNameInput.focus(), 300);
+        }
+
+        function completeOnboarding(name) {
+            state.name = name;
+            state.isOnboarded = true;
+            dom.onboardingOverlay.classList.add('hidden');
+            updateUI();
+            // Show welcome message
+            setTimeout(() => {
+                const msg = `Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu sekarang!`;
+                alert(msg);
+            }, 400);
+        }
+
+        // ================================================================
+        // 7. UPDATE UI
+        // ================================================================
+
+        function updateUI() {
+            const data = getLevelData(state.level);
+            const totalExp = getTotalExpForLevel(state.level);
+            const progress = getExpProgress();
+            const avatarCount = getAvatarCount();
+            const unlockedAvatars = getUnlockedAvatars();
+
+            // Hero
+            dom.heroLevel.textContent = state.level;
+            dom.heroExp.textContent = state.exp;
+            dom.heroSoal.textContent = state.soalTerjawab;
+            dom.heroAvatarCount.textContent = avatarCount;
+            dom.heroAvatar.textContent = state.avatar;
+
+            // HUD
+            dom.hudAvatar.textContent = state.avatar;
+            if (!isAvatarUnlocked(state.avatar)) {
+                if (unlockedAvatars.length > 0) {
+                    state.avatar = unlockedAvatars[0];
+                    dom.hudAvatar.textContent = state.avatar;
+                    dom.heroAvatar.textContent = state.avatar;
+                    dom.profileAvatar.textContent = state.avatar;
+                }
+            }
+            dom.hudName.textContent = state.name;
+            dom.hudLevel.textContent = `LEVEL ${String(state.level).padStart(2, '0')}`;
+            dom.hudTitle.textContent = data ? data.title : 'Number Novice';
+            dom.hudExpFill.style.width = `${progress}%`;
+            dom.hudExpLabel.textContent = `${state.exp} / ${totalExp} EXP`;
+            dom.hudStreak.textContent = state.streak;
+
+            // Profile
+            dom.profileAvatar.textContent = state.avatar;
+            dom.profileName.textContent = state.name;
+            dom.profileTitle.textContent = `LEVEL ${String(state.level).padStart(2, '0')} · ${data ? data.title : 'Number Novice'}`;
+            dom.pExp.textContent = `⚡ ${state.exp}`;
+            dom.pSoal.textContent = `🎯 ${state.soalTerjawab}`;
+            dom.pBenar.textContent = `✅ ${state.soalBenar}`;
+            dom.pAch.textContent = `🏆 ${state.unlockedAchievements.length}`;
+            dom.pLevel.textContent = `📈 ${state.level}`;
+            dom.pAvatarCount.textContent = `👤 ${avatarCount}`;
+
+            // Quiz score
+            dom.quizScore.textContent = `Benar: ${state.quizCorrect} | Salah: ${state.quizWrong}`;
+
+            // Boss
+            dom.bossHpFill.style.width = `${state.bossHP}%`;
+            dom.bossHpPct.textContent = `${state.bossHP}%`;
+            if (state.bossHP <= 0 && !state.bossDefeated) {
+                state.bossDefeated = true;
+                dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
+                dom.bossEmoji.textContent = '💀';
+                addExp(100);
+                confettiBurst();
+            }
+
+            const bossNames = ['Number Goblin', 'Fraction Fiend', 'Decimal Demon', 'Equation Wraith', 'Angle Assassin',
+                'Polynomial Predator', 'Sine Shadow', 'Log Lich', 'Matrix Overlord', 'Derivative Dragon',
+                'Integral Titan', 'Randomness Reaper', 'Data Devourer', 'Algebra Archmage', 'Final Boss'
+            ];
+            const bossIdx = Math.min(state.level - 1, bossNames.length - 1);
+            dom.bossName.textContent = bossNames[bossIdx] || 'Final Boss';
+            dom.bossSub.textContent = `"Defeat the ${bossNames[bossIdx] || 'Final Boss'}!"`;
+            dom.bossEmoji.textContent = state.bossHP <= 0 ? '💀' : '👾';
+
+            renderAchievements();
+            renderMaterials();
+            renderAvatarGrid();
+
+            // Update onboarding preview if not onboarded
+            if (!state.isOnboarded) {
+                dom.onboardingAvatarPreview.textContent = state.avatar;
+            }
+        }
+
+        // ================================================================
+        // 8. RENDER FUNCTIONS
+        // ================================================================
+
+        function renderMaterials() {
+            const materials = getMateriList();
+            let html = '';
+            materials.forEach(m => {
+                const active = m.id === state.materialId ? 'active' : '';
+                const badge = state.kelas === 'sd' ? 'badge-sd' : state.kelas === 'smp' ? 'badge-smp' : 'badge-sma';
+                const label = state.kelas === 'sd' ? 'SD' : state.kelas === 'smp' ? 'SMP' : 'SMA';
+                const soalCount = getSoalForMaterial(m.id).length;
+                html += `
+                    <div class="material-card ${active}" data-id="${m.id}">
+                        <div class="icon">${m.icon}</div>
+                        <h4>${m.name}</h4>
+                        <p>${m.desc}</p>
+                        <span class="badge ${badge}">${label}</span>
+                        <p style="font-size:.7rem;color:var(--purple);margin-top:6px;">${soalCount} soal</p>
+                    </div>
+                `;
+            });
+            dom.materialGrid.innerHTML = html;
+
+            dom.materialGrid.querySelectorAll('.material-card').forEach(el => {
+                el.addEventListener('click', function() {
+                    state.materialId = this.dataset.id;
+                    renderMaterials();
+                    loadMateri();
+                    resetQuiz();
+                });
+            });
+        }
+
+        function loadMateri() {
+            const data = getCurrentMateriData();
+            if (!data) {
+                dom.materiTitle.textContent = 'Materi tidak ditemukan';
+                dom.materiSub.textContent = 'Silakan pilih materi lain.';
+                dom.materiContent.innerHTML =
+                    `<div class="text-center" style="padding:40px 20px;color:var(--ink-soft);"><div style="font-size:3rem;margin-bottom:16px;">📚</div><h3 style="font-family:'Baloo 2',sans-serif;font-size:1.4rem;">Materi tidak tersedia</h3><p>Silakan pilih materi yang lain.</p></div>`;
+                return;
+            }
+
+            dom.materiTitle.textContent = `${data.icon} ${data.name}`;
+            dom.materiSub.textContent = data.desc;
+            dom.materiContent.innerHTML = `
+                <div class="materi-header"><div class="icon">${data.icon}</div><h2>${data.name}</h2></div>
+                <div class="materi-body">${data.content}</div>
+            `;
+
+            dom.latihanTitle.textContent = `Soal Latihan - ${data.name}`;
+            dom.latihanSub.textContent = `Kerjakan soal tentang ${data.name} untuk mendapatkan EXP!`;
+            dom.quizTag.textContent = `📝 ${data.name}`;
+        }
+
+        function renderAchievements() {
+            let html = '';
+            ACHIEVEMENTS.forEach(ach => {
+                const unlocked = state.unlockedAchievements.includes(ach.id);
+                const cls = unlocked ? 'ach-card' : 'ach-card locked';
+                html += `
+                    <div class="${cls}">
+                        <div class="ach-icon">${ach.icon}</div>
+                        <h4>${ach.name}</h4>
+                        <p>${ach.desc}</p>
+                        ${unlocked ? '<span style="font-size:.65rem;color:var(--green);">✅ Unlocked</span>' : '<span style="font-size:.65rem;color:#A199CC;">🔒 Locked</span>'}
+                    </div>
+                `;
+            });
+            dom.achGrid.innerHTML = html;
+        }
+
+        function renderAvatarGrid() {
+            const allAvatars = [...AVATAR_DATA];
+            const customAvatars = state.customAvatars.map(a => ({ emoji: a, name: 'Custom', levelReq: 1, custom: true }));
+            const combined = [...allAvatars, ...customAvatars];
+            let html = '';
+
+            combined.forEach(av => {
+                const unlocked = isAvatarUnlocked(av.emoji);
+                const isActive = state.avatar === av.emoji;
+                const levelReq = av.levelReq || 1;
+
+                html += `
+                    <div class="avatar-option ${unlocked ? '' : 'locked'} ${isActive ? 'active' : ''}" 
+                         data-avatar="${av.emoji}" 
+                         ${!unlocked ? 'style="cursor:not-allowed;"' : ''}>
+                        ${av.emoji}
+                        ${!unlocked ? `<span class="lock-icon">🔒</span>` : ''}
+                        <span class="level-req">${unlocked ? '✅' : '🔓 Level ' + levelReq}</span>
+                    </div>
+                `;
+            });
+
+            dom.avatarGrid.innerHTML = html;
+
+            dom.avatarGrid.querySelectorAll('.avatar-option').forEach(el => {
+                el.addEventListener('click', function() {
+                    if (this.classList.contains('locked')) return;
+                    dom.avatarGrid.querySelectorAll('.avatar-option').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    dom.customAvatarPreview.textContent = this.dataset.avatar;
+                });
+            });
+
+            dom.customAvatarInput.addEventListener('input', function() {
+                const val = this.value.trim() || '😎';
+                dom.customAvatarPreview.textContent = val.slice(0, 2);
+            });
+        }
+
+        // ================================================================
+        // 9. QUIZ
+        // ================================================================
+
+        let currentQuestions = [];
+        let quizState = { index: 0, answered: false, correct: 0, wrong: 0, total: 0 };
+
+        function resetQuiz() {
+            const soal = getSoalForMaterial(state.materialId);
+            currentQuestions = [...soal];
+            for (let i = currentQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentQuestions[i], currentQuestions[j]] = [currentQuestions[j], currentQuestions[i]];
+            }
+            currentQuestions = currentQuestions.slice(0, 10);
+
+            quizState.index = 0;
+            quizState.answered = false;
+            quizState.correct = 0;
+            quizState.wrong = 0;
+            quizState.total = currentQuestions.length;
+
+            state.quizCorrect = 0;
+            state.quizWrong = 0;
+
+            dom.quizResult.classList.add('hidden');
+            dom.quizNextBtn.classList.remove('show');
+            dom.quizFeedback.textContent = '';
+            dom.quizFeedback.className = 'quiz-feedback';
+
+            if (currentQuestions.length === 0) {
+                dom.quizQuestion.textContent = 'Belum ada soal untuk materi ini.';
+                dom.quizOptions.innerHTML = '';
+                dom.quizQNum.textContent = 'SOAL 0 / 0';
+                return;
+            }
+
+            renderQuizQuestion();
+            updateUI();
+        }
+
+        function renderQuizQuestion() {
+            if (quizState.index >= currentQuestions.length) { showQuizResult(); return; }
+
+            const q = currentQuestions[quizState.index];
+            if (!q) return;
+
+            dom.quizQuestion.textContent = q.q;
+            dom.quizQNum.textContent = `SOAL ${quizState.index + 1} / ${currentQuestions.length}`;
+            dom.quizProgress.style.width = `${((quizState.index + 1) / currentQuestions.length) * 100}%`;
+            dom.quizFeedback.textContent = '';
+            dom.quizFeedback.className = 'quiz-feedback';
+            dom.quizNextBtn.classList.remove('show');
+            quizState.answered = false;
+
+            const letters = ['A', 'B', 'C', 'D'];
+            let html = '';
+            q.o.forEach((opt, i) => {
+                html += `
+                    <button class="quiz-opt" data-index="${i}" data-correct="${i === q.c ? '1' : '0'}">
+                        <span class="k">${letters[i]}</span>
+                        ${opt}
+                    </button>
+                `;
+            });
+            dom.quizOptions.innerHTML = html;
+
+            dom.quizOptions.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (quizState.answered) return;
+                    quizState.answered = true;
+
+                    const isCorrect = this.dataset.correct === '1';
+                    const qData = currentQuestions[quizState.index];
+
+                    dom.quizOptions.querySelectorAll('.quiz-opt').forEach(b => b.classList.add('disabled'));
+
+                    dom.quizOptions.querySelectorAll('.quiz-opt').forEach(b => {
+                        if (b.dataset.correct === '1') b.classList.add('correct');
+                        if (b === this && !isCorrect) b.classList.add('wrong');
+                    });
+
+                    if (isCorrect) {
+                        quizState.correct++;
+                        state.quizCorrect++;
+                        state.soalBenar++;
+                        dom.quizFeedback.className = 'quiz-feedback correct';
+                        dom.quizFeedback.innerHTML = `✅ BENAR! <span class="expgain">+10 EXP</span>`;
+                        addExp(10);
+                        confettiBurst();
+
+                        if (state.soalTerjawab >= 1 && !state.unlockedAchievements.includes(1))
+                            state.unlockedAchievements.push(1);
+                        if (state.soalTerjawab >= 50 && !state.unlockedAchievements.includes(4))
+                            state.unlockedAchievements.push(4);
+
+                        if (state.bossHP > 0) {
+                            state.bossHP = Math.max(0, state.bossHP - 3);
+                            dom.bossHpFill.style.width = `${state.bossHP}%`;
+                            dom.bossHpPct.textContent = `${state.bossHP}%`;
+                            if (state.bossHP <= 0) {
+                                state.bossDefeated = true;
+                                dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
+                                dom.bossEmoji.textContent = '💀';
+                                addExp(100);
+                                confettiBurst();
+                            }
+                        }
+                    } else {
+                        quizState.wrong++;
+                        state.quizWrong++;
+                        dom.quizFeedback.className = 'quiz-feedback wrong';
+                        dom.quizFeedback.innerHTML = `
+                            ❌ SALAH! <span class="expgain">+2 EXP</span>
+                            <span class="explanation">💡 Pembahasan: ${qData.exp || 'Coba periksa kembali perhitunganmu!'}</span>
+                        `;
+                        addExp(2);
+                    }
+
+                    state.soalTerjawab++;
+                    dom.quizScore.textContent = `Benar: ${state.quizCorrect} | Salah: ${state.quizWrong}`;
+                    updateUI();
+
+                    setTimeout(() => {
+                        dom.quizNextBtn.classList.add('show');
+                        dom.quizNextBtn.textContent = quizState.index + 1 >= currentQuestions.length ?
+                            '🏆 Lihat Hasil' : '➡️ Soal Berikutnya';
+                    }, 1000);
+                });
+            });
+        }
+
+        function showQuizResult() {
+            const total = quizState.correct + quizState.wrong;
+            const pct = total > 0 ? Math.round((quizState.correct / total) * 100) : 0;
+
+            dom.quizResult.classList.remove('hidden');
+            dom.quizOptions.innerHTML = '';
+            dom.quizQuestion.textContent = '';
+            dom.quizQNum.textContent = 'SELESAI!';
+            dom.quizProgress.style.width = '100%';
+            dom.quizNextBtn.classList.remove('show');
+            dom.quizFeedback.textContent = '';
+
+            let emoji = '😅',
+                msg = 'Terus belajar ya!';
+            if (pct === 100) { emoji = '🏆';
+                msg = 'SEMPURNA! Kamu hebat!'; } else if (pct >= 80) { emoji = '🌟';
+                msg = 'Bagus sekali! Pertahankan!'; } else if (pct >= 60) { emoji = '👍';
+                msg = 'Cukup baik, tingkatkan lagi!'; } else if (pct >= 40) { emoji = '📚';
+                msg = 'Perlu belajar lagi, semangat!'; } else { emoji = '💪';
+                msg = 'Jangan menyerah, coba lagi!'; }
+
+            dom.quizResultText.innerHTML =
+                `${emoji} <br><strong>${msg}</strong><br><span style="font-size:.9rem;color:#B9B3E8;">Benar: ${quizState.correct} | Salah: ${quizState.wrong} | Nilai: ${pct}%</span>`;
+
+            if (pct === 100 && !state.unlockedAchievements.includes(3)) {
+                state.unlockedAchievements.push(3);
+                updateUI();
+            }
+
+            if (pct >= 80) {
+                const bonus = pct === 100 ? 50 : 20;
+                addExp(bonus);
+                dom.quizFeedback.className = 'quiz-feedback correct';
+                dom.quizFeedback.innerHTML = `🎉 Bonus EXP +${bonus} karena nilai bagus!`;
+            }
+        }
+
+        // ================================================================
+        // 10. LEVEL UP MODAL
+        // ================================================================
+
+        function showLevelUpModal(level) {
+            const data = getLevelData(level);
+            const newAvatars = AVATAR_DATA.filter(a => a.levelReq === level);
+            const avatarMsg = newAvatars.length > 0 ?
+                `🔓 Avatar Baru: ${newAvatars.map(a => a.emoji + ' ' + a.name).join(', ')}` :
+                '🔓 Avatar Baru Tersedia! Cek di profil!';
+
+            dom.levelModalLevel.textContent = `LEVEL ${String(level).padStart(2, '0')}`;
+            dom.levelModalTitle.textContent = `"${data ? data.title : 'Math Master'}"`;
+            dom.levelModalRewards.innerHTML = `
+                <div>🏆 New Badge Unlocked</div>
+                <div>${avatarMsg}</div>
+                <div>+50 Bonus EXP</div>
+            `;
+            dom.levelModal.classList.add('show');
+            confettiBurst();
+        }
+
+        // ================================================================
+        // 11. AVATAR FUNCTIONS
+        // ================================================================
+
+        function openAvatarModal() {
+            renderAvatarGrid();
+            dom.avatarModal.classList.add('show');
+        }
+
+        function closeAvatarModal() { dom.avatarModal.classList.remove('show'); }
+
+        function addCustomAvatar() {
+            const input = dom.customAvatarInput;
+            const val = input.value.trim();
+            if (!val) { alert('Masukkan emoji atau karakter untuk avatar!'); return; }
+            const avatar = val.slice(0, 2);
+            if (state.customAvatars.includes(avatar)) { alert('Avatar ini sudah ada!'); return; }
+            state.customAvatars.push(avatar);
+            if (!state.unlockedAvatars.includes(avatar)) state.unlockedAvatars.push(avatar);
+            state.avatar = avatar;
+            input.value = '';
+            dom.customAvatarPreview.textContent = '😎';
+            closeAvatarModal();
+            updateUI();
+            confettiBurst();
+        }
+
+        // ================================================================
+        // 12. CONFETTI
+        // ================================================================
+
+        function confettiBurst() {
+            const colors = ['#6C63FF', '#00C2FF', '#FFD166', '#FF6B9D', '#5DD39E', '#FF9A6B'];
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'confetti-piece';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDelay = (Math.random() * .5) + 's';
+                p.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 2500);
+            }
+        }
+
+        // ================================================================
+        // 13. SCROLL REVEAL
+        // ================================================================
+
+        function setupScrollReveal() {
+            const revealEls = document.querySelectorAll('.reveal');
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in');
+                        io.unobserve(e.target); } });
+            }, { threshold: .15 });
+            revealEls.forEach(el => io.observe(el));
+        }
+
+        // ================================================================
+        // 14. BOTTOM NAV
+        // ================================================================
+
+        function setupBottomNav() {
+            const bnItems = document.querySelectorAll('.bn-item');
+            const sections = ['dashboard', 'kelas', 'belajar', 'latihan', 'profile'];
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        const idx = sections.indexOf(e.target.id);
+                        if (idx > -1) { bnItems.forEach(b => b.classList.remove('active'));
+                            bnItems[idx].classList.add('active'); }
+                    }
+                });
+            }, { threshold: .3 });
+            sections.forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+        }
+
+        // ================================================================
+        // 15. EVENT LISTENERS
+        // ================================================================
+
+        function setupEventListeners() {
+            // Class buttons
+            dom.classBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    dom.classBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    state.kelas = this.dataset.class;
+                    const materials = getMateriList();
+                    if (materials.length > 0) state.materialId = materials[0].id;
+                    renderMaterials();
+                    loadMateri();
+                    resetQuiz();
+                    updateUI();
+                });
+            });
+
+            dom.startMateriBtn.addEventListener('click', () => document.getElementById('belajar').scrollIntoView({ behavior: 'smooth' }));
+
+            dom.startQuizBtn.addEventListener('click', function() {
+                const soal = getSoalForMaterial(state.materialId);
+                if (soal.length > 0) { resetQuiz();
+                    document.getElementById('latihan').scrollIntoView({ behavior: 'smooth' }); } else alert(
+                    'Belum ada soal untuk materi ini!');
+            });
+
+            dom.quizNextBtn.addEventListener('click', function() {
+                if (quizState.index + 1 >= currentQuestions.length) showQuizResult();
+                else { quizState.index++;
+                    renderQuizQuestion(); }
+            });
+
+            dom.quizResetBtn.addEventListener('click', resetQuiz);
+
+            dom.hudAvatar.addEventListener('click', openAvatarModal);
+
+            dom.avatarCloseBtn.addEventListener('click', function() {
+                const selected = dom.avatarGrid.querySelector('.avatar-option.active');
+                if (selected) state.avatar = selected.dataset.avatar;
+                closeAvatarModal();
+                updateUI();
+            });
+
+            dom.avatarModal.addEventListener('click', function(e) { if (e.target === this) closeAvatarModal(); });
+
+            dom.addCustomAvatarBtn.addEventListener('click', addCustomAvatar);
+            dom.customAvatarInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomAvatar(); });
+
+            dom.levelModalClose.addEventListener('click', function() { dom.levelModal.classList.remove('show'); });
+            dom.levelModal.addEventListener('click', function(e) { if (e.target === this) dom.levelModal.classList.remove(
+                    'show'); });
+
+            dom.bossAttackBtn.addEventListener('click', function() {
+                if (state.bossHP <= 0 || state.bossDefeated) return;
+                state.bossHP = Math.max(0, state.bossHP - 10);
+                dom.bossHpFill.style.width = `${state.bossHP}%`;
+                dom.bossHpPct.textContent = `${state.bossHP}%`;
+                if (state.bossHP <= 0) {
+                    state.bossDefeated = true;
+                    dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
+                    dom.bossEmoji.textContent = '💀';
+                    addExp(100);
+                    confettiBurst();
+                } else {
+                    dom.bossNote.textContent = `−10 HP! Boss tersisa ${state.bossHP} HP!`;
+                }
+                updateUI();
+            });
+
+            if (state.streak >= 7 && !state.unlockedAchievements.includes(2)) {
+                state.unlockedAchievements.push(2);
+                updateUI();
+            }
+        }
+
+        // ================================================================
+        // 16. INIT
+        // ================================================================
+
+        function init() {
+            // Start with onboarding
+            startOnboarding();
+
+            // Set initial state
+            state.exp = 80;
+            state.unlockedAchievements = [];
+            state.unlockedAvatars = ['🧑‍🚀'];
+
+            const materials = getMateriList();
+            if (materials.length > 0) state.materialId = materials[0].id;
+
+            renderMaterials();
+            loadMateri();
+            updateUI();
+            setTimeout(resetQuiz, 200);
+            setupScrollReveal();
+            setupBottomNav();
+            setupEventListeners();
+
+            console.log('🚀 MathQuest initialized!');
+            console.log(`📊 Level: ${state.level}, EXP: ${state.exp}`);
+            console.log(`👤 Nama: ${state.name}, Avatar: ${state.avatar}`);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
