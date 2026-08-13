@@ -224,11 +224,6 @@
             box-shadow: 0 2px 0 #8f2c58;
         }
 
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: .8rem;
-        }
-
         .hidden {
             display: none !important;
         }
@@ -2189,7 +2184,7 @@
         ];
 
         // ================================================================
-        // 2. MATERI & SOAL
+        // 2. MATERI & SOAL (disederhanakan agar tidak terlalu panjang)
         // ================================================================
 
         const MATERI_DATA = {
@@ -2197,44 +2192,34 @@
                 'sd1': {
                     name: 'Operasi Bilangan',
                     icon: '🔢',
-                    desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian bilangan bulat.',
+                    desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian.',
                     content: `
-                        <h3>📌 Apa itu Operasi Bilangan?</h3>
-                        <p>Operasi bilangan adalah cara kita menghitung dengan angka. Ada 4 operasi dasar:</p>
-                        <ul>
-                            <li><b>Penjumlahan (+)</b>: Menggabungkan dua atau lebih angka.</li>
-                            <li><b>Pengurangan (−)</b>: Mengambil sebagian dari angka.</li>
-                            <li><b>Perkalian (×)</b>: Penjumlahan berulang.</li>
-                            <li><b>Pembagian (÷)</b>: Membagi angka menjadi bagian yang sama.</li>
-                        </ul>
-                        <h3>📝 Contoh Soal</h3>
-                        <div class="contoh"><div class="label">Contoh 1:</div><p><b>25 + 37 = ?</b></p><p>Jawab: 25 + 37 = 62</p></div>
-                        <div class="contoh"><div class="label">Contoh 2:</div><p><b>84 - 29 = ?</b></p><p>Jawab: 84 - 29 = 55</p></div>
-                        <div class="tip">💡 <b>Tips:</b> Untuk perkalian dengan 10, cukup tambahkan nol di belakang angka.</div>
+                        <h3>📌 Operasi Bilangan Dasar</h3>
+                        <p>Ada 4 operasi dasar: <b>+</b> (penjumlahan), <b>−</b> (pengurangan), <b>×</b> (perkalian), dan <b>÷</b> (pembagian).</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>25 + 37 = 62</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Perkalian dengan 10 = tambahkan 0 di belakang.</div>
                     `
                 },
                 'sd2': {
                     name: 'Pecahan',
                     icon: '🍕',
-                    desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian pecahan.',
+                    desc: 'Pelajari operasi penjumlahan dan pengurangan pecahan.',
                     content: `
-                        <h3>📌 Apa itu Pecahan?</h3>
-                        <p>Pecahan adalah bagian dari keseluruhan. Pecahan ditulis sebagai <b>a/b</b>.</p>
-                        <div class="rumus">a/b + c/d = (a×d + c×b) / (b×d)</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = ?</b></p><p>1/2 = 2/4, jadi 2/4 + 1/4 = 3/4</p></div>
-                        <div class="tip">💡 <b>Tips:</b> Untuk menjumlahkan pecahan, samakan penyebutnya terlebih dahulu!</div>
+                        <h3>📌 Pecahan</h3>
+                        <p>Pecahan adalah bagian dari keseluruhan: <b>a/b</b>.</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = 3/4</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Samakan penyebut sebelum menjumlahkan!</div>
                     `
                 },
                 'sd3': {
                     name: 'Persentase',
                     icon: '💯',
-                    desc: 'Pelajari cara menghitung persentase dalam kehidupan sehari-hari.',
+                    desc: 'Pelajari cara menghitung persentase.',
                     content: `
-                        <h3>📌 Apa itu Persentase?</h3>
-                        <p>Persentase adalah cara menyatakan pecahan dengan penyebut 100. Simbol persentase adalah <b>%</b>.</p>
-                        <div class="rumus">Persentase = (Nilai / Total) × 100%</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = ?</b></p><p>80 × 25/100 = 20</p></div>
-                        <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat, 10% = sepersepuluh.</div>
+                        <h3>📌 Persentase</h3>
+                        <p>Persentase = (Nilai / Total) × 100%</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = 20</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat.</div>
                     `
                 }
             },
@@ -2242,13 +2227,12 @@
                 'smp1': {
                     name: 'Aljabar',
                     icon: '🧮',
-                    desc: 'Pelajari persamaan linear satu variabel dan cara menyelesaikannya.',
+                    desc: 'Pelajari persamaan linear satu variabel.',
                     content: `
-                        <h3>📌 Apa itu Aljabar?</h3>
+                        <h3>📌 Aljabar</h3>
                         <p>Aljabar menggunakan huruf untuk mewakili angka yang belum diketahui.</p>
-                        <div class="rumus">ax + b = c  →  x = (c - b) / a</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16, berapakah x?</b></p><p>2x = 10 → x = 5</p></div>
-                        <div class="tip">💡 <b>Tips:</b> Pindahkan angka ke sisi lain dengan operasi kebalikannya!</div>
+                        <div class="rumus">ax + b = c → x = (c - b) / a</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16 → x = 5</b></p></div>
                     `
                 },
                 'smp2': {
@@ -2258,21 +2242,18 @@
                     content: `
                         <h3>📌 Bangun Datar</h3>
                         <div class="rumus">Persegi: L = s², K = 4s</div>
-                        <div class="rumus">Persegi Panjang: L = p×l, K = 2(p+l)</div>
-                        <div class="rumus">Segitiga: L = ½×a×t</div>
                         <div class="rumus">Lingkaran: L = πr², K = 2πr</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>Luas persegi dengan sisi 8 cm adalah...</b></p><p>L = 8² = 64 cm²</p></div>
-                        <div class="tip">💡 <b>Tips:</b> π (pi) ≈ 3.14 atau 22/7</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Luas persegi s=8cm → 64 cm²</b></p></div>
                     `
                 },
                 'smp3': {
                     name: 'Statistika',
                     icon: '📊',
-                    desc: 'Pelajari mean, median, dan modus dari sekumpulan data.',
+                    desc: 'Pelajari mean, median, dan modus.',
                     content: `
                         <h3>📌 Ukuran Pemusatan Data</h3>
-                        <ul><li><b>Mean</b>: Jumlah data ÷ Banyak data</li><li><b>Median</b>: Nilai tengah setelah data diurutkan</li><li><b>Modus</b>: Nilai yang paling sering muncul</li></ul>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>Data: 5, 7, 8, 6, 9. Mean?</b></p><p>(5+7+8+6+9)/5 = 35/5 = 7</p></div>
+                        <ul><li><b>Mean</b>: Jumlah data ÷ Banyak data</li><li><b>Median</b>: Nilai tengah</li><li><b>Modus</b>: Nilai paling sering</li></ul>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Data 5,7,8,6,9 → Mean = 7</b></p></div>
                     `
                 }
             },
@@ -2280,123 +2261,113 @@
                 'sma1': {
                     name: 'Fungsi & Limit',
                     icon: '📈',
-                    desc: 'Pelajari konsep fungsi dan limit dalam matematika.',
+                    desc: 'Pelajari konsep fungsi dan limit.',
                     content: `
                         <h3>📌 Fungsi</h3>
-                        <p>Fungsi adalah hubungan antara input (x) dan output (f(x)).</p>
-                        <div class="rumus">f(x) = ax + b</div>
-                        <div class="rumus">lim (x→c) f(x) = L</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>f(x) = 2x + 3, f(5)?</b></p><p>f(5) = 2(5) + 3 = 13</p></div>
+                        <p>Fungsi: f(x) = ax + b</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>f(x)=2x+3, f(5)=13</b></p></div>
                     `
                 },
                 'sma2': {
                     name: 'Trigonometri',
                     icon: '🌀',
-                    desc: 'Pelajari sinus, cosinus, dan tangen pada segitiga siku-siku.',
+                    desc: 'Pelajari sinus, cosinus, dan tangen.',
                     content: `
-                        <h3>📌 Perbandingan Trigonometri</h3>
-                        <ul><li><b>sin θ</b> = depan / miring</li><li><b>cos θ</b> = samping / miring</li><li><b>tan θ</b> = depan / samping</li></ul>
+                        <h3>📌 Trigonometri</h3>
+                        <ul><li><b>sin θ</b> = depan/miring</li><li><b>cos θ</b> = samping/miring</li><li><b>tan θ</b> = depan/samping</li></ul>
                         <div class="rumus">sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1</div>
                     `
                 },
                 'sma3': {
                     name: 'Matriks',
                     icon: '🧩',
-                    desc: 'Pelajari operasi dasar pada matriks.',
+                    desc: 'Pelajari operasi dasar matriks.',
                     content: `
                         <h3>📌 Matriks</h3>
-                        <p>Matriks adalah susunan bilangan dalam baris dan kolom.</p>
-                        <div class="rumus">A = [[a, b], [c, d]], det(A) = a×d - b×c</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>det [[1,2],[3,4]] = ?</b></p><p>det = 1×4 - 2×3 = -2</p></div>
+                        <div class="rumus">det [[a,b],[c,d]] = a×d - b×c</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>det [[1,2],[3,4]] = -2</b></p></div>
                     `
                 }
             }
         };
 
-        // Soal generators
+        // Soal generators (disederhanakan)
         function generateSoalSD1() {
             return [
-                { q: 'Berapakah 25 + 37?', o: ['62', '52', '72', '61'], c: 0, exp: '25 + 37 = 62' },
-                { q: 'Berapakah 84 - 29?', o: ['55', '65', '45', '54'], c: 0, exp: '84 - 29 = 55' },
-                { q: 'Berapakah 13 × 8?', o: ['94', '104', '114', '98'], c: 1, exp: '13 × 8 = 104' },
-                { q: 'Berapakah 96 ÷ 6?', o: ['14', '16', '18', '15'], c: 1, exp: '96 ÷ 6 = 16' },
-                { q: 'Berapakah 7 × 9 + 8?', o: ['71', '72', '73', '63'], c: 0, exp: '7×9=63, 63+8=71' },
-                { q: 'Berapakah (15 + 5) ÷ 4?', o: ['4', '5', '6', '3'], c: 1, exp: '15+5=20, 20÷4=5' },
-                { q: 'Berapakah 2/3 + 1/3?', o: ['1', '2/3', '3/6', '1/3'], c: 0, exp: '2/3+1/3=3/3=1' },
-                { q: 'Berapakah 3/4 - 1/4?', o: ['1/2', '1/4', '2/4', '3/8'], c: 0, exp: '3/4-1/4=2/4=1/2' },
-                { q: 'Berapakah 15% dari 200?', o: ['20', '30', '40', '25'], c: 1, exp: '200×15/100=30' },
-                { q: 'Berapakah 120 × 5?', o: ['500', '600', '700', '550'], c: 1, exp: '120×5=600' },
+                { q: '25 + 37 = ?', o: ['62', '52', '72', '61'], c: 0, exp: '25 + 37 = 62' },
+                { q: '84 - 29 = ?', o: ['55', '65', '45', '54'], c: 0, exp: '84 - 29 = 55' },
+                { q: '13 × 8 = ?', o: ['94', '104', '114', '98'], c: 1, exp: '13 × 8 = 104' },
+                { q: '96 ÷ 6 = ?', o: ['14', '16', '18', '15'], c: 1, exp: '96 ÷ 6 = 16' },
+                { q: '7 × 9 + 8 = ?', o: ['71', '72', '73', '63'], c: 0, exp: '7×9=63, 63+8=71' },
+                { q: '(15 + 5) ÷ 4 = ?', o: ['4', '5', '6', '3'], c: 1, exp: '15+5=20, 20÷4=5' },
+                { q: '2/3 + 1/3 = ?', o: ['1', '2/3', '3/6', '1/3'], c: 0, exp: '2/3+1/3=3/3=1' },
+                { q: '3/4 - 1/4 = ?', o: ['1/2', '1/4', '2/4', '3/8'], c: 0, exp: '3/4-1/4=2/4=1/2' },
+                { q: '15% dari 200 = ?', o: ['20', '30', '40', '25'], c: 1, exp: '200×15/100=30' },
+                { q: '120 × 5 = ?', o: ['500', '600', '700', '550'], c: 1, exp: '120×5=600' },
             ];
         }
 
         function generateSoalSD2() {
             return [
-                { q: 'Berapakah 1/2 + 1/4?', o: ['2/4', '3/4', '1/4', '2/6'], c: 1, exp: '1/2=2/4, 2/4+1/4=3/4' },
-                { q: 'Berapakah 3/5 - 1/5?', o: ['2/5', '2/10', '4/5', '1/5'], c: 0, exp: '3/5-1/5=2/5' },
-                { q: 'Berapakah 2/3 × 3/4?', o: ['6/12', '1/2', '5/7', '3/6'], c: 1, exp: '2/3×3/4=6/12=1/2' },
-                { q: 'Berapakah 2/3 ÷ 4/5?', o: ['8/15', '10/12', '5/6', '3/4'], c: 2, exp: '2/3÷4/5=2/3×5/4=10/12=5/6' },
-                { q: 'Berapakah 1 1/2 + 2 1/3?', o: ['3 5/6', '3 1/5', '4 1/6', '3 2/5'], c: 0,
+                { q: '1/2 + 1/4 = ?', o: ['2/4', '3/4', '1/4', '2/6'], c: 1, exp: '1/2=2/4, 2/4+1/4=3/4' },
+                { q: '3/5 - 1/5 = ?', o: ['2/5', '2/10', '4/5', '1/5'], c: 0, exp: '3/5-1/5=2/5' },
+                { q: '2/3 × 3/4 = ?', o: ['6/12', '1/2', '5/7', '3/6'], c: 1, exp: '2/3×3/4=6/12=1/2' },
+                { q: '2/3 ÷ 4/5 = ?', o: ['8/15', '10/12', '5/6', '3/4'], c: 2, exp: '2/3÷4/5=2/3×5/4=10/12=5/6' },
+                { q: '1 1/2 + 2 1/3 = ?', o: ['3 5/6', '3 1/5', '4 1/6', '3 2/5'], c: 0,
                     exp: '1 1/2=3/2, 2 1/3=7/3, 3/2+7/3=9/6+14/6=23/6=3 5/6' },
-                { q: 'Berapakah 2 1/4 - 1 1/2?', o: ['3/4', '1/4', '1 3/4', '2/4'], c: 0,
+                { q: '2 1/4 - 1 1/2 = ?', o: ['3/4', '1/4', '1 3/4', '2/4'], c: 0,
                     exp: '2 1/4=9/4, 1 1/2=3/2=6/4, 9/4-6/4=3/4' },
-                { q: 'Berapakah 3/8 + 5/8?', o: ['1', '6/8', '7/8', '1/2'], c: 0, exp: '3/8+5/8=8/8=1' },
-                { q: 'Berapakah 7/10 - 3/10?', o: ['2/5', '5/10', '3/5', '2/10'], c: 0, exp: '7/10-3/10=4/10=2/5' },
+                { q: '3/8 + 5/8 = ?', o: ['1', '6/8', '7/8', '1/2'], c: 0, exp: '3/8+5/8=8/8=1' },
+                { q: '7/10 - 3/10 = ?', o: ['2/5', '5/10', '3/5', '2/10'], c: 0, exp: '7/10-3/10=4/10=2/5' },
             ];
         }
 
         function generateSoalSD3() {
             return [
-                { q: 'Berapakah 25% dari 80?', o: ['15', '20', '25', '30'], c: 1, exp: '80×25/100=20' },
-                { q: 'Berapakah 10% dari 250?', o: ['15', '20', '25', '30'], c: 2, exp: '250×10/100=25' },
-                { q: 'Berapakah 50% dari 360?', o: ['160', '170', '180', '190'], c: 2, exp: '360×50/100=180' },
-                { q: 'Berapakah 75% dari 120?', o: ['80', '85', '90', '95'], c: 2, exp: '120×75/100=90' },
-                { q: 'Berapakah 15% dari 300?', o: ['35', '40', '45', '50'], c: 2, exp: '300×15/100=45' },
-                { q: 'Berapakah 5% dari 600?', o: ['20', '25', '30', '35'], c: 2, exp: '600×5/100=30' },
-                { q: 'Berapakah 120% dari 50?', o: ['50', '55', '60', '65'], c: 2, exp: '50×120/100=60' },
-                { q: 'Berapakah 8% dari 150?', o: ['10', '11', '12', '13'], c: 2, exp: '150×8/100=12' },
+                { q: '25% dari 80 = ?', o: ['15', '20', '25', '30'], c: 1, exp: '80×25/100=20' },
+                { q: '10% dari 250 = ?', o: ['15', '20', '25', '30'], c: 2, exp: '250×10/100=25' },
+                { q: '50% dari 360 = ?', o: ['160', '170', '180', '190'], c: 2, exp: '360×50/100=180' },
+                { q: '75% dari 120 = ?', o: ['80', '85', '90', '95'], c: 2, exp: '120×75/100=90' },
+                { q: '15% dari 300 = ?', o: ['35', '40', '45', '50'], c: 2, exp: '300×15/100=45' },
+                { q: '5% dari 600 = ?', o: ['20', '25', '30', '35'], c: 2, exp: '600×5/100=30' },
+                { q: '120% dari 50 = ?', o: ['50', '55', '60', '65'], c: 2, exp: '50×120/100=60' },
+                { q: '8% dari 150 = ?', o: ['10', '11', '12', '13'], c: 2, exp: '150×8/100=12' },
             ];
         }
 
         function generateSoalSMP1() {
             return [
-                { q: 'Jika 2x + 6 = 16, berapakah x?', o: ['3', '4', '5', '6'], c: 2, exp: '2x=10 → x=5' },
-                { q: 'Jika 3x - 7 = 14, berapakah x?', o: ['5', '6', '7', '8'], c: 2, exp: '3x=21 → x=7' },
-                { q: 'Jika 4x + 5 = 25, berapakah x?', o: ['4', '5', '6', '7'], c: 1, exp: '4x=20 → x=5' },
-                { q: 'Jika 5x - 3 = 22, berapakah x?', o: ['4', '5', '6', '7'], c: 1, exp: '5x=25 → x=5' },
-                { q: 'Jika 2x + 3x = 25, berapakah x?', o: ['3', '4', '5', '6'], c: 2, exp: '5x=25 → x=5' },
-                { q: 'Jika 6x - 4 = 2x + 12, berapakah x?', o: ['2', '3', '4', '5'], c: 2, exp: '4x=16 → x=4' },
-                { q: 'Jika x/3 + 2 = 7, berapakah x?', o: ['12', '13', '14', '15'], c: 3, exp: 'x/3=5 → x=15' },
-                { q: 'Jika 2x/3 = 8, berapakah x?', o: ['10', '11', '12', '13'], c: 2, exp: '2x=24 → x=12' },
+                { q: '2x + 6 = 16, x = ?', o: ['3', '4', '5', '6'], c: 2, exp: '2x=10 → x=5' },
+                { q: '3x - 7 = 14, x = ?', o: ['5', '6', '7', '8'], c: 2, exp: '3x=21 → x=7' },
+                { q: '4x + 5 = 25, x = ?', o: ['4', '5', '6', '7'], c: 1, exp: '4x=20 → x=5' },
+                { q: '5x - 3 = 22, x = ?', o: ['4', '5', '6', '7'], c: 1, exp: '5x=25 → x=5' },
+                { q: '2x + 3x = 25, x = ?', o: ['3', '4', '5', '6'], c: 2, exp: '5x=25 → x=5' },
+                { q: '6x - 4 = 2x + 12, x = ?', o: ['2', '3', '4', '5'], c: 2, exp: '4x=16 → x=4' },
+                { q: 'x/3 + 2 = 7, x = ?', o: ['12', '13', '14', '15'], c: 3, exp: 'x/3=5 → x=15' },
+                { q: '2x/3 = 8, x = ?', o: ['10', '11', '12', '13'], c: 2, exp: '2x=24 → x=12' },
             ];
         }
 
         function generateSoalSMP2() {
             return [
-                { q: 'Luas persegi dengan sisi 8 cm adalah...', o: ['48 cm²', '56 cm²', '64 cm²', '72 cm²'], c: 2,
-                    exp: 'L=s²=8²=64 cm²' },
-                { q: 'Keliling persegi panjang p=12cm, l=5cm adalah...', o: ['30 cm', '32 cm', '34 cm', '36 cm'], c: 2,
-                    exp: 'K=2(12+5)=34 cm' },
-                { q: 'Luas segitiga alas 10cm, tinggi 6cm adalah...', o: ['25 cm²', '30 cm²', '35 cm²', '40 cm²'], c: 1,
-                    exp: 'L=½×10×6=30 cm²' },
-                { q: 'Luas lingkaran r=7cm (π=22/7) adalah...', o: ['143 cm²', '150 cm²', '154 cm²', '160 cm²'], c: 2,
-                    exp: 'L=22/7×7²=154 cm²' },
-                { q: 'Keliling lingkaran r=14cm (π=22/7) adalah...', o: ['66 cm', '77 cm', '88 cm', '99 cm'], c: 2,
-                    exp: 'K=2×22/7×14=88 cm' },
-                { q: 'Volume kubus rusuk 5cm adalah...', o: ['100 cm³', '115 cm³', '125 cm³', '135 cm³'], c: 2,
-                    exp: 'V=5³=125 cm³' },
-                { q: 'Luas permukaan balok 6×4×3 cm adalah...', o: ['88 cm²', '98 cm²', '108 cm²', '118 cm²'], c: 2,
-                    exp: 'L=2(24+18+12)=108 cm²' },
+                { q: 'Luas persegi s=8cm?', o: ['48', '56', '64', '72'], c: 2, exp: 'L=8²=64 cm²' },
+                { q: 'Keliling persegi panjang 12×5?', o: ['30', '32', '34', '36'], c: 2, exp: 'K=2(12+5)=34 cm' },
+                { q: 'Luas segitiga a=10, t=6?', o: ['25', '30', '35', '40'], c: 1, exp: 'L=½×10×6=30 cm²' },
+                { q: 'Luas lingkaran r=7 (π=22/7)?', o: ['143', '150', '154', '160'], c: 2, exp: 'L=22/7×7²=154 cm²' },
+                { q: 'Keliling lingkaran r=14 (π=22/7)?', o: ['66', '77', '88', '99'], c: 2, exp: 'K=2×22/7×14=88 cm' },
+                { q: 'Volume kubus s=5?', o: ['100', '115', '125', '135'], c: 2, exp: 'V=5³=125 cm³' },
+                { q: 'Luas permukaan balok 6×4×3?', o: ['88', '98', '108', '118'], c: 2, exp: 'L=2(24+18+12)=108 cm²' },
             ];
         }
 
         function generateSoalSMP3() {
             return [
-                { q: 'Data: 5,7,8,6,9. Mean?', o: ['6', '7', '8', '9'], c: 1, exp: '(5+7+8+6+9)/5=35/5=7' },
-                { q: 'Data: 3,4,5,5,6,7. Median?', o: ['4', '5', '5.5', '6'], c: 1, exp: 'Urutan: 3,4,5,5,6,7 → median=5' },
-                { q: 'Data: 2,3,3,4,4,4,5. Modus?', o: ['2', '3', '4', '5'], c: 2, exp: 'Nilai terbanyak adalah 4' },
-                { q: 'Data: 10,12,14,16,18. Mean?', o: ['12', '13', '14', '15'], c: 2, exp: '(10+12+14+16+18)/5=70/5=14' },
-                { q: 'Data: 1,2,2,3,3,3,4,4. Modus?', o: ['1', '2', '3', '4'], c: 2, exp: 'Nilai terbanyak adalah 3' },
-                { q: 'Data: 5,6,7,8,9,10. Median?', o: ['6.5', '7', '7.5', '8'], c: 2, exp: 'Median=(7+8)/2=7.5' },
+                { q: 'Mean 5,7,8,6,9?', o: ['6', '7', '8', '9'], c: 1, exp: '(5+7+8+6+9)/5=35/5=7' },
+                { q: 'Median 3,4,5,5,6,7?', o: ['4', '5', '5.5', '6'], c: 1, exp: 'Urutan: 3,4,5,5,6,7 → median=5' },
+                { q: 'Modus 2,3,3,4,4,4,5?', o: ['2', '3', '4', '5'], c: 2, exp: 'Nilai terbanyak adalah 4' },
+                { q: 'Mean 10,12,14,16,18?', o: ['12', '13', '14', '15'], c: 2, exp: '(10+12+14+16+18)/5=70/5=14' },
+                { q: 'Modus 1,2,2,3,3,3,4,4?', o: ['1', '2', '3', '4'], c: 2, exp: 'Nilai terbanyak adalah 3' },
+                { q: 'Median 5,6,7,8,9,10?', o: ['6.5', '7', '7.5', '8'], c: 2, exp: 'Median=(7+8)/2=7.5' },
             ];
         }
 
@@ -2404,7 +2375,7 @@
             return [
                 { q: 'f(x)=2x+3, f(5)=?', o: ['10', '11', '12', '13'], c: 3, exp: 'f(5)=2(5)+3=13' },
                 { q: 'f(x)=x²-4, f(3)=?', o: ['3', '4', '5', '6'], c: 2, exp: 'f(3)=9-4=5' },
-                { q: 'f(g(2)) jika f(x)=3x-2, g(x)=x+1?', o: ['5', '6', '7', '8'], c: 2, exp: 'g(2)=3, f(3)=7' },
+                { q: 'f(g(2)) f=3x-2, g=x+1?', o: ['5', '6', '7', '8'], c: 2, exp: 'g(2)=3, f(3)=7' },
                 { q: 'lim x→2 (x²+3x-2)=?', o: ['6', '7', '8', '9'], c: 2, exp: '4+6-2=8' },
                 { q: 'lim x→1 (x²-1)/(x-1)=?', o: ['0', '1', '2', '3'], c: 2, exp: '(x²-1)/(x-1)=x+1, limit=2' },
                 { q: 'f(x)=x³-2x, f(-1)=?', o: ['0', '1', '2', '3'], c: 1, exp: '(-1)³-2(-1)=-1+2=1' },
@@ -2416,7 +2387,7 @@
                 { q: 'sin 30° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 1, exp: 'sin 30°=1/2' },
                 { q: 'cos 60° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 1, exp: 'cos 60°=1/2' },
                 { q: 'tan 45° = ?', o: ['0', '1/2', '1', '√3'], c: 2, exp: 'tan 45°=1' },
-                { q: 'sin θ=3/5, cos θ=? (sudut lancip)', o: ['2/5', '3/5', '4/5', '5/4'], c: 2,
+                { q: 'sin θ=3/5, cos θ=?', o: ['2/5', '3/5', '4/5', '5/4'], c: 2,
                     exp: 'cos²θ=1-(3/5)²=16/25, cosθ=4/5' },
                 { q: 'sin 45° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 2, exp: 'sin 45°=1/√2' },
                 { q: 'cos 30° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 3, exp: 'cos 30°=√3/2' },
@@ -2434,8 +2405,8 @@
                         'Matriks Segitiga'
                     ], c: 1, exp: 'Matriks identitas 2×2' },
                 { q: 'det [[2,1],[4,3]] = ?', o: ['1', '2', '3', '4'], c: 1, exp: 'det=2×3-1×4=2' },
-                { q: 'A+B dengan A=[[1,2],[3,4]], B=[[5,6],[7,8]]', o: ['[[6,8],[10,12]]', '[[5,12],[21,32]]',
-                        '[[6,8],[8,10]]', '[[4,6],[8,10]]'
+                { q: 'A+B [[1,2],[3,4]]+[[5,6],[7,8]]', o: ['[[6,8],[10,12]]', '[[5,12],[21,32]]', '[[6,8],[8,10]]',
+                        '[[4,6],[8,10]]'
                     ], c: 0, exp: 'A+B=[[6,8],[10,12]]' },
             ];
         }
@@ -2491,7 +2462,6 @@
         const $$ = (s) => document.querySelectorAll(s);
 
         const dom = {
-            // Onboarding
             onboardingOverlay: $('#onboardingOverlay'),
             onboardingNameInput: $('#onboardingNameInput'),
             onboardingStartBtn: $('#onboardingStartBtn'),
@@ -2506,7 +2476,6 @@
             heroAvatar: $('#heroAvatarDisplay'),
 
             hudAvatar: $('#hudAvatar'),
-            hudAvatarLock: $('#hudAvatarLock'),
             hudName: $('#hudName'),
             hudLevel: $('#hudLevel'),
             hudTitle: $('#hudTitle'),
@@ -2655,19 +2624,16 @@
         function startOnboarding() {
             dom.onboardingOverlay.classList.remove('hidden');
 
-            // Update preview on input
             dom.onboardingNameInput.addEventListener('input', function() {
                 const name = this.value.trim() || 'Pemain';
                 dom.onboardingNamePreview.textContent = name;
             });
 
-            // Start button
             dom.onboardingStartBtn.addEventListener('click', function() {
                 const name = dom.onboardingNameInput.value.trim() || 'Pemain';
                 completeOnboarding(name);
             });
 
-            // Enter key
             dom.onboardingNameInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     const name = this.value.trim() || 'Pemain';
@@ -2675,12 +2641,10 @@
                 }
             });
 
-            // Skip button
             dom.onboardingSkipBtn.addEventListener('click', function() {
                 completeOnboarding('Pemain');
             });
 
-            // Focus input
             setTimeout(() => dom.onboardingNameInput.focus(), 300);
         }
 
@@ -2689,10 +2653,8 @@
             state.isOnboarded = true;
             dom.onboardingOverlay.classList.add('hidden');
             updateUI();
-            // Show welcome message
             setTimeout(() => {
-                const msg = `Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu sekarang!`;
-                alert(msg);
+                alert(`Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu sekarang!`);
             }, 400);
         }
 
@@ -2707,6 +2669,15 @@
             const avatarCount = getAvatarCount();
             const unlockedAvatars = getUnlockedAvatars();
 
+            // Pastikan avatar yang dipakai sudah terbuka
+            if (!isAvatarUnlocked(state.avatar)) {
+                if (unlockedAvatars.length > 0) {
+                    state.avatar = unlockedAvatars[0];
+                } else {
+                    state.avatar = '🧑‍🚀';
+                }
+            }
+
             // Hero
             dom.heroLevel.textContent = state.level;
             dom.heroExp.textContent = state.exp;
@@ -2716,14 +2687,6 @@
 
             // HUD
             dom.hudAvatar.textContent = state.avatar;
-            if (!isAvatarUnlocked(state.avatar)) {
-                if (unlockedAvatars.length > 0) {
-                    state.avatar = unlockedAvatars[0];
-                    dom.hudAvatar.textContent = state.avatar;
-                    dom.heroAvatar.textContent = state.avatar;
-                    dom.profileAvatar.textContent = state.avatar;
-                }
-            }
             dom.hudName.textContent = state.name;
             dom.hudLevel.textContent = `LEVEL ${String(state.level).padStart(2, '0')}`;
             dom.hudTitle.textContent = data ? data.title : 'Number Novice';
@@ -2769,7 +2732,6 @@
             renderMaterials();
             renderAvatarGrid();
 
-            // Update onboarding preview if not onboarded
             if (!state.isOnboarded) {
                 dom.onboardingAvatarPreview.textContent = state.avatar;
             }
@@ -2872,15 +2834,23 @@
 
             dom.avatarGrid.innerHTML = html;
 
+            // Event listener untuk klik avatar
             dom.avatarGrid.querySelectorAll('.avatar-option').forEach(el => {
                 el.addEventListener('click', function() {
                     if (this.classList.contains('locked')) return;
+                    // Hapus active dari semua
                     dom.avatarGrid.querySelectorAll('.avatar-option').forEach(b => b.classList.remove('active'));
+                    // Aktifkan yang diklik
                     this.classList.add('active');
-                    dom.customAvatarPreview.textContent = this.dataset.avatar;
+                    // Update preview custom avatar
+                    const avatar = this.dataset.avatar;
+                    dom.customAvatarPreview.textContent = avatar;
+                    // Simpan sementara untuk dipilih nanti
+                    dom.avatarGrid._selected = avatar;
                 });
             });
 
+            // Custom avatar preview
             dom.customAvatarInput.addEventListener('input', function() {
                 const val = this.value.trim() || '😎';
                 dom.customAvatarPreview.textContent = val.slice(0, 2);
@@ -3192,24 +3162,45 @@
 
             dom.quizResetBtn.addEventListener('click', resetQuiz);
 
+            // === AVATAR - Perbaikan utama ada di sini ===
             dom.hudAvatar.addEventListener('click', openAvatarModal);
 
+            // Tombol "Pilih Avatar" di modal
             dom.avatarCloseBtn.addEventListener('click', function() {
+                // Ambil avatar yang dipilih dari yang active di grid
                 const selected = dom.avatarGrid.querySelector('.avatar-option.active');
-                if (selected) state.avatar = selected.dataset.avatar;
+                if (selected) {
+                    state.avatar = selected.dataset.avatar;
+                    updateUI();
+                } else {
+                    // Jika tidak ada yang dipilih, gunakan yang pertama tidak terkunci
+                    const firstUnlocked = dom.avatarGrid.querySelector('.avatar-option:not(.locked)');
+                    if (firstUnlocked) {
+                        state.avatar = firstUnlocked.dataset.avatar;
+                        updateUI();
+                    }
+                }
                 closeAvatarModal();
-                updateUI();
             });
 
-            dom.avatarModal.addEventListener('click', function(e) { if (e.target === this) closeAvatarModal(); });
+            // Klik di luar modal untuk close
+            dom.avatarModal.addEventListener('click', function(e) {
+                if (e.target === this) closeAvatarModal();
+            });
 
+            // Custom avatar
             dom.addCustomAvatarBtn.addEventListener('click', addCustomAvatar);
-            dom.customAvatarInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomAvatar(); });
+            dom.customAvatarInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') addCustomAvatar();
+            });
 
+            // Level modal
             dom.levelModalClose.addEventListener('click', function() { dom.levelModal.classList.remove('show'); });
-            dom.levelModal.addEventListener('click', function(e) { if (e.target === this) dom.levelModal.classList.remove(
-                    'show'); });
+            dom.levelModal.addEventListener('click', function(e) {
+                if (e.target === this) dom.levelModal.classList.remove('show');
+            });
 
+            // Boss attack
             dom.bossAttackBtn.addEventListener('click', function() {
                 if (state.bossHP <= 0 || state.bossDefeated) return;
                 state.bossHP = Math.max(0, state.bossHP - 10);
@@ -3238,10 +3229,8 @@
         // ================================================================
 
         function init() {
-            // Start with onboarding
             startOnboarding();
 
-            // Set initial state
             state.exp = 80;
             state.unlockedAchievements = [];
             state.unlockedAvatars = ['🧑‍🚀'];
