@@ -20,6 +20,8 @@
             --pink: #FF6B9D;
             --green: #5DD39E;
             --orange: #FF9A6B;
+            --diamond: #6EE7F9;
+            --coin: #FFD166;
             --ink: #1A1533;
             --ink-soft: #4A4468;
             --bg: #F6F4FF;
@@ -222,6 +224,28 @@
         .btn-danger:active {
             transform: translateY(4px);
             box-shadow: 0 2px 0 #8f2c58;
+        }
+
+        .btn-coin {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--coin), #F59E0B);
+            color: #3D2A00;
+            padding: 11px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 0 #B4790A;
+            font-size: .85rem;
+        }
+
+        .btn-coin:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #B4790A;
+        }
+
+        .btn-coin:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .hidden {
@@ -456,6 +480,32 @@
             color: var(--purple-dark);
         }
 
+        .nav-wallet {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-right: 10px;
+        }
+
+        @media (min-width: 900px) {
+            .nav-wallet {
+                display: flex;
+            }
+        }
+
+        .wallet-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: .82rem;
+            background: #fff;
+            border: 1.5px solid var(--line);
+            padding: 7px 12px;
+            border-radius: 100px;
+        }
+
         .nav-cta {
             font-family: 'Baloo 2', sans-serif;
             font-weight: 700;
@@ -528,7 +578,7 @@
 
         .hero-stats {
             display: flex;
-            gap: 28px;
+            gap: 24px;
             margin-top: 34px;
             flex-wrap: wrap;
         }
@@ -637,6 +687,12 @@
             color: var(--purple);
             animation-delay: .7s;
         }
+        .chip-5 {
+            top: 40%;
+            right: -4%;
+            color: var(--blue);
+            animation-delay: 1.6s;
+        }
 
         /* ============================================================
            DASHBOARD HUD
@@ -676,10 +732,24 @@
             border-radius: 28px;
             padding: 28px;
             display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 24px;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 20px;
             align-items: center;
             box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+            transition: background .4s ease;
+        }
+
+        .hud-card[data-theme="malam"] {
+            background: linear-gradient(160deg, #050512, #14142b);
+        }
+        .hud-card[data-theme="laut"] {
+            background: linear-gradient(160deg, #073B4C, #0E5E75);
+        }
+        .hud-card[data-theme="sunset"] {
+            background: linear-gradient(160deg, #7A2C4E, #C2452F);
+        }
+        .hud-card[data-theme="hutan"] {
+            background: linear-gradient(160deg, #0F3D2E, #1B6B4D);
         }
 
         @media (max-width: 760px) {
@@ -703,6 +773,7 @@
             cursor: pointer;
             transition: transform .2s;
             position: relative;
+            margin: 0 auto;
         }
 
         .hud-avatar:hover {
@@ -718,6 +789,23 @@
             border-radius: 50%;
             padding: 2px 4px;
             line-height: 1;
+        }
+
+        /* Avatar frames (shop cosmetics) */
+        .frame-perunggu { border-color: #CD7F32 !important; box-shadow: 0 0 0 6px rgba(205,127,50,.28) !important; }
+        .frame-perak { border-color: #C7CCD8 !important; box-shadow: 0 0 0 6px rgba(199,204,216,.32) !important; }
+        .frame-emas { border-color: #FFD700 !important; box-shadow: 0 0 22px rgba(255,215,0,.55), 0 0 0 6px rgba(255,215,0,.3) !important; }
+        .frame-pelangi {
+            border: 4px solid transparent !important;
+            background-image: linear-gradient(135deg, var(--pink), var(--purple)),
+                conic-gradient(from 0deg, #FF6B9D, #FFD166, #5DD39E, #00C2FF, #6C63FF, #FF6B9D) !important;
+            background-origin: border-box !important;
+            background-clip: padding-box, border-box !important;
+            animation: rainbowspin 4s linear infinite;
+        }
+        @keyframes rainbowspin {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         .hud-mid .name-row {
@@ -821,6 +909,50 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: .06em;
+        }
+
+        .hud-wallet {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hud-wallet .wchip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: .95rem;
+            justify-content: center;
+        }
+
+        .hud-wallet .wchip.coin { color: var(--coin); }
+        .hud-wallet .wchip.diamond { color: var(--diamond); }
+
+        /* ============================================================
+           FLOATING COIN GAIN
+           ============================================================ */
+        .coin-pop {
+            position: fixed;
+            z-index: 130;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--coin);
+            pointer-events: none;
+            animation: coinpop 1.1s ease-out forwards;
+            text-shadow: 0 2px 6px rgba(0,0,0,.35);
+        }
+
+        @keyframes coinpop {
+            0% { transform: translateY(0) scale(.6); opacity: 0; }
+            15% { transform: translateY(-6px) scale(1.1); opacity: 1; }
+            100% { transform: translateY(-70px) scale(1); opacity: 0; }
         }
 
         /* ============================================================
@@ -1016,6 +1148,15 @@
             font-size: .95rem;
         }
 
+        .materi-section .materi-body .salah-kaprah {
+            background: #FFF0F3;
+            border-left: 4px solid var(--pink);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: .92rem;
+        }
+
         /* ============================================================
            QUIZ
            ============================================================ */
@@ -1045,6 +1186,25 @@
             letter-spacing: .03em;
             font-size: 1rem;
             color: var(--yellow);
+        }
+
+        .quiz-head-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: .85rem;
+            color: #B9B3E8;
+            flex-wrap: wrap;
+        }
+
+        .quiz-combo {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            color: var(--orange);
+            font-size: .82rem;
+            background: rgba(255, 154, 107, .15);
+            padding: 4px 10px;
+            border-radius: 100px;
         }
 
         .quiz-progress {
@@ -1165,6 +1325,15 @@
             font-size: .8rem;
         }
 
+        .quiz-feedback .coingain {
+            font-family: 'Space Mono', monospace;
+            background: rgba(255, 209, 102, .18);
+            color: var(--coin);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: .8rem;
+        }
+
         .quiz-feedback .explanation {
             font-size: .85rem;
             color: #B9B3E8;
@@ -1208,6 +1377,152 @@
             font-size: 1.1rem;
             color: #B9B3E8;
             margin-top: 6px;
+        }
+
+        /* ============================================================
+           SHOP
+           ============================================================ */
+        .shop-wallet-bar {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .shop-wallet-bar .wchip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: #fff;
+            border: 2px solid var(--line);
+            padding: 10px 18px;
+            border-radius: 100px;
+            font-size: 1rem;
+        }
+
+        .shop-wallet-bar .wchip.coin { color: #B4790A; }
+        .shop-wallet-bar .wchip.diamond { color: #0891A8; }
+
+        .shop-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .shop-tab {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .85rem;
+            padding: 9px 18px;
+            border-radius: 100px;
+            border: 2px solid var(--line);
+            background: #fff;
+            color: var(--ink-soft);
+            transition: all .2s;
+        }
+
+        .shop-tab.active {
+            border-color: var(--purple);
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .shop-item {
+            background: #fff;
+            border: 2px solid var(--line);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            transition: all .2s;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .shop-item .icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #EDE9FF, #F3F0FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 10px;
+        }
+
+        .shop-item h4 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1rem;
+        }
+
+        .shop-item p {
+            font-size: .78rem;
+            color: var(--ink-soft);
+            margin: 6px 0 12px;
+            min-height: 32px;
+        }
+
+        .shop-item .price {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: .95rem;
+            margin-bottom: 10px;
+        }
+
+        .shop-item .price.coin { color: #B4790A; }
+        .shop-item .price.diamond { color: #0891A8; }
+
+        .shop-item .owned-tag {
+            display: inline-block;
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--green);
+            background: #E4F9F0;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 6px;
+        }
+
+        .shop-item .equipped-tag {
+            display: inline-block;
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--purple-dark);
+            background: #EDE9FF;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 6px;
+        }
+
+        .shop-item button {
+            width: 100%;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .82rem;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .shop-item .btn-owned {
+            background: #F1EFFB;
+            color: var(--purple-dark);
+        }
+
+        .shop-item .btn-equipped {
+            background: var(--purple);
+            color: #fff;
         }
 
         /* ============================================================
@@ -1446,6 +1761,38 @@
         }
 
         /* ============================================================
+           ACHIEVEMENT TOAST
+           ============================================================ */
+        .ach-toast {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: linear-gradient(135deg, #2A1E63, #1B1345);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 18px;
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 40px -14px rgba(0,0,0,.5);
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: all .4s cubic-bezier(.34,1.56,.64,1);
+        }
+
+        .ach-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .ach-toast .ic { font-size: 1.8rem; }
+        .ach-toast .tt { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: .82rem; color: var(--yellow); }
+        .ach-toast .nm { font-size: .95rem; font-weight: 700; }
+
+        /* ============================================================
            BOSS
            ============================================================ */
         .boss-card {
@@ -1528,6 +1875,13 @@
             margin-top: 16px;
         }
 
+        .boss-reward-note {
+            margin-top: 10px;
+            font-size: .74rem;
+            color: var(--coin);
+            font-weight: 700;
+        }
+
         /* ============================================================
            ACHIEVEMENTS
            ============================================================ */
@@ -1566,6 +1920,14 @@
             font-size: .72rem;
             color: var(--ink-soft);
             line-height: 1.4;
+        }
+
+        .ach-card .ach-reward {
+            display: block;
+            margin-top: 6px;
+            font-size: .68rem;
+            font-weight: 700;
+            color: var(--purple-dark);
         }
 
         .ach-card.locked {
@@ -1835,6 +2197,366 @@
             background: var(--purple);
             border-radius: 4px;
         }
+
+        /* ============================================================
+           BATTLE ARENA (ATTACK MODE)
+           ============================================================ */
+        .battle-wallet-bar {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .battle-wallet-bar .wchip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: #fff;
+            border: 2px solid var(--line);
+            padding: 10px 18px;
+            border-radius: 100px;
+            font-size: 1rem;
+        }
+
+        .battle-wallet-bar .wchip.coin { color: #B4790A; }
+        .battle-wallet-bar .wchip.diamond { color: #0891A8; }
+
+        .monster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px;
+        }
+
+        .monster-card {
+            background: linear-gradient(160deg, #2A1E63, #1B1345);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all .2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .monster-card:not(.locked):hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-pop);
+            border-color: var(--pink);
+        }
+
+        .monster-card.locked {
+            opacity: .5;
+            filter: grayscale(.6);
+        }
+
+        .monster-card .m-emoji {
+            font-size: 3rem;
+            margin-bottom: 6px;
+        }
+
+        .monster-card h4 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.05rem;
+        }
+
+        .monster-card .m-diff {
+            display: inline-block;
+            font-size: .65rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 100px;
+            margin: 8px 0;
+        }
+
+        .diff-Mudah { background: #D4EDDA; color: #155724; }
+        .diff-Sedang { background: #FFF3CD; color: #856404; }
+        .diff-Sulit { background: #F8D7DA; color: #721C24; }
+        .diff-Extreme { background: #E4CCFF; color: #4B1D8F; }
+
+        .monster-card .m-stats {
+            font-size: .72rem;
+            color: #B9B3E8;
+            font-family: 'Space Mono', monospace;
+            margin: 6px 0 12px;
+        }
+
+        .monster-card .m-rewards {
+            font-size: .7rem;
+            color: var(--coin);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .monster-card .btn-fight {
+            width: 100%;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pink), #C93E7C);
+            color: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: .85rem;
+            box-shadow: 0 5px 0 #8f2c58;
+        }
+
+        .monster-card .btn-fight:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #8f2c58;
+        }
+
+        .monster-card .lock-note {
+            font-size: .7rem;
+            color: #B9B3E8;
+            font-weight: 700;
+        }
+
+        /* Battle arena screen */
+        .battle-arena {
+            background: linear-gradient(165deg, #1B1345, #2A1E63);
+            color: #fff;
+            border-radius: 28px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+        }
+
+        .battle-vs-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        @media (max-width: 640px) {
+            .battle-vs-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .battle-side {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 18px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .battle-side .b-emoji {
+            font-size: 3.2rem;
+            transition: transform .15s;
+        }
+
+        .battle-side .b-emoji.hit {
+            animation: battleHit .4s ease;
+        }
+
+        @keyframes battleHit {
+            0% { transform: translateX(0) scale(1); }
+            30% { transform: translateX(-10px) scale(.92); filter: brightness(1.8) saturate(2); }
+            60% { transform: translateX(8px) scale(1.04); }
+            100% { transform: translateX(0) scale(1); }
+        }
+
+        .battle-side .b-name {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            margin-top: 6px;
+            font-size: 1.05rem;
+        }
+
+        .battle-vs-label {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--yellow);
+            text-align: center;
+        }
+
+        .battle-hp-track {
+            margin-top: 10px;
+            height: 14px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, .1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .battle-hp-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width .5s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .battle-hp-fill.player {
+            background: linear-gradient(90deg, var(--green), #3FB984);
+        }
+
+        .battle-hp-fill.monster {
+            background: linear-gradient(90deg, var(--pink), #FF9A6B);
+        }
+
+        .battle-hp-label {
+            font-size: .68rem;
+            font-family: 'Space Mono', monospace;
+            color: #B9B3E8;
+            margin-top: 4px;
+        }
+
+        .battle-log {
+            text-align: center;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--yellow);
+            min-height: 22px;
+            margin-bottom: 16px;
+        }
+
+        .battle-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 560px) {
+            .battle-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .battle-action-btn {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            padding: 14px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform .12s;
+        }
+
+        .battle-action-btn:active { transform: translateY(3px); }
+
+        .battle-action-attack {
+            background: linear-gradient(135deg, var(--pink), #C93E7C);
+            color: #fff;
+            box-shadow: 0 5px 0 #8f2c58;
+        }
+
+        .battle-action-defend {
+            background: linear-gradient(135deg, var(--blue), #0891A8);
+            color: #fff;
+            box-shadow: 0 5px 0 #066277;
+        }
+
+        .battle-action-skill {
+            background: linear-gradient(135deg, var(--yellow), #F59E0B);
+            color: #3D2A00;
+            box-shadow: 0 5px 0 #B4790A;
+        }
+
+        .battle-action-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .skill-charge-note {
+            text-align: center;
+            font-size: .7rem;
+            color: #B9B3E8;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 18px;
+        }
+
+        .battle-question-box {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 6px;
+        }
+
+        .battle-question-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .battle-question-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 560px) {
+            .battle-question-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .battle-back-btn {
+            margin-top: 18px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: .85rem;
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .battle-result {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .battle-result .big {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 3rem;
+        }
+
+        .battle-result .sub {
+            font-size: 1.1rem;
+            color: #B9B3E8;
+            margin-top: 6px;
+        }
+
+        .battle-result .rewards-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .battle-result .rewards-row span {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: rgba(255, 255, 255, .08);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: .85rem;
+        }
+
+        .battle-result-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -1868,6 +2590,8 @@
     <div class="mathfloat" style="top:700px;left:3%;font-size:1.8rem;animation-delay:.8s;">π</div>
     <div class="mathfloat" style="top:1500px;right:4%;font-size:2rem;animation-delay:2s;">∑</div>
     <div class="mathfloat" style="top:2300px;left:5%;font-size:1.7rem;animation-delay:1.1s;">÷</div>
+    <div class="mathfloat" style="top:3100px;right:5%;font-size:1.9rem;animation-delay:.5s;">sin θ</div>
+    <div class="mathfloat" style="top:3800px;left:4%;font-size:1.6rem;animation-delay:1.7s;">∞</div>
 
     <!-- ===== TOP NAV ===== -->
     <nav class="topnav">
@@ -1878,7 +2602,13 @@
                 <a href="#kelas">Kelas & Materi</a>
                 <a href="#belajar">Belajar</a>
                 <a href="#latihan">Latihan</a>
+                <a href="#battle">⚔️ Battle</a>
+                <a href="#toko">Toko</a>
                 <a href="#profile">Profil</a>
+            </div>
+            <div class="nav-wallet">
+                <span class="wallet-chip">🪙 <span id="navCoin">0</span></span>
+                <span class="wallet-chip">💎 <span id="navDiamond">0</span></span>
             </div>
             <a href="#kelas" class="nav-cta">Mulai →</a>
         </div>
@@ -1890,7 +2620,7 @@
             <div>
                 <span class="eyebrow">⚡ Math Adventure Platform</span>
                 <h1>MATEMATIKA,<br><span class="accent">TAPI JADI GAME.</span></h1>
-                <p class="lead">Pilih kelas, pelajari materi, kerjakan soal, kumpulkan EXP, buka avatar keren, dan naik level!</p>
+                <p class="lead">Pilih kelas, pelajari materi, taklukkan soal, kumpulkan EXP + koin + diamond, buka avatar keren, belanja di toko, dan naik level jadi Math Master!</p>
                 <div class="hero-cta">
                     <a href="#kelas" class="btn-primary">🚀 Pilih Kelas & Materi</a>
                     <a href="#latihan" class="btn-secondary">⚔️ Mulai Latihan</a>
@@ -1898,16 +2628,18 @@
                 <div class="hero-stats">
                     <div class="hero-stat"><b id="heroLevel">1</b><span>Level</span></div>
                     <div class="hero-stat"><b id="heroExp">0</b><span>EXP</span></div>
+                    <div class="hero-stat"><b id="heroCoin">🪙0</b><span>Koin</span></div>
+                    <div class="hero-stat"><b id="heroDiamond">💎0</b><span>Diamond</span></div>
                     <div class="hero-stat"><b id="heroSoal">0</b><span>Soal Terjawab</span></div>
-                    <div class="hero-stat"><b id="heroAvatarCount">0</b><span>Avatar Terbuka</span></div>
                 </div>
             </div>
             <div class="hero-stage">
                 <div class="stage-blob"></div>
-                <div class="float-chip chip-1">⚡ +30 EXP</div>
+                <div class="float-chip chip-1">⚡ +10 EXP</div>
                 <div class="float-chip chip-2">🔥 Streak 7</div>
                 <div class="float-chip chip-3">🏆 Achievement!</div>
                 <div class="float-chip chip-4">✨ LEVEL UP!</div>
+                <div class="float-chip chip-5">🪙 +5 Koin</div>
                 <div class="hero-avatar" id="heroAvatarDisplay">🧑‍🚀</div>
             </div>
         </div>
@@ -1919,9 +2651,9 @@
             <div class="section-head reveal">
                 <span class="eyebrow">🎮 Dashboard</span>
                 <h2>Progress kamu, ditampilkan seperti game HUD.</h2>
-                <p>Klik avatar untuk mengganti karaktermu! Buka avatar baru setiap naik level.</p>
+                <p>Klik avatar untuk mengganti karaktermu! Buka avatar baru setiap naik level, atau beli bingkai keren di Toko.</p>
             </div>
-            <div class="hud-card reveal">
+            <div class="hud-card reveal" id="hudCard">
                 <div class="hud-avatar" id="hudAvatar" title="Klik untuk ganti avatar">
                     🧑‍🚀
                     <span class="lock-badge" id="hudAvatarLock" style="display:none;">🔒</span>
@@ -1934,6 +2666,10 @@
                     </div>
                     <div class="exp-track"><div class="exp-fill" id="hudExpFill" style="width:0%"></div></div>
                     <div class="exp-label" id="hudExpLabel">0 / 100 EXP</div>
+                </div>
+                <div class="hud-wallet">
+                    <div class="wchip coin">🪙 <span id="hudCoin">0</span></div>
+                    <div class="wchip diamond">💎 <span id="hudDiamond">0</span></div>
                 </div>
                 <div class="hud-streak">
                     <div class="num">🔥 <span id="hudStreak">7</span></div>
@@ -1949,7 +2685,7 @@
             <div class="section-head reveal section-title-center">
                 <span class="eyebrow">📚 Pilih Kelas & Materi</span>
                 <h2>Pilih jenjangmu, lalu pilih materi yang ingin dipelajari.</h2>
-                <p>Setiap materi punya penjelasan lengkap dan soal latihan yang berbeda.</p>
+                <p>Setiap materi punya penjelasan lengkap, contoh soal, tips, dan bank soal latihan sendiri.</p>
             </div>
 
             <div class="class-selector reveal justify-center">
@@ -1993,13 +2729,16 @@
             <div class="section-head reveal">
                 <span class="eyebrow">⚔️ Latihan Soal</span>
                 <h2 id="latihanTitle">Soal Latihan</h2>
-                <p id="latihanSub">Jawab dengan benar untuk mendapatkan EXP dan naik level!</p>
+                <p id="latihanSub">Jawab dengan benar untuk mendapatkan EXP, koin, dan naik level! Jawab beruntun untuk combo bonus.</p>
             </div>
 
             <div class="quiz-section reveal">
                 <div class="quiz-head">
                     <div class="quiz-tag" id="quizTag">📝 LATIHAN SOAL</div>
-                    <div style="font-size:.85rem;color:#B9B3E8;" id="quizScore">Benar: 0 | Salah: 0</div>
+                    <div class="quiz-head-right">
+                        <span id="quizScore">Benar: 0 | Salah: 0</span>
+                        <span class="quiz-combo" id="quizCombo" style="display:none;">🔥 Combo x0</span>
+                    </div>
                 </div>
                 <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgress" style="width:0%"></div></div>
                 <div class="quiz-question-num" id="quizQNum">SOAL 1 / 10</div>
@@ -2021,8 +2760,8 @@
         <div class="wrap">
             <div class="section-head reveal">
                 <span class="eyebrow">👾 Boss Battle</span>
-                <h2>Kalahkan Boss untuk mendapat EXP besar!</h2>
-                <p>Setiap jawaban benar mengurangi HP boss. Habiskan HP-nya!</p>
+                <h2>Kalahkan Boss untuk mendapat EXP dan koin besar!</h2>
+                <p>Setiap jawaban benar di Latihan Soal mengurangi HP boss. Habiskan HP-nya untuk hadiah besar!</p>
             </div>
             <div class="boss-card reveal">
                 <div class="boss-emoji" id="bossEmoji">👾</div>
@@ -2034,7 +2773,101 @@
                 </div>
                 <button class="btn-danger boss-attack-btn" id="bossAttackBtn">⚔️ Serang Boss (−10 HP)</button>
                 <div class="boss-note" id="bossNote">Kalahkan boss untuk mendapat +100 EXP!</div>
+                <div class="boss-reward-note">🪙 +50 Koin &nbsp;·&nbsp; 💎 +1 Diamond saat boss kalah</div>
             </div>
+        </div>
+    </section>
+
+    <!-- ===== BATTLE ARENA (ATTACK MODE) ===== -->
+    <section class="section" id="battle" style="padding-top:0;">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">⚔️ Attack Mode</span>
+                <h2>Battle Arena — lawan monster, bukan cuma jawab soal!</h2>
+                <p>Pilih musuh, lalu SERANG! Jawab soal matematika dengan benar untuk melancarkan serangan. Salah, dan monster akan menyerang balik. Menangkan pertarungan untuk koin, diamond, dan XP!</p>
+            </div>
+
+            <div class="battle-wallet-bar reveal">
+                <div class="wchip coin">🪙 Koin: <span id="battleCoin">0</span></div>
+                <div class="wchip diamond">💎 Diamond: <span id="battleDiamond">0</span></div>
+                <div class="wchip">👹 Dikalahkan: <span id="battleDefeatedCount">0</span></div>
+            </div>
+
+            <!-- Monster select screen -->
+            <div class="monster-grid reveal" id="monsterGrid"></div>
+
+            <!-- Battle arena screen (hidden until a fight starts) -->
+            <div class="battle-arena hidden reveal" id="battleArenaScreen">
+                <div class="battle-vs-row">
+                    <div class="battle-side">
+                        <div class="b-emoji" id="battlePlayerEmoji">🧑‍🚀</div>
+                        <div class="b-name" id="battlePlayerName">Player</div>
+                        <div class="battle-hp-track"><div class="battle-hp-fill player" id="battlePlayerHpFill" style="width:100%"></div></div>
+                        <div class="battle-hp-label" id="battlePlayerHpLabel">100 / 100 HP</div>
+                    </div>
+                    <div class="battle-vs-label">VS</div>
+                    <div class="battle-side">
+                        <div class="b-emoji" id="battleMonsterEmoji">👹</div>
+                        <div class="b-name" id="battleMonsterName">Monster</div>
+                        <div class="battle-hp-track"><div class="battle-hp-fill monster" id="battleMonsterHpFill" style="width:100%"></div></div>
+                        <div class="battle-hp-label" id="battleMonsterHpLabel">100 / 100 HP</div>
+                    </div>
+                </div>
+
+                <div class="battle-log" id="battleLog">Pilih aksi untuk memulai serangan!</div>
+
+                <div id="battleActionsWrap">
+                    <div class="battle-actions">
+                        <button class="battle-action-btn battle-action-attack" id="battleAttackBtn">⚔️ SERANG</button>
+                        <button class="battle-action-btn battle-action-defend" id="battleDefendBtn">🛡️ DEFEND</button>
+                        <button class="battle-action-btn battle-action-skill" id="battleSkillBtn">✨ SKILL</button>
+                    </div>
+                    <div class="skill-charge-note" id="battleSkillNote">✨ Skill Charge: 0 / 3 (jawab benar untuk mengisi)</div>
+                </div>
+
+                <!-- Math challenge box (shown after clicking Serang / Skill) -->
+                <div class="battle-question-box hidden" id="battleQuestionBox">
+                    <div class="battle-question-text" id="battleQuestionText">12 × 8 = ?</div>
+                    <div class="battle-question-options" id="battleQuestionOptions"></div>
+                </div>
+
+                <!-- Victory / Defeat result -->
+                <div class="battle-result hidden" id="battleResult">
+                    <div class="big" id="battleResultEmoji">🎉</div>
+                    <div class="sub" id="battleResultText">VICTORY!</div>
+                    <div class="rewards-row" id="battleRewardsRow"></div>
+                    <div class="battle-result-actions">
+                        <button class="btn-danger" id="battleRematchBtn">🔄 REMATCH</button>
+                        <button class="btn-secondary" id="battleHomeBtn">🏠 KEMBALI</button>
+                    </div>
+                </div>
+
+                <button class="battle-back-btn" id="battleFleeBtn">← Kembali ke daftar musuh</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TOKO ===== -->
+    <section class="section" id="toko" style="background:#fff;">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">🛒 Toko MathQuest</span>
+                <h2>Tukar koin & diamond dengan item keren!</h2>
+                <p>Dapatkan koin dari menjawab soal dan mengalahkan boss. Belanjakan untuk bingkai avatar, tema HUD, dan booster EXP.</p>
+            </div>
+
+            <div class="shop-wallet-bar reveal">
+                <div class="wchip coin">🪙 Koin: <span id="shopCoin">0</span></div>
+                <div class="wchip diamond">💎 Diamond: <span id="shopDiamond">0</span></div>
+            </div>
+
+            <div class="shop-tabs reveal" id="shopTabs">
+                <button class="shop-tab active" data-tab="frame">🖼️ Bingkai Avatar</button>
+                <button class="shop-tab" data-tab="theme">🎨 Tema HUD</button>
+                <button class="shop-tab" data-tab="booster">🚀 Booster</button>
+            </div>
+
+            <div class="shop-grid reveal" id="shopGrid"></div>
         </div>
     </section>
 
@@ -2044,7 +2877,7 @@
             <div class="section-head reveal section-title-center">
                 <span class="eyebrow">🏆 Collectibles</span>
                 <h2>Achievement, dikoleksi seperti kartu game.</h2>
-                <p>Yang belum diraih tampil sebagai silhouette — memancing rasa penasaran.</p>
+                <p>Yang belum diraih tampil sebagai silhouette — memancing rasa penasaran. Setiap achievement memberi bonus koin!</p>
             </div>
             <div class="ach-grid reveal" id="achGrid"></div>
         </div>
@@ -2064,11 +2897,14 @@
                     <div class="profile-title" id="profileTitle">LEVEL 01 · Number Novice</div>
                     <div class="profile-stats">
                         <div class="pstat"><b id="pExp">⚡ 0</b><span>EXP</span></div>
+                        <div class="pstat"><b id="pCoin">🪙 0</b><span>Koin</span></div>
+                        <div class="pstat"><b id="pDiamond">💎 0</b><span>Diamond</span></div>
                         <div class="pstat"><b id="pSoal">🎯 0</b><span>Soal</span></div>
                         <div class="pstat"><b id="pBenar">✅ 0</b><span>Benar</span></div>
                         <div class="pstat"><b id="pAch">🏆 0</b><span>Achievement</span></div>
                         <div class="pstat"><b id="pLevel">📈 1</b><span>Level</span></div>
                         <div class="pstat"><b id="pAvatarCount">👤 0</b><span>Avatar</span></div>
+                        <div class="pstat"><b id="pItems">🎒 0</b><span>Item Toko</span></div>
                     </div>
                 </div>
             </div>
@@ -2080,7 +2916,7 @@
         <div class="wrap">
             <div class="final-cta reveal">
                 <h2>Siap jadi Math Master?</h2>
-                <p>Pilih kelas → Pelajari materi → Kerjakan soal → Kumpulkan EXP → Buka avatar keren → Naik level!</p>
+                <p>Pilih kelas → Pelajari materi → Kerjakan soal → Kumpulkan EXP, koin & diamond → Belanja di toko → Buka avatar keren → Naik level!</p>
                 <a href="#kelas" class="btn-primary">🚀 Mulai Sekarang</a>
             </div>
         </div>
@@ -2092,10 +2928,20 @@
     <nav class="bottom-nav">
         <a class="bn-item active" href="#dashboard"><span class="ic">🏠</span>Home</a>
         <a class="bn-item" href="#kelas"><span class="ic">📚</span>Kelas</a>
-        <a class="bn-item" href="#belajar"><span class="ic">📖</span>Belajar</a>
-        <a class="bn-item" href="#latihan"><span class="ic">⚔️</span>Latihan</a>
+        <a class="bn-item" href="#latihan"><span class="ic">📝</span>Latihan</a>
+        <a class="bn-item" href="#battle"><span class="ic">⚔️</span>Battle</a>
+        <a class="bn-item" href="#toko"><span class="ic">🛒</span>Toko</a>
         <a class="bn-item" href="#profile"><span class="ic">👤</span>Profil</a>
     </nav>
+
+    <!-- ===== ACHIEVEMENT TOAST ===== -->
+    <div class="ach-toast" id="achToast">
+        <div class="ic">🏆</div>
+        <div>
+            <div class="tt">ACHIEVEMENT UNLOCKED</div>
+            <div class="nm" id="achToastName">First Step</div>
+        </div>
+    </div>
 
     <!-- ===== AVATAR SELECTOR MODAL ===== -->
     <div class="modal-overlay" id="avatarModal">
@@ -2174,17 +3020,40 @@
             { emoji: '⭐', name: 'Bintang', levelReq: 15 },
         ];
 
+        // Item-item toko: bingkai avatar, tema HUD, booster
+        const SHOP_ITEMS = [
+            { id: 'frame_perunggu', type: 'frame', cssClass: 'frame-perunggu', icon: '🥉', name: 'Bingkai Perunggu', desc: 'Bingkai avatar warna perunggu.', cost: 50, currency: 'coin' },
+            { id: 'frame_perak', type: 'frame', cssClass: 'frame-perak', icon: '🥈', name: 'Bingkai Perak', desc: 'Bingkai avatar berkilau perak.', cost: 120, currency: 'coin' },
+            { id: 'frame_emas', type: 'frame', cssClass: 'frame-emas', icon: '🥇', name: 'Bingkai Emas', desc: 'Bingkai avatar mewah warna emas.', cost: 250, currency: 'coin' },
+            { id: 'frame_pelangi', type: 'frame', cssClass: 'frame-pelangi', icon: '🌈', name: 'Bingkai Pelangi', desc: 'Bingkai animasi warna-warni langka!', cost: 8, currency: 'diamond' },
+            { id: 'theme_malam', type: 'theme', dataTheme: 'malam', icon: '🌙', name: 'Tema Malam', desc: 'HUD gelap elegan bertema malam.', cost: 80, currency: 'coin' },
+            { id: 'theme_laut', type: 'theme', dataTheme: 'laut', icon: '🌊', name: 'Tema Laut', desc: 'HUD biru segar bertema samudra.', cost: 80, currency: 'coin' },
+            { id: 'theme_sunset', type: 'theme', dataTheme: 'sunset', icon: '🌅', name: 'Tema Sunset', desc: 'HUD hangat bertema matahari terbenam.', cost: 80, currency: 'coin' },
+            { id: 'theme_hutan', type: 'theme', dataTheme: 'hutan', icon: '🌲', name: 'Tema Hutan', desc: 'HUD hijau menyegarkan bertema hutan.', cost: 3, currency: 'diamond' },
+            { id: 'boost_exp_small', type: 'booster', icon: '⚡', name: 'Booster EXP Kecil', desc: 'Langsung dapat +30 EXP instan.', cost: 40, currency: 'coin', consumable: true, effect: { exp: 30 } },
+            { id: 'boost_exp_big', type: 'booster', icon: '🚀', name: 'Booster EXP Besar', desc: 'Langsung dapat +100 EXP instan.', cost: 4, currency: 'diamond', consumable: true, effect: { exp: 100 } },
+            { id: 'boost_coin', type: 'booster', icon: '💰', name: 'Kantong Koin', desc: 'Tukar 2 diamond untuk 60 koin instan.', cost: 2, currency: 'diamond', consumable: true, effect: { coin: 60 } },
+        ];
+
         const ACHIEVEMENTS = [
-            { id: 1, icon: '🏆', name: 'FIRST STEP', desc: 'Jawab 1 soal pertama', unlocked: false },
-            { id: 2, icon: '🔥', name: 'STREAK MASTER', desc: '7 hari streak', unlocked: false },
-            { id: 3, icon: '🎯', name: 'PERFECT', desc: 'Nilai 100% di quiz', unlocked: false },
-            { id: 4, icon: '⚡', name: 'SPEED SOLVER', desc: 'Jawab 50 soal', unlocked: false },
-            { id: 5, icon: '👑', name: 'MATH MASTER', desc: 'Level 10+', unlocked: false },
-            { id: 6, icon: '🎨', name: 'AVATAR COLLECTOR', desc: 'Buka 5 avatar', unlocked: false },
+            { id: 1, icon: '🏆', name: 'FIRST STEP', desc: 'Jawab 1 soal pertama', unlocked: false, coinReward: 10 },
+            { id: 2, icon: '🔥', name: 'STREAK MASTER', desc: '7 hari streak', unlocked: false, coinReward: 20 },
+            { id: 3, icon: '🎯', name: 'PERFECT', desc: 'Nilai 100% di quiz', unlocked: false, coinReward: 30 },
+            { id: 4, icon: '⚡', name: 'SPEED SOLVER', desc: 'Jawab 50 soal', unlocked: false, coinReward: 40 },
+            { id: 5, icon: '👑', name: 'MATH MASTER', desc: 'Level 10+', unlocked: false, coinReward: 100 },
+            { id: 6, icon: '🎨', name: 'AVATAR COLLECTOR', desc: 'Buka 5 avatar', unlocked: false, coinReward: 30 },
+            { id: 7, icon: '📚', name: 'RAJIN BELAJAR', desc: 'Buka 5 materi berbeda', unlocked: false, coinReward: 25 },
+            { id: 8, icon: '👾', name: 'BOSS SLAYER', desc: 'Kalahkan 3 boss', unlocked: false, coinReward: 60 },
+            { id: 9, icon: '🪙', name: 'KAYA RAYA', desc: 'Kumpulkan 500 koin', unlocked: false, coinReward: 0 },
+            { id: 10, icon: '💎', name: 'DIAMOND HUNTER', desc: 'Kumpulkan 10 diamond', unlocked: false, coinReward: 20 },
+            { id: 11, icon: '🛍️', name: 'SHOPAHOLIC', desc: 'Beli 3 item di toko', unlocked: false, coinReward: 15 },
+            { id: 12, icon: '🔗', name: 'COMBO KING', desc: 'Raih combo 5x jawaban benar', unlocked: false, coinReward: 25 },
+            { id: 13, icon: '💯', name: 'CENTURY CLUB', desc: 'Jawab 100 soal', unlocked: false, coinReward: 80 },
+            { id: 14, icon: '🧠', name: 'MULTI TALENTA', desc: 'Selesaikan materi dari SD, SMP, dan SMA', unlocked: false, coinReward: 50 },
         ];
 
         // ================================================================
-        // 2. MATERI & SOAL (disederhanakan agar tidak terlalu panjang)
+        // 2. MATERI & SOAL
         // ================================================================
 
         const MATERI_DATA = {
@@ -2195,9 +3064,11 @@
                     desc: 'Pelajari penjumlahan, pengurangan, perkalian, dan pembagian.',
                     content: `
                         <h3>📌 Operasi Bilangan Dasar</h3>
-                        <p>Ada 4 operasi dasar: <b>+</b> (penjumlahan), <b>−</b> (pengurangan), <b>×</b> (perkalian), dan <b>÷</b> (pembagian).</p>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>25 + 37 = 62</b></p></div>
-                        <div class="tip">💡 <b>Tips:</b> Perkalian dengan 10 = tambahkan 0 di belakang.</div>
+                        <p>Ada 4 operasi dasar: <b>+</b> (penjumlahan), <b>−</b> (pengurangan), <b>×</b> (perkalian), dan <b>÷</b> (pembagian). Urutan pengerjaan mengikuti aturan <b>KaBaTaKuJumKu</b>: Kurung, Pangkat, Kali/Bagi (kiri ke kanan), Jumlah/Kurang (kiri ke kanan).</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>25 + 37 = 62</b></p><p><b>8 × 5 − 2 = 38</b> (kalikan dulu: 40, baru kurangi: 38)</p></div>
+                        <div class="rumus">(a + b) × c = a×c + b×c</div>
+                        <div class="tip">💡 <b>Tips:</b> Perkalian dengan 10 = tambahkan 0 di belakang. Perkalian dengan 100 = tambahkan dua 0.</div>
+                        <div class="salah-kaprah">⚠️ <b>Hati-hati:</b> Kalikan/bagi dulu sebelum menjumlah/mengurangi jika tidak ada tanda kurung!</div>
                     `
                 },
                 'sd2': {
@@ -2206,9 +3077,11 @@
                     desc: 'Pelajari operasi penjumlahan dan pengurangan pecahan.',
                     content: `
                         <h3>📌 Pecahan</h3>
-                        <p>Pecahan adalah bagian dari keseluruhan: <b>a/b</b>.</p>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = 3/4</b></p></div>
-                        <div class="tip">💡 <b>Tips:</b> Samakan penyebut sebelum menjumlahkan!</div>
+                        <p>Pecahan adalah bagian dari keseluruhan, ditulis <b>a/b</b> di mana a = pembilang, b = penyebut. Untuk menjumlah/mengurangi pecahan, penyebutnya harus sama dulu (samakan dengan KPK).</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = 2/4 + 1/4 = 3/4</b></p></div>
+                        <div class="rumus">a/b × c/d = (a×c) / (b×d)</div>
+                        <div class="tip">💡 <b>Tips:</b> Samakan penyebut sebelum menjumlahkan atau mengurangkan!</div>
+                        <div class="salah-kaprah">⚠️ <b>Hati-hati:</b> Membagi pecahan = kalikan dengan kebalikan (balik pembilang & penyebut pecahan kedua).</div>
                     `
                 },
                 'sd3': {
@@ -2217,9 +3090,36 @@
                     desc: 'Pelajari cara menghitung persentase.',
                     content: `
                         <h3>📌 Persentase</h3>
-                        <p>Persentase = (Nilai / Total) × 100%</p>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = 20</b></p></div>
-                        <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat.</div>
+                        <p>Persentase artinya "per seratus". Rumus: Persentase = (Nilai / Total) × 100%.</p>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = 80 × 25/100 = 20</b></p></div>
+                        <div class="rumus">Nilai = Persen/100 × Total</div>
+                        <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat, 10% = geser koma satu angka ke kiri.</div>
+                    `
+                },
+                'sd4': {
+                    name: 'Bangun Ruang',
+                    icon: '📦',
+                    desc: 'Pelajari volume dan luas permukaan kubus, balok, dan tabung.',
+                    content: `
+                        <h3>📌 Bangun Ruang</h3>
+                        <p>Bangun ruang punya volume (isi ruang) dan luas permukaan (luas seluruh sisi).</p>
+                        <div class="rumus">Kubus: V = s³, Luas Permukaan = 6s²</div>
+                        <div class="rumus">Balok: V = p × l × t</div>
+                        <div class="rumus">Tabung: V = π × r² × t</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Kubus s=4cm → V = 4³ = 64 cm³</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Satuan volume selalu pangkat 3 (cm³, m³), satuan luas pangkat 2 (cm², m²).</div>
+                    `
+                },
+                'sd5': {
+                    name: 'Pengukuran & Satuan',
+                    icon: '⏱️',
+                    desc: 'Pelajari konversi satuan waktu, panjang, berat, dan kecepatan.',
+                    content: `
+                        <h3>📌 Pengukuran & Satuan</h3>
+                        <p>Satuan panjang: km-hm-dam-m-dm-cm-mm (setiap turun 1 tangga ×10). Kecepatan = Jarak ÷ Waktu.</p>
+                        <div class="rumus">Kecepatan (v) = Jarak (s) ÷ Waktu (t)</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Jarak 120 km ditempuh 2 jam → v = 60 km/jam</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> 1 jam = 60 menit, 1 menit = 60 detik. Naik tangga satuan panjang = bagi 10, turun tangga = kali 10.</div>
                     `
                 }
             },
@@ -2230,20 +3130,23 @@
                     desc: 'Pelajari persamaan linear satu variabel.',
                     content: `
                         <h3>📌 Aljabar</h3>
-                        <p>Aljabar menggunakan huruf untuk mewakili angka yang belum diketahui.</p>
+                        <p>Aljabar menggunakan huruf (variabel) untuk mewakili angka yang belum diketahui. Tujuannya adalah mengisolasi variabel di satu sisi.</p>
                         <div class="rumus">ax + b = c → x = (c - b) / a</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16 → x = 5</b></p></div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16 → 2x = 10 → x = 5</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Apa pun yang dilakukan di satu sisi persamaan, harus dilakukan juga di sisi lain agar tetap seimbang.</div>
                     `
                 },
                 'smp2': {
                     name: 'Geometri',
                     icon: '📐',
-                    desc: 'Pelajari rumus luas dan keliling bangun datar.',
+                    desc: 'Pelajari rumus luas dan keliling bangun datar & ruang.',
                     content: `
-                        <h3>📌 Bangun Datar</h3>
+                        <h3>📌 Bangun Datar & Ruang</h3>
                         <div class="rumus">Persegi: L = s², K = 4s</div>
                         <div class="rumus">Lingkaran: L = πr², K = 2πr</div>
+                        <div class="rumus">Segitiga: L = ½ × alas × tinggi</div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Luas persegi s=8cm → 64 cm²</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Gunakan π ≈ 22/7 jika jari-jari kelipatan 7, atau π ≈ 3,14 untuk angka lain.</div>
                     `
                 },
                 'smp3': {
@@ -2252,8 +3155,32 @@
                     desc: 'Pelajari mean, median, dan modus.',
                     content: `
                         <h3>📌 Ukuran Pemusatan Data</h3>
-                        <ul><li><b>Mean</b>: Jumlah data ÷ Banyak data</li><li><b>Median</b>: Nilai tengah</li><li><b>Modus</b>: Nilai paling sering</li></ul>
+                        <ul><li><b>Mean</b>: Jumlah data ÷ Banyak data</li><li><b>Median</b>: Nilai tengah setelah data diurutkan</li><li><b>Modus</b>: Nilai yang paling sering muncul</li></ul>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Data 5,7,8,6,9 → Mean = 7</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Selalu urutkan data dulu sebelum mencari median!</div>
+                    `
+                },
+                'smp4': {
+                    name: 'SPLDV',
+                    icon: '🔀',
+                    desc: 'Pelajari sistem persamaan linear dua variabel.',
+                    content: `
+                        <h3>📌 Sistem Persamaan Linear Dua Variabel</h3>
+                        <p>SPLDV terdiri dari dua persamaan dengan dua variabel (biasanya x dan y) yang diselesaikan bersamaan, menggunakan metode substitusi atau eliminasi.</p>
+                        <div class="rumus">x + y = 7 dan x − y = 1 → x = 4, y = 3</div>
+                        <div class="contoh"><div class="label">Contoh (Eliminasi):</div><p><b>Jumlahkan kedua persamaan untuk hilangkan y: 2x = 8 → x = 4</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Pilih metode eliminasi jika koefisien salah satu variabel mudah disamakan atau berlawanan tanda.</div>
+                    `
+                },
+                'smp5': {
+                    name: 'Bilangan Berpangkat & Akar',
+                    icon: '√',
+                    desc: 'Pelajari operasi eksponen dan bentuk akar.',
+                    content: `
+                        <h3>📌 Bilangan Berpangkat & Bentuk Akar</h3>
+                        <div class="rumus">aᵐ × aⁿ = aᵐ⁺ⁿ &nbsp;&nbsp; aᵐ ÷ aⁿ = aᵐ⁻ⁿ &nbsp;&nbsp; (aᵐ)ⁿ = aᵐˣⁿ</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>2³ × 2² = 2⁵ = 32</b></p><p><b>√16 = 4 (karena 4² = 16)</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> a⁰ = 1 untuk semua a ≠ 0. a⁻ⁿ = 1/aⁿ.</div>
                     `
                 }
             },
@@ -2264,8 +3191,12 @@
                     desc: 'Pelajari konsep fungsi dan limit.',
                     content: `
                         <h3>📌 Fungsi</h3>
-                        <p>Fungsi: f(x) = ax + b</p>
+                        <p>Fungsi f(x) memetakan setiap input x ke satu output. Bentuk umum linear: f(x) = ax + b.</p>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>f(x)=2x+3, f(5)=13</b></p></div>
+                        <h3>📌 Limit</h3>
+                        <p>Limit menunjukkan nilai yang didekati fungsi saat x mendekati suatu titik. Jika bentuk 0/0 muncul, faktorkan dulu.</p>
+                        <div class="rumus">lim(x→1) (x²-1)/(x-1) = lim(x→1) (x+1) = 2</div>
+                        <div class="tip">💡 <b>Tips:</b> Substitusi langsung dulu; jika hasilnya 0/0, gunakan pemfaktoran atau L'Hopital.</div>
                     `
                 },
                 'sma2': {
@@ -2274,8 +3205,10 @@
                     desc: 'Pelajari sinus, cosinus, dan tangen.',
                     content: `
                         <h3>📌 Trigonometri</h3>
-                        <ul><li><b>sin θ</b> = depan/miring</li><li><b>cos θ</b> = samping/miring</li><li><b>tan θ</b> = depan/samping</li></ul>
+                        <ul><li><b>sin θ</b> = depan/miring</li><li><b>cos θ</b> = samping/miring</li><li><b>tan θ</b> = depan/samping = sin θ/cos θ</li></ul>
                         <div class="rumus">sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1</div>
+                        <div class="rumus">sin²θ + cos²θ = 1</div>
+                        <div class="tip">💡 <b>Tips:</b> Hafalkan nilai sudut istimewa 0°, 30°, 45°, 60°, 90° — ini kunci banyak soal!</div>
                     `
                 },
                 'sma3': {
@@ -2286,12 +3219,40 @@
                         <h3>📌 Matriks</h3>
                         <div class="rumus">det [[a,b],[c,d]] = a×d - b×c</div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>det [[1,2],[3,4]] = -2</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Penjumlahan/pengurangan matriks dilakukan elemen per elemen pada posisi yang sama. Ukuran matriks harus sama.</div>
+                    `
+                },
+                'sma4': {
+                    name: 'Barisan & Deret',
+                    icon: '🔢',
+                    desc: 'Pelajari barisan aritmetika dan geometri.',
+                    content: `
+                        <h3>📌 Barisan Aritmetika</h3>
+                        <p>Selisih antar suku berurutan selalu sama (disebut beda, b).</p>
+                        <div class="rumus">Un = a + (n-1)b</div>
+                        <h3>📌 Barisan Geometri</h3>
+                        <p>Rasio antar suku berurutan selalu sama (disebut rasio, r).</p>
+                        <div class="rumus">Un = a × r⁽ⁿ⁻¹⁾</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>2,5,8,11,... → a=2, b=3, U5 = 2+(5-1)3 = 14</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Jika selisih tetap → aritmetika. Jika perbandingan tetap → geometri.</div>
+                    `
+                },
+                'sma5': {
+                    name: 'Peluang',
+                    icon: '🎲',
+                    desc: 'Pelajari dasar teori peluang (probabilitas).',
+                    content: `
+                        <h3>📌 Peluang</h3>
+                        <p>Peluang suatu kejadian A adalah perbandingan banyak kejadian A dengan banyak seluruh kejadian yang mungkin (ruang sampel).</p>
+                        <div class="rumus">P(A) = n(A) / n(S)</div>
+                        <div class="contoh"><div class="label">Contoh:</div><p><b>Peluang dadu muncul angka genap: n(A)=3 {2,4,6}, n(S)=6 → P = 3/6 = 1/2</b></p></div>
+                        <div class="tip">💡 <b>Tips:</b> Nilai peluang selalu antara 0 dan 1. P=0 mustahil terjadi, P=1 pasti terjadi.</div>
                     `
                 }
             }
         };
 
-        // Soal generators (disederhanakan)
+        // Soal generators
         function generateSoalSD1() {
             return [
                 { q: '25 + 37 = ?', o: ['62', '52', '72', '61'], c: 0, exp: '25 + 37 = 62' },
@@ -2304,6 +3265,11 @@
                 { q: '3/4 - 1/4 = ?', o: ['1/2', '1/4', '2/4', '3/8'], c: 0, exp: '3/4-1/4=2/4=1/2' },
                 { q: '15% dari 200 = ?', o: ['20', '30', '40', '25'], c: 1, exp: '200×15/100=30' },
                 { q: '120 × 5 = ?', o: ['500', '600', '700', '550'], c: 1, exp: '120×5=600' },
+                { q: '6 × (4 + 3) = ?', o: ['40', '42', '44', '46'], c: 1, exp: '4+3=7, 6×7=42' },
+                { q: '100 - 8 × 7 = ?', o: ['42', '44', '46', '48'], c: 1, exp: '8×7=56, 100-56=44' },
+                { q: '9 × 9 = ?', o: ['81', '72', '99', '89'], c: 0, exp: '9×9=81' },
+                { q: '144 ÷ 12 = ?', o: ['10', '11', '12', '13'], c: 2, exp: '144÷12=12' },
+                { q: '250 + 175 = ?', o: ['415', '425', '435', '445'], c: 1, exp: '250+175=425' },
             ];
         }
 
@@ -2319,6 +3285,10 @@
                     exp: '2 1/4=9/4, 1 1/2=3/2=6/4, 9/4-6/4=3/4' },
                 { q: '3/8 + 5/8 = ?', o: ['1', '6/8', '7/8', '1/2'], c: 0, exp: '3/8+5/8=8/8=1' },
                 { q: '7/10 - 3/10 = ?', o: ['2/5', '5/10', '3/5', '2/10'], c: 0, exp: '7/10-3/10=4/10=2/5' },
+                { q: '1/4 × 1/2 = ?', o: ['1/6', '1/8', '2/6', '1/4'], c: 1, exp: '1/4×1/2=1/8' },
+                { q: '3/4 ÷ 1/2 = ?', o: ['3/8', '1 1/2', '3/2', '2/3'], c: 1, exp: '3/4÷1/2=3/4×2=3/2=1 1/2' },
+                { q: '5/6 - 1/3 = ?', o: ['1/2', '2/3', '1/3', '4/6'], c: 0, exp: '1/3=2/6, 5/6-2/6=3/6=1/2' },
+                { q: '2/5 + 3/10 = ?', o: ['1/2', '5/15', '7/10', '5/10'], c: 2, exp: '2/5=4/10, 4/10+3/10=7/10' },
             ];
         }
 
@@ -2332,6 +3302,34 @@
                 { q: '5% dari 600 = ?', o: ['20', '25', '30', '35'], c: 2, exp: '600×5/100=30' },
                 { q: '120% dari 50 = ?', o: ['50', '55', '60', '65'], c: 2, exp: '50×120/100=60' },
                 { q: '8% dari 150 = ?', o: ['10', '11', '12', '13'], c: 2, exp: '150×8/100=12' },
+                { q: '40 dari 200 = berapa persen?', o: ['15%', '20%', '25%', '30%'], c: 1, exp: '40/200×100%=20%' },
+                { q: '60% dari 90 = ?', o: ['50', '52', '54', '56'], c: 2, exp: '90×60/100=54' },
+            ];
+        }
+
+        function generateSoalSD4() {
+            return [
+                { q: 'Volume kubus s=4cm?', o: ['48', '56', '64', '72'], c: 2, exp: 'V=4³=64 cm³' },
+                { q: 'Volume balok 5×4×3?', o: ['50', '55', '60', '65'], c: 2, exp: 'V=5×4×3=60 cm³' },
+                { q: 'Luas permukaan kubus s=3cm?', o: ['48', '52', '54', '56'], c: 2, exp: 'LP=6×3²=54 cm²' },
+                { q: 'Volume tabung r=7,t=10 (π=22/7)?', o: ['1400', '1450', '1540', '1600'], c: 2, exp: 'V=22/7×7²×10=1540 cm³' },
+                { q: 'Volume kubus s=6cm?', o: ['196', '206', '216', '226'], c: 2, exp: 'V=6³=216 cm³' },
+                { q: 'Volume balok 8×5×2?', o: ['70', '75', '80', '85'], c: 2, exp: 'V=8×5×2=80 cm³' },
+                { q: 'Luas permukaan balok 4×3×2?', o: ['48', '50', '52', '54'], c: 2, exp: 'LP=2(12+8+6)=52 cm²' },
+                { q: 'Volume kubus s=10cm?', o: ['800', '900', '1000', '1100'], c: 2, exp: 'V=10³=1000 cm³' },
+            ];
+        }
+
+        function generateSoalSD5() {
+            return [
+                { q: '2 jam = ? menit', o: ['100', '110', '120', '130'], c: 2, exp: '2×60=120 menit' },
+                { q: '3 km = ? m', o: ['300', '3000', '30000', '30'], c: 1, exp: '3km=3000m' },
+                { q: 'Jarak 100km, waktu 2 jam, kecepatan?', o: ['40km/j', '50km/j', '60km/j', '70km/j'], c: 1, exp: 'v=100/2=50km/jam' },
+                { q: '5000 gram = ? kg', o: ['3', '4', '5', '6'], c: 2, exp: '5000/1000=5kg' },
+                { q: 'Jarak 240km ditempuh dgn v=60km/j, waktu?', o: ['3jam', '4jam', '5jam', '6jam'], c: 1, exp: 't=240/60=4 jam' },
+                { q: '1.5 jam = ? menit', o: ['80', '90', '100', '110'], c: 1, exp: '1.5×60=90 menit' },
+                { q: '4500 m = ? km', o: ['4.5', '45', '0.45', '450'], c: 0, exp: '4500/1000=4.5km' },
+                { q: 'Kecepatan 80km/j selama 3 jam, jarak?', o: ['220km', '230km', '240km', '250km'], c: 2, exp: 's=80×3=240km' },
             ];
         }
 
@@ -2345,6 +3343,10 @@
                 { q: '6x - 4 = 2x + 12, x = ?', o: ['2', '3', '4', '5'], c: 2, exp: '4x=16 → x=4' },
                 { q: 'x/3 + 2 = 7, x = ?', o: ['12', '13', '14', '15'], c: 3, exp: 'x/3=5 → x=15' },
                 { q: '2x/3 = 8, x = ?', o: ['10', '11', '12', '13'], c: 2, exp: '2x=24 → x=12' },
+                { q: '7x - 2 = 5x + 10, x = ?', o: ['4', '5', '6', '7'], c: 2, exp: '2x=12 → x=6' },
+                { q: '3(x+2)=21, x = ?', o: ['3', '4', '5', '6'], c: 2, exp: '3x+6=21 → 3x=15 → x=5' },
+                { q: '10 - 2x = 4, x = ?', o: ['2', '3', '4', '5'], c: 1, exp: '-2x=-6 → x=3' },
+                { q: '4(2x-1)=28, x = ?', o: ['3', '4', '5', '6'], c: 1, exp: '8x-4=28 → 8x=32 → x=4' },
             ];
         }
 
@@ -2357,6 +3359,9 @@
                 { q: 'Keliling lingkaran r=14 (π=22/7)?', o: ['66', '77', '88', '99'], c: 2, exp: 'K=2×22/7×14=88 cm' },
                 { q: 'Volume kubus s=5?', o: ['100', '115', '125', '135'], c: 2, exp: 'V=5³=125 cm³' },
                 { q: 'Luas permukaan balok 6×4×3?', o: ['88', '98', '108', '118'], c: 2, exp: 'L=2(24+18+12)=108 cm²' },
+                { q: 'Luas trapesium a=8,b=12,t=5?', o: ['40', '45', '50', '55'], c: 2, exp: 'L=½×(8+12)×5=50 cm²' },
+                { q: 'Keliling segitiga sisi 5,6,7?', o: ['16', '17', '18', '19'], c: 2, exp: 'K=5+6+7=18 cm' },
+                { q: 'Luas belah ketupat d1=8,d2=6?', o: ['20', '22', '24', '26'], c: 2, exp: 'L=½×8×6=24 cm²' },
             ];
         }
 
@@ -2368,6 +3373,35 @@
                 { q: 'Mean 10,12,14,16,18?', o: ['12', '13', '14', '15'], c: 2, exp: '(10+12+14+16+18)/5=70/5=14' },
                 { q: 'Modus 1,2,2,3,3,3,4,4?', o: ['1', '2', '3', '4'], c: 2, exp: 'Nilai terbanyak adalah 3' },
                 { q: 'Median 5,6,7,8,9,10?', o: ['6.5', '7', '7.5', '8'], c: 2, exp: 'Median=(7+8)/2=7.5' },
+                { q: 'Mean 2,4,6,8,10?', o: ['5', '6', '7', '8'], c: 1, exp: '(2+4+6+8+10)/5=30/5=6' },
+                { q: 'Median 12,15,11,18,14?', o: ['12', '13', '14', '15'], c: 2, exp: 'Urutan:11,12,14,15,18 → median=14' },
+            ];
+        }
+
+        function generateSoalSMP4() {
+            return [
+                { q: 'x+y=7, x-y=1, x = ?', o: ['3', '4', '5', '6'], c: 1, exp: '2x=8 → x=4' },
+                { q: 'x+y=7, x-y=1, y = ?', o: ['2', '3', '4', '5'], c: 1, exp: 'x=4, y=7-4=3' },
+                { q: '2x+y=10, x+y=7, x = ?', o: ['2', '3', '4', '5'], c: 1, exp: 'Kurangi: x=3' },
+                { q: '2x+y=10, x+y=7, y = ?', o: ['3', '4', '5', '6'], c: 2, exp: 'x=3, y=7-3=4' },
+                { q: 'x+2y=8, x=2, y = ?', o: ['2', '3', '4', '5'], c: 1, exp: '2+2y=8 → y=3' },
+                { q: '3x+2y=16, x=4, y = ?', o: ['1', '2', '3', '4'], c: 1, exp: '12+2y=16 → y=2' },
+                { q: 'x-y=2, x+y=10, x = ?', o: ['4', '5', '6', '7'], c: 2, exp: '2x=12 → x=6' },
+                { q: 'x-y=2, x+y=10, y = ?', o: ['2', '3', '4', '5'], c: 2, exp: 'x=6, y=6-2=4' },
+            ];
+        }
+
+        function generateSoalSMP5() {
+            return [
+                { q: '2³ × 2² = ?', o: ['16', '24', '32', '64'], c: 2, exp: '2⁵=32' },
+                { q: '3⁴ ÷ 3² = ?', o: ['3', '6', '9', '12'], c: 2, exp: '3²=9' },
+                { q: '(2²)³ = ?', o: ['32', '48', '64', '72'], c: 2, exp: '2⁶=64' },
+                { q: '√64 = ?', o: ['6', '7', '8', '9'], c: 2, exp: '8²=64' },
+                { q: '√144 = ?', o: ['10', '11', '12', '13'], c: 2, exp: '12²=144' },
+                { q: '5⁰ = ?', o: ['0', '1', '5', '10'], c: 1, exp: 'a⁰=1' },
+                { q: '2⁻² = ?', o: ['1/2', '1/4', '2', '4'], c: 1, exp: '2⁻²=1/2²=1/4' },
+                { q: '√25 + √9 = ?', o: ['6', '7', '8', '9'], c: 2, exp: '5+3=8' },
+                { q: '4² × 4⁻¹ = ?', o: ['2', '3', '4', '5'], c: 2, exp: '4²⁻¹=4¹=4' },
             ];
         }
 
@@ -2379,6 +3413,8 @@
                 { q: 'lim x→2 (x²+3x-2)=?', o: ['6', '7', '8', '9'], c: 2, exp: '4+6-2=8' },
                 { q: 'lim x→1 (x²-1)/(x-1)=?', o: ['0', '1', '2', '3'], c: 2, exp: '(x²-1)/(x-1)=x+1, limit=2' },
                 { q: 'f(x)=x³-2x, f(-1)=?', o: ['0', '1', '2', '3'], c: 1, exp: '(-1)³-2(-1)=-1+2=1' },
+                { q: 'lim x→3 (x²-9)/(x-3)=?', o: ['4', '5', '6', '7'], c: 2, exp: '(x-3)(x+3)/(x-3)=x+3, limit=6' },
+                { q: 'f(x)=5x-1, f(4)=?', o: ['17', '18', '19', '20'], c: 2, exp: 'f(4)=20-1=19' },
             ];
         }
 
@@ -2391,6 +3427,9 @@
                     exp: 'cos²θ=1-(3/5)²=16/25, cosθ=4/5' },
                 { q: 'sin 45° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 2, exp: 'sin 45°=1/√2' },
                 { q: 'cos 30° = ?', o: ['0', '1/2', '1/√2', '√3/2'], c: 3, exp: 'cos 30°=√3/2' },
+                { q: 'sin 90° = ?', o: ['0', '1/2', '1', '√3/2'], c: 2, exp: 'sin 90°=1' },
+                { q: 'cos 0° = ?', o: ['0', '1/2', '1', '√3/2'], c: 2, exp: 'cos 0°=1' },
+                { q: 'tan 30° = ?', o: ['1/√3', '1/2', '1', '√3'], c: 0, exp: 'tan 30°=1/√3' },
             ];
         }
 
@@ -2408,6 +3447,32 @@
                 { q: 'A+B [[1,2],[3,4]]+[[5,6],[7,8]]', o: ['[[6,8],[10,12]]', '[[5,12],[21,32]]', '[[6,8],[8,10]]',
                         '[[4,6],[8,10]]'
                     ], c: 0, exp: 'A+B=[[6,8],[10,12]]' },
+                { q: 'det [[5,2],[3,1]] = ?', o: ['-1', '0', '1', '2'], c: 0, exp: 'det=5×1-2×3=-1' },
+            ];
+        }
+
+        function generateSoalSMA4() {
+            return [
+                { q: 'Barisan 2,5,8,11,... U6 = ?', o: ['15', '16', '17', '18'], c: 2, exp: 'a=2,b=3, U6=2+5×3=17' },
+                { q: 'Barisan 3,7,11,... beda = ?', o: ['2', '3', '4', '5'], c: 2, exp: 'b=7-3=4' },
+                { q: 'Barisan geometri 2,6,18,... rasio = ?', o: ['2', '3', '4', '6'], c: 1, exp: 'r=6/2=3' },
+                { q: 'Barisan geometri 3,6,12,... U5 = ?', o: ['36', '42', '48', '54'], c: 2, exp: 'a=3,r=2, U5=3×2⁴=48' },
+                { q: 'Barisan aritmetika a=5,b=2, U10 = ?', o: ['21', '22', '23', '24'], c: 2, exp: 'U10=5+9×2=23' },
+                { q: 'Deret 1+2+3+...+10 = ?', o: ['45', '50', '55', '60'], c: 2, exp: 'Sn=n(n+1)/2=10×11/2=55' },
+                { q: 'Barisan 10,7,4,... U8 = ?', o: ['-9', '-11', '-13', '-15'], c: 1, exp: 'a=10,b=-3, U8=10+7×(-3)=-11' },
+                { q: 'Barisan geometri a=4,r=2, U4 = ?', o: ['28', '30', '32', '34'], c: 2, exp: 'U4=4×2³=32' },
+            ];
+        }
+
+        function generateSoalSMA5() {
+            return [
+                { q: 'Peluang dadu muncul angka genap?', o: ['1/6', '1/3', '1/2', '2/3'], c: 2, exp: 'n(A)=3{2,4,6}, n(S)=6, P=1/2' },
+                { q: 'Peluang koin muncul angka?', o: ['1/4', '1/3', '1/2', '1'], c: 2, exp: 'n(A)=1, n(S)=2, P=1/2' },
+                { q: 'Peluang dadu muncul angka 5?', o: ['1/6', '1/5', '1/4', '1/3'], c: 0, exp: 'n(A)=1, n(S)=6, P=1/6' },
+                { q: 'Kotak isi 4 merah 6 biru, peluang ambil merah?', o: ['1/5', '2/5', '3/5', '4/5'], c: 1, exp: 'n(A)=4, n(S)=10, P=4/10=2/5' },
+                { q: 'Peluang dadu muncul angka >4?', o: ['1/6', '1/3', '1/2', '2/3'], c: 1, exp: 'n(A)=2{5,6}, n(S)=6, P=1/3' },
+                { q: '2 dadu dilempar, peluang jumlah=7?', o: ['1/6', '5/36', '1/9', '1/4'], c: 0, exp: 'n(A)=6 kombinasi, n(S)=36, P=6/36=1/6' },
+                { q: 'Kartu 52, peluang terambil As?', o: ['1/52', '1/26', '1/13', '1/4'], c: 2, exp: 'n(A)=4, n(S)=52, P=4/52=1/13' },
             ];
         }
 
@@ -2415,17 +3480,29 @@
             sd1: generateSoalSD1,
             sd2: generateSoalSD2,
             sd3: generateSoalSD3,
+            sd4: generateSoalSD4,
+            sd5: generateSoalSD5,
             smp1: generateSoalSMP1,
             smp2: generateSoalSMP2,
             smp3: generateSoalSMP3,
+            smp4: generateSoalSMP4,
+            smp5: generateSoalSMP5,
             sma1: generateSoalSMA1,
             sma2: generateSoalSMA2,
             sma3: generateSoalSMA3,
+            sma4: generateSoalSMA4,
+            sma5: generateSoalSMA5,
         };
 
         function getSoalForMaterial(materialId) {
             if (SOAL_MAP[materialId]) return SOAL_MAP[materialId]();
             return [];
+        }
+
+        function getAllSoalPool() {
+            let all = [];
+            Object.keys(SOAL_MAP).forEach(key => { all = all.concat(SOAL_MAP[key]()); });
+            return all;
         }
 
         // ================================================================
@@ -2436,6 +3513,8 @@
             name: 'DEKA',
             level: 1,
             exp: 80,
+            coins: 40,
+            diamonds: 2,
             avatar: '🧑‍🚀',
             customAvatars: [],
             streak: 7,
@@ -2443,15 +3522,24 @@
             soalBenar: 0,
             unlockedAchievements: [],
             unlockedAvatars: ['🧑‍🚀'],
+            visitedMaterials: [],
+            ownedItems: [],
+            equippedFrame: null,
+            equippedTheme: null,
             kelas: 'sd',
             materialId: 'sd1',
             bossHP: 100,
             bossDefeated: false,
+            bossesDefeatedCount: 0,
+            comboCount: 0,
+            maxCombo: 0,
             quizIndex: 0,
             quizAnswered: false,
             quizCorrect: 0,
             quizWrong: 0,
             isOnboarded: false,
+            shopTab: 'frame',
+            monstersDefeatedCount: 0,
         };
 
         // ================================================================
@@ -2471,10 +3559,15 @@
 
             heroLevel: $('#heroLevel'),
             heroExp: $('#heroExp'),
+            heroCoin: $('#heroCoin'),
+            heroDiamond: $('#heroDiamond'),
             heroSoal: $('#heroSoal'),
-            heroAvatarCount: $('#heroAvatarCount'),
             heroAvatar: $('#heroAvatarDisplay'),
 
+            navCoin: $('#navCoin'),
+            navDiamond: $('#navDiamond'),
+
+            hudCard: $('#hudCard'),
             hudAvatar: $('#hudAvatar'),
             hudName: $('#hudName'),
             hudLevel: $('#hudLevel'),
@@ -2482,6 +3575,8 @@
             hudExpFill: $('#hudExpFill'),
             hudExpLabel: $('#hudExpLabel'),
             hudStreak: $('#hudStreak'),
+            hudCoin: $('#hudCoin'),
+            hudDiamond: $('#hudDiamond'),
 
             classBtns: $$('.class-btn'),
             materialGrid: $('#materialGrid'),
@@ -2496,6 +3591,7 @@
             latihanSub: $('#latihanSub'),
             quizTag: $('#quizTag'),
             quizScore: $('#quizScore'),
+            quizCombo: $('#quizCombo'),
             quizProgress: $('#quizProgress'),
             quizQNum: $('#quizQNum'),
             quizQuestion: $('#quizQuestion'),
@@ -2514,17 +3610,27 @@
             bossNote: $('#bossNote'),
             bossAttackBtn: $('#bossAttackBtn'),
 
+            shopCoin: $('#shopCoin'),
+            shopDiamond: $('#shopDiamond'),
+            shopTabs: $('#shopTabs'),
+            shopGrid: $('#shopGrid'),
+
             achGrid: $('#achGrid'),
+            achToast: $('#achToast'),
+            achToastName: $('#achToastName'),
 
             profileAvatar: $('#profileAvatar'),
             profileName: $('#profileName'),
             profileTitle: $('#profileTitle'),
             pExp: $('#pExp'),
+            pCoin: $('#pCoin'),
+            pDiamond: $('#pDiamond'),
             pSoal: $('#pSoal'),
             pBenar: $('#pBenar'),
             pAch: $('#pAch'),
             pLevel: $('#pLevel'),
             pAvatarCount: $('#pAvatarCount'),
+            pItems: $('#pItems'),
 
             avatarModal: $('#avatarModal'),
             avatarGrid: $('#avatarGrid'),
@@ -2605,16 +3711,58 @@
                     newAvatars.forEach(a => {
                         if (!state.unlockedAvatars.includes(a.emoji)) state.unlockedAvatars.push(a.emoji);
                     });
+                    state.diamonds += 1;
                     showLevelUpModal(state.level);
                     leveled = true;
-                    if (state.level >= 10 && !state.unlockedAchievements.includes(5))
-                        state.unlockedAchievements.push(5);
-                    if (getAvatarCount() >= 5 && !state.unlockedAchievements.includes(6))
-                        state.unlockedAchievements.push(6);
+                    checkAchievement(5, state.level >= 10);
+                    checkAchievement(6, getAvatarCount() >= 5);
                 } else break;
             }
             updateUI();
             return leveled;
+        }
+
+        function addCoins(amount, sourceEl) {
+            state.coins += amount;
+            if (sourceEl) spawnCoinPop(sourceEl, `+${amount} 🪙`);
+            checkAchievement(9, state.coins >= 500);
+            updateUI();
+        }
+
+        function addDiamonds(amount) {
+            state.diamonds += amount;
+            checkAchievement(10, state.diamonds >= 10);
+            updateUI();
+        }
+
+        function spawnCoinPop(refEl, text) {
+            try {
+                const rect = refEl.getBoundingClientRect();
+                const p = document.createElement('div');
+                p.className = 'coin-pop';
+                p.textContent = text;
+                p.style.left = (rect.left + rect.width / 2 - 20) + 'px';
+                p.style.top = (rect.top) + 'px';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1200);
+            } catch (e) {}
+        }
+
+        function checkAchievement(id, condition) {
+            if (!condition) return;
+            if (state.unlockedAchievements.includes(id)) return;
+            state.unlockedAchievements.push(id);
+            const ach = ACHIEVEMENTS.find(a => a.id === id);
+            if (ach && ach.coinReward) state.coins += ach.coinReward;
+            showAchToast(ach);
+            renderAchievements();
+        }
+
+        function showAchToast(ach) {
+            if (!ach) return;
+            dom.achToastName.textContent = `${ach.icon} ${ach.name}${ach.coinReward ? ' (+' + ach.coinReward + ' koin)' : ''}`;
+            dom.achToast.classList.add('show');
+            setTimeout(() => dom.achToast.classList.remove('show'), 2800);
         }
 
         // ================================================================
@@ -2654,7 +3802,7 @@
             dom.onboardingOverlay.classList.add('hidden');
             updateUI();
             setTimeout(() => {
-                alert(`Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu sekarang!`);
+                alert(`Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu, kumpulkan koin & diamond, lalu belanja di Toko!`);
             }, 400);
         }
 
@@ -2681,43 +3829,60 @@
             // Hero
             dom.heroLevel.textContent = state.level;
             dom.heroExp.textContent = state.exp;
+            dom.heroCoin.textContent = `🪙${state.coins}`;
+            dom.heroDiamond.textContent = `💎${state.diamonds}`;
             dom.heroSoal.textContent = state.soalTerjawab;
-            dom.heroAvatarCount.textContent = avatarCount;
             dom.heroAvatar.textContent = state.avatar;
+
+            // Nav wallet
+            dom.navCoin.textContent = state.coins;
+            dom.navDiamond.textContent = state.diamonds;
 
             // HUD
             dom.hudAvatar.textContent = state.avatar;
+            dom.hudAvatar.className = 'hud-avatar' + (state.equippedFrame ? ' ' + state.equippedFrame : '');
             dom.hudName.textContent = state.name;
             dom.hudLevel.textContent = `LEVEL ${String(state.level).padStart(2, '0')}`;
             dom.hudTitle.textContent = data ? data.title : 'Number Novice';
             dom.hudExpFill.style.width = `${progress}%`;
             dom.hudExpLabel.textContent = `${state.exp} / ${totalExp} EXP`;
             dom.hudStreak.textContent = state.streak;
+            dom.hudCoin.textContent = state.coins;
+            dom.hudDiamond.textContent = state.diamonds;
+            if (state.equippedTheme) dom.hudCard.setAttribute('data-theme', state.equippedTheme);
+            else dom.hudCard.removeAttribute('data-theme');
 
             // Profile
             dom.profileAvatar.textContent = state.avatar;
+            dom.profileAvatar.className = 'profile-avatar' + (state.equippedFrame ? ' ' + state.equippedFrame : '');
             dom.profileName.textContent = state.name;
             dom.profileTitle.textContent = `LEVEL ${String(state.level).padStart(2, '0')} · ${data ? data.title : 'Number Novice'}`;
             dom.pExp.textContent = `⚡ ${state.exp}`;
+            dom.pCoin.textContent = `🪙 ${state.coins}`;
+            dom.pDiamond.textContent = `💎 ${state.diamonds}`;
             dom.pSoal.textContent = `🎯 ${state.soalTerjawab}`;
             dom.pBenar.textContent = `✅ ${state.soalBenar}`;
             dom.pAch.textContent = `🏆 ${state.unlockedAchievements.length}`;
             dom.pLevel.textContent = `📈 ${state.level}`;
             dom.pAvatarCount.textContent = `👤 ${avatarCount}`;
+            dom.pItems.textContent = `🎒 ${state.ownedItems.length}`;
+
+            // Shop wallet
+            dom.shopCoin.textContent = state.coins;
+            dom.shopDiamond.textContent = state.diamonds;
 
             // Quiz score
             dom.quizScore.textContent = `Benar: ${state.quizCorrect} | Salah: ${state.quizWrong}`;
+            if (state.comboCount >= 2) {
+                dom.quizCombo.style.display = 'inline-block';
+                dom.quizCombo.textContent = `🔥 Combo x${state.comboCount}`;
+            } else {
+                dom.quizCombo.style.display = 'none';
+            }
 
             // Boss
             dom.bossHpFill.style.width = `${state.bossHP}%`;
             dom.bossHpPct.textContent = `${state.bossHP}%`;
-            if (state.bossHP <= 0 && !state.bossDefeated) {
-                state.bossDefeated = true;
-                dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
-                dom.bossEmoji.textContent = '💀';
-                addExp(100);
-                confettiBurst();
-            }
 
             const bossNames = ['Number Goblin', 'Fraction Fiend', 'Decimal Demon', 'Equation Wraith', 'Angle Assassin',
                 'Polynomial Predator', 'Sine Shadow', 'Log Lich', 'Matrix Overlord', 'Derivative Dragon',
@@ -2731,6 +3896,9 @@
             renderAchievements();
             renderMaterials();
             renderAvatarGrid();
+            renderShop();
+            if (typeof renderMonsterGrid === 'function') renderMonsterGrid();
+            if (typeof updateBattleWalletDisplays === 'function') updateBattleWalletDisplays();
 
             if (!state.isOnboarded) {
                 dom.onboardingAvatarPreview.textContent = state.avatar;
@@ -2749,10 +3917,11 @@
                 const badge = state.kelas === 'sd' ? 'badge-sd' : state.kelas === 'smp' ? 'badge-smp' : 'badge-sma';
                 const label = state.kelas === 'sd' ? 'SD' : state.kelas === 'smp' ? 'SMP' : 'SMA';
                 const soalCount = getSoalForMaterial(m.id).length;
+                const visited = state.visitedMaterials.includes(m.id) ? ' ✓' : '';
                 html += `
                     <div class="material-card ${active}" data-id="${m.id}">
                         <div class="icon">${m.icon}</div>
-                        <h4>${m.name}</h4>
+                        <h4>${m.name}${visited}</h4>
                         <p>${m.desc}</p>
                         <span class="badge ${badge}">${label}</span>
                         <p style="font-size:.7rem;color:var(--purple);margin-top:6px;">${soalCount} soal</p>
@@ -2789,8 +3958,17 @@
             `;
 
             dom.latihanTitle.textContent = `Soal Latihan - ${data.name}`;
-            dom.latihanSub.textContent = `Kerjakan soal tentang ${data.name} untuk mendapatkan EXP!`;
+            dom.latihanSub.textContent = `Kerjakan soal tentang ${data.name} untuk mendapatkan EXP dan koin!`;
             dom.quizTag.textContent = `📝 ${data.name}`;
+
+            if (!state.visitedMaterials.includes(state.materialId)) {
+                state.visitedMaterials.push(state.materialId);
+                checkAchievement(7, state.visitedMaterials.length >= 5);
+                const hasSD = state.visitedMaterials.some(id => id.startsWith('sd'));
+                const hasSMP = state.visitedMaterials.some(id => id.startsWith('smp'));
+                const hasSMA = state.visitedMaterials.some(id => id.startsWith('sma'));
+                checkAchievement(14, hasSD && hasSMP && hasSMA);
+            }
         }
 
         function renderAchievements() {
@@ -2804,6 +3982,7 @@
                         <h4>${ach.name}</h4>
                         <p>${ach.desc}</p>
                         ${unlocked ? '<span style="font-size:.65rem;color:var(--green);">✅ Unlocked</span>' : '<span style="font-size:.65rem;color:#A199CC;">🔒 Locked</span>'}
+                        ${ach.coinReward ? `<span class="ach-reward">🪙 +${ach.coinReward}</span>` : ''}
                     </div>
                 `;
             });
@@ -2857,6 +4036,93 @@
             });
         }
 
+        function renderShop() {
+            const items = SHOP_ITEMS.filter(i => i.type === state.shopTab);
+            let html = '';
+            items.forEach(item => {
+                const owned = state.ownedItems.includes(item.id);
+                const equipped = (item.type === 'frame' && state.equippedFrame === item.cssClass) ||
+                    (item.type === 'theme' && state.equippedTheme === item.dataTheme);
+                const canAfford = item.currency === 'coin' ? state.coins >= item.cost : state.diamonds >= item.cost;
+                const priceLabel = item.currency === 'coin' ? `🪙 ${item.cost}` : `💎 ${item.cost}`;
+
+                let actionHtml = '';
+                if (item.consumable) {
+                    actionHtml = `<button class="btn-coin" data-action="buy" data-id="${item.id}" ${!canAfford ? 'disabled' : ''}>Gunakan</button>`;
+                } else if (owned && item.type === 'frame') {
+                    actionHtml = equipped ?
+                        `<span class="equipped-tag">✅ Dipakai</span><button class="btn-equipped" data-action="unequip" data-id="${item.id}">Lepas</button>` :
+                        `<span class="owned-tag">🎒 Dimiliki</span><button class="btn-owned" data-action="equip" data-id="${item.id}">Pakai</button>`;
+                } else if (owned && item.type === 'theme') {
+                    actionHtml = equipped ?
+                        `<span class="equipped-tag">✅ Aktif</span><button class="btn-equipped" data-action="unequip" data-id="${item.id}">Nonaktifkan</button>` :
+                        `<span class="owned-tag">🎒 Dimiliki</span><button class="btn-owned" data-action="equip" data-id="${item.id}">Aktifkan</button>`;
+                } else {
+                    actionHtml = `<button class="btn-coin" data-action="buy" data-id="${item.id}" ${!canAfford ? 'disabled' : ''}>Beli</button>`;
+                }
+
+                html += `
+                    <div class="shop-item">
+                        <div class="icon">${item.icon}</div>
+                        <h4>${item.name}</h4>
+                        <p>${item.desc}</p>
+                        <div class="price ${item.currency}">${priceLabel}</div>
+                        ${actionHtml}
+                    </div>
+                `;
+            });
+            dom.shopGrid.innerHTML = html || `<p style="color:var(--ink-soft);">Belum ada item di kategori ini.</p>`;
+
+            dom.shopGrid.querySelectorAll('button[data-action]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const action = this.dataset.action;
+                    if (action === 'buy') purchaseItem(id);
+                    else if (action === 'equip') equipItem(id);
+                    else if (action === 'unequip') unequipItem(id);
+                });
+            });
+        }
+
+        function purchaseItem(id) {
+            const item = SHOP_ITEMS.find(i => i.id === id);
+            if (!item) return;
+            const balance = item.currency === 'coin' ? state.coins : state.diamonds;
+            if (balance < item.cost) { alert('Koin/diamond kamu belum cukup!'); return; }
+
+            if (item.currency === 'coin') state.coins -= item.cost;
+            else state.diamonds -= item.cost;
+
+            if (item.consumable) {
+                if (item.effect.exp) addExp(item.effect.exp);
+                if (item.effect.coin) state.coins += item.effect.coin;
+                confettiBurst();
+            } else {
+                state.ownedItems.push(id);
+                if (item.type === 'frame') state.equippedFrame = item.cssClass;
+                if (item.type === 'theme') state.equippedTheme = item.dataTheme;
+                checkAchievement(11, state.ownedItems.length >= 3);
+                confettiBurst();
+            }
+            updateUI();
+        }
+
+        function equipItem(id) {
+            const item = SHOP_ITEMS.find(i => i.id === id);
+            if (!item) return;
+            if (item.type === 'frame') state.equippedFrame = item.cssClass;
+            if (item.type === 'theme') state.equippedTheme = item.dataTheme;
+            updateUI();
+        }
+
+        function unequipItem(id) {
+            const item = SHOP_ITEMS.find(i => i.id === id);
+            if (!item) return;
+            if (item.type === 'frame') state.equippedFrame = null;
+            if (item.type === 'theme') state.equippedTheme = null;
+            updateUI();
+        }
+
         // ================================================================
         // 9. QUIZ
         // ================================================================
@@ -2881,6 +4147,7 @@
 
             state.quizCorrect = 0;
             state.quizWrong = 0;
+            state.comboCount = 0;
 
             dom.quizResult.classList.add('hidden');
             dom.quizNextBtn.classList.remove('show');
@@ -2943,37 +4210,42 @@
                         quizState.correct++;
                         state.quizCorrect++;
                         state.soalBenar++;
+                        state.comboCount++;
+                        state.maxCombo = Math.max(state.maxCombo, state.comboCount);
+                        checkAchievement(12, state.maxCombo >= 5);
+
+                        const comboBonus = state.comboCount >= 5 ? 5 : (state.comboCount >= 3 ? 3 : 0);
+                        const coinGain = 5 + comboBonus;
+
                         dom.quizFeedback.className = 'quiz-feedback correct';
-                        dom.quizFeedback.innerHTML = `✅ BENAR! <span class="expgain">+10 EXP</span>`;
+                        dom.quizFeedback.innerHTML = `✅ BENAR! <span class="expgain">+10 EXP</span> <span class="coingain">+${coinGain} 🪙</span>${comboBonus ? ' <span style="color:var(--orange);">🔥 Combo Bonus!</span>' : ''}`;
                         addExp(10);
+                        addCoins(coinGain, this);
                         confettiBurst();
 
-                        if (state.soalTerjawab >= 1 && !state.unlockedAchievements.includes(1))
-                            state.unlockedAchievements.push(1);
-                        if (state.soalTerjawab >= 50 && !state.unlockedAchievements.includes(4))
-                            state.unlockedAchievements.push(4);
+                        checkAchievement(1, state.soalTerjawab >= 1);
+                        checkAchievement(4, state.soalTerjawab >= 50);
+                        checkAchievement(13, state.soalTerjawab >= 100);
 
                         if (state.bossHP > 0) {
                             state.bossHP = Math.max(0, state.bossHP - 3);
                             dom.bossHpFill.style.width = `${state.bossHP}%`;
                             dom.bossHpPct.textContent = `${state.bossHP}%`;
-                            if (state.bossHP <= 0) {
-                                state.bossDefeated = true;
-                                dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
-                                dom.bossEmoji.textContent = '💀';
-                                addExp(100);
-                                confettiBurst();
+                            if (state.bossHP <= 0 && !state.bossDefeated) {
+                                defeatBoss();
                             }
                         }
                     } else {
                         quizState.wrong++;
                         state.quizWrong++;
+                        state.comboCount = 0;
                         dom.quizFeedback.className = 'quiz-feedback wrong';
                         dom.quizFeedback.innerHTML = `
-                            ❌ SALAH! <span class="expgain">+2 EXP</span>
+                            ❌ SALAH! <span class="expgain">+2 EXP</span> <span class="coingain">+1 🪙</span>
                             <span class="explanation">💡 Pembahasan: ${qData.exp || 'Coba periksa kembali perhitunganmu!'}</span>
                         `;
                         addExp(2);
+                        addCoins(1, this);
                     }
 
                     state.soalTerjawab++;
@@ -2987,6 +4259,18 @@
                     }, 1000);
                 });
             });
+        }
+
+        function defeatBoss() {
+            state.bossDefeated = true;
+            state.bossesDefeatedCount++;
+            dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP, +50 Koin, +1 Diamond!';
+            dom.bossEmoji.textContent = '💀';
+            addExp(100);
+            addCoins(50);
+            addDiamonds(1);
+            checkAchievement(8, state.bossesDefeatedCount >= 3);
+            confettiBurst();
         }
 
         function showQuizResult() {
@@ -3013,17 +4297,17 @@
             dom.quizResultText.innerHTML =
                 `${emoji} <br><strong>${msg}</strong><br><span style="font-size:.9rem;color:#B9B3E8;">Benar: ${quizState.correct} | Salah: ${quizState.wrong} | Nilai: ${pct}%</span>`;
 
-            if (pct === 100 && !state.unlockedAchievements.includes(3)) {
-                state.unlockedAchievements.push(3);
-                updateUI();
-            }
+            if (pct === 100) checkAchievement(3, true);
 
             if (pct >= 80) {
-                const bonus = pct === 100 ? 50 : 20;
-                addExp(bonus);
+                const bonusExp = pct === 100 ? 50 : 20;
+                const bonusCoin = pct === 100 ? 30 : 15;
+                addExp(bonusExp);
+                addCoins(bonusCoin);
                 dom.quizFeedback.className = 'quiz-feedback correct';
-                dom.quizFeedback.innerHTML = `🎉 Bonus EXP +${bonus} karena nilai bagus!`;
+                dom.quizFeedback.innerHTML = `🎉 Bonus +${bonusExp} EXP dan +${bonusCoin} 🪙 karena nilai bagus!`;
             }
+            updateUI();
         }
 
         // ================================================================
@@ -3042,7 +4326,7 @@
             dom.levelModalRewards.innerHTML = `
                 <div>🏆 New Badge Unlocked</div>
                 <div>${avatarMsg}</div>
-                <div>+50 Bonus EXP</div>
+                <div>💎 +1 Diamond Bonus</div>
             `;
             dom.levelModal.classList.add('show');
             confettiBurst();
@@ -3112,7 +4396,7 @@
 
         function setupBottomNav() {
             const bnItems = document.querySelectorAll('.bn-item');
-            const sections = ['dashboard', 'kelas', 'belajar', 'latihan', 'profile'];
+            const sections = ['dashboard', 'kelas', 'latihan', 'toko', 'profile'];
             const io = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
@@ -3162,18 +4446,15 @@
 
             dom.quizResetBtn.addEventListener('click', resetQuiz);
 
-            // === AVATAR - Perbaikan utama ada di sini ===
+            // === AVATAR ===
             dom.hudAvatar.addEventListener('click', openAvatarModal);
 
-            // Tombol "Pilih Avatar" di modal
             dom.avatarCloseBtn.addEventListener('click', function() {
-                // Ambil avatar yang dipilih dari yang active di grid
                 const selected = dom.avatarGrid.querySelector('.avatar-option.active');
                 if (selected) {
                     state.avatar = selected.dataset.avatar;
                     updateUI();
                 } else {
-                    // Jika tidak ada yang dipilih, gunakan yang pertama tidak terkunci
                     const firstUnlocked = dom.avatarGrid.querySelector('.avatar-option:not(.locked)');
                     if (firstUnlocked) {
                         state.avatar = firstUnlocked.dataset.avatar;
@@ -3183,7 +4464,6 @@
                 closeAvatarModal();
             });
 
-            // Klik di luar modal untuk close
             dom.avatarModal.addEventListener('click', function(e) {
                 if (e.target === this) closeAvatarModal();
             });
@@ -3207,33 +4487,46 @@
                 dom.bossHpFill.style.width = `${state.bossHP}%`;
                 dom.bossHpPct.textContent = `${state.bossHP}%`;
                 if (state.bossHP <= 0) {
-                    state.bossDefeated = true;
-                    dom.bossNote.textContent = '💥 BOSS DEFEATED! +100 EXP!';
-                    dom.bossEmoji.textContent = '💀';
-                    addExp(100);
-                    confettiBurst();
+                    defeatBoss();
                 } else {
                     dom.bossNote.textContent = `−10 HP! Boss tersisa ${state.bossHP} HP!`;
                 }
                 updateUI();
             });
 
-            if (state.streak >= 7 && !state.unlockedAchievements.includes(2)) {
-                state.unlockedAchievements.push(2);
-                updateUI();
-            }
+            // Shop tabs
+            dom.shopTabs.querySelectorAll('.shop-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    dom.shopTabs.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    state.shopTab = this.dataset.tab;
+                    renderShop();
+                });
+            });
+
+            if (state.streak >= 7) checkAchievement(2, true);
         }
 
         // ================================================================
-        // 16. INIT
+        // 16. NEXT BOSS RESET (biar boss baru muncul di level naik)
+        // ================================================================
+
+        const originalAddExp = addExp;
+
+        // ================================================================
+        // 17. INIT
         // ================================================================
 
         function init() {
             startOnboarding();
 
             state.exp = 80;
+            state.coins = 40;
+            state.diamonds = 2;
             state.unlockedAchievements = [];
             state.unlockedAvatars = ['🧑‍🚀'];
+            state.visitedMaterials = [];
+            state.ownedItems = [];
 
             const materials = getMateriList();
             if (materials.length > 0) state.materialId = materials[0].id;
@@ -3247,7 +4540,7 @@
             setupEventListeners();
 
             console.log('🚀 MathQuest initialized!');
-            console.log(`📊 Level: ${state.level}, EXP: ${state.exp}`);
+            console.log(`📊 Level: ${state.level}, EXP: ${state.exp}, Coins: ${state.coins}, Diamonds: ${state.diamonds}`);
             console.log(`👤 Nama: ${state.name}, Avatar: ${state.avatar}`);
         }
 
