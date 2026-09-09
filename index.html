@@ -3565,6 +3565,16 @@
       </div>
     </div>
 
+    <div class="game-toast" id="gameToast" data-tone="success">
+      <div class="game-toast-icon" id="gameToastIcon">✨</div>
+      <div class="game-toast-content">
+        <div class="game-toast-title" id="gameToastTitle">NOTIFIKASI</div>
+        <div class="game-toast-text" id="gameToastText">
+          Selamat datang, Pemain!
+        </div>
+      </div>
+    </div>
+
     <!-- ===== AVATAR SELECTOR MODAL ===== -->
     <div class="modal-overlay" id="avatarModal">
       <div class="modal-card">
@@ -5106,6 +5116,11 @@
         onboardingAvatarPreview: $("#onboardingAvatarPreview"),
         onboardingNamePreview: $("#onboardingNamePreview"),
 
+        gameToast: $("#gameToast"),
+        gameToastIcon: $("#gameToastIcon"),
+        gameToastTitle: $("#gameToastTitle"),
+        gameToastText: $("#gameToastText"),
+
         heroLevel: $("#heroLevel"),
         heroExp: $("#heroExp"),
         heroCoin: $("#heroCoin"),
@@ -5221,7 +5236,12 @@
         if (!data) return false;
         const pdfUrl = getMateriPdfUrl(state.materialId);
         if (!pdfUrl || pdfUrl === "#") {
-          alert("PDF belum tersedia untuk materi ini.");
+          showGameToast({
+            icon: "📄",
+            title: "PDF",
+            message: "PDF belum tersedia untuk materi ini.",
+            tone: "warning",
+          });
           return false;
         }
         window.open(pdfUrl, "_blank", "noopener,noreferrer");
@@ -5363,6 +5383,33 @@
         setTimeout(() => dom.achToast.classList.remove("show"), 2800);
       }
 
+      function showGameToast({
+        icon = "✨",
+        title = "NOTIFIKASI",
+        message = "",
+        tone = "success",
+      } = {}) {
+        if (!dom.gameToast) return;
+        dom.gameToastIcon.textContent = icon;
+        dom.gameToastTitle.textContent = title;
+        dom.gameToastText.textContent = message;
+        dom.gameToast.dataset.tone = tone;
+        dom.gameToast.classList.add("show");
+        clearTimeout(showGameToast._timer);
+        showGameToast._timer = setTimeout(() => {
+          dom.gameToast.classList.remove("show");
+        }, 2600);
+      }
+
+      window.alert = function (message) {
+        showGameToast({
+          icon: "✨",
+          title: "NOTIFIKASI",
+          message: String(message),
+          tone: "info",
+        });
+      };
+
       // ================================================================
       // 6. ONBOARDING
       // ================================================================
@@ -5400,9 +5447,12 @@
         dom.onboardingOverlay.classList.add("hidden");
         updateUI();
         setTimeout(() => {
-          alert(
-            `Selamat datang, ${name}! 🎉\nMulai petualangan matematikamu, kumpulkan koin & diamond, lalu belanja di Toko!`,
-          );
+          showGameToast({
+            icon: "🎉",
+            title: "SELAMAT DATANG",
+            message: `Halo ${name}! Mulai petualangan matematikamu, kumpulkan koin & diamond, lalu belanja di Toko!`,
+            tone: "success",
+          });
         }, 400);
       }
 
@@ -5747,7 +5797,12 @@
         if (!item) return;
         const balance = item.currency === "coin" ? state.coins : state.diamonds;
         if (balance < item.cost) {
-          alert("Koin/diamond kamu belum cukup!");
+          showGameToast({
+            icon: "💰",
+            title: "TOKO",
+            message: "Koin/diamond kamu belum cukup!",
+            tone: "warning",
+          });
           return;
         }
 
@@ -6039,12 +6094,22 @@
         const input = dom.customAvatarInput;
         const val = input.value.trim();
         if (!val) {
-          alert("Masukkan emoji atau karakter untuk avatar!");
+          showGameToast({
+            icon: "⚠️",
+            title: "AVATAR",
+            message: "Masukkan emoji atau karakter untuk avatar!",
+            tone: "warning",
+          });
           return;
         }
         const avatar = val.slice(0, 2);
         if (state.customAvatars.includes(avatar)) {
-          alert("Avatar ini sudah ada!");
+          showGameToast({
+            icon: "⚠️",
+            title: "AVATAR",
+            message: "Avatar ini sudah ada!",
+            tone: "warning",
+          });
           return;
         }
         state.customAvatars.push(avatar);
@@ -6164,7 +6229,14 @@
             document
               .getElementById("latihan")
               .scrollIntoView({ behavior: "smooth" });
-          } else alert("Belum ada soal untuk materi ini!");
+          } else {
+            showGameToast({
+              icon: "📚",
+              title: "LATIHAN",
+              message: "Belum ada soal untuk materi ini!",
+              tone: "warning",
+            });
+          }
         });
 
         dom.quizNextBtn.addEventListener("click", function () {
