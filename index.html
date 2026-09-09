@@ -138,24 +138,24 @@
 
       body[data-site-theme="rainbow"],
       body[data-site-theme="cyber"] {
-        --bg: #0b1020;
-        --bg-card: #121a2e;
-        --bg-dark: #090d19;
-        --bg-dark-2: #161f39;
-        --ink: #edf3ff;
-        --ink-soft: #b9c7ef;
-        --line: rgba(123, 92, 255, 0.32);
-        --site-bg: #0b1020;
-        --site-surface: #121a2e;
-        --site-surface-2: #1b2340;
-        --site-strong: #090d19;
-        --site-strong-2: #161f39;
-        --site-text: #edf3ff;
-        --site-muted: #b9c7ef;
-        --site-line: rgba(123, 92, 255, 0.32);
-        --site-hero-a: rgba(108, 99, 255, 0.32);
-        --site-hero-b: rgba(0, 194, 255, 0.2);
-        --site-nav-bg: rgba(11, 16, 32, 0.82);
+        --bg: #070b17;
+        --bg-card: #0e1730;
+        --bg-dark: #050914;
+        --bg-dark-2: #121a2f;
+        --ink: #eaf3ff;
+        --ink-soft: #b7c4ef;
+        --line: rgba(93, 211, 158, 0.28);
+        --site-bg: #070b17;
+        --site-surface: #0f172a;
+        --site-surface-2: #1a2643;
+        --site-strong: #050914;
+        --site-strong-2: #121a2f;
+        --site-text: #eaf3ff;
+        --site-muted: #b7c4ef;
+        --site-line: rgba(93, 211, 158, 0.28);
+        --site-hero-a: rgba(108, 99, 255, 0.35);
+        --site-hero-b: rgba(0, 194, 255, 0.25);
+        --site-nav-bg: rgba(9, 12, 24, 0.84);
       }
 
       body[data-site-theme="rainbow"] {
@@ -177,6 +177,105 @@
         --site-hero-a: rgba(255, 107, 157, 0.18);
         --site-hero-b: rgba(0, 194, 255, 0.18);
         --site-nav-bg: rgba(248, 243, 255, 0.8);
+      }
+
+      body[data-site-theme="ember"] {
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(255, 152, 85, 0.28),
+            transparent 32%
+          ),
+          linear-gradient(180deg, #fffaf3 0%, #ffe5c7 44%, #f7d9b2 100%);
+        background-attachment: fixed;
+      }
+
+      body[data-site-theme="steel"] {
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(118, 149, 202, 0.2),
+            transparent 32%
+          ),
+          linear-gradient(180deg, #f4f8ff 0%, #dfeaf8 48%, #cdddf7 100%);
+        background-attachment: fixed;
+      }
+
+      body[data-site-theme="royal"] {
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(255, 210, 102, 0.32),
+            transparent 30%
+          ),
+          linear-gradient(180deg, #fffef8 0%, #fff0af 46%, #f6d064 100%);
+        background-attachment: fixed;
+      }
+
+      body[data-site-theme="cyber"] {
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(108, 99, 255, 0.34),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(34, 211, 238, 0.23),
+            transparent 32%
+          ),
+          linear-gradient(180deg, #080d18 0%, #0d1328 40%, #070b17 100%);
+        background-attachment: fixed;
+      }
+
+      body[data-site-theme="ember"] .hero,
+      body[data-site-theme="steel"] .hero,
+      body[data-site-theme="royal"] .hero,
+      body[data-site-theme="cyber"] .hero {
+        position: relative;
+      }
+
+      body[data-site-theme="ember"] .hero::before,
+      body[data-site-theme="steel"] .hero::before,
+      body[data-site-theme="royal"] .hero::before,
+      body[data-site-theme="cyber"] .hero::before {
+        content: "";
+        position: absolute;
+        inset: 24px 5% auto 5%;
+        height: 360px;
+        border-radius: 36px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.18),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+
+      body[data-site-theme="cyber"] .topnav .wrap,
+      body[data-site-theme="cyber"] .hud-card,
+      body[data-site-theme="cyber"] .shop-item,
+      body[data-site-theme="cyber"] .material-card,
+      body[data-site-theme="cyber"] .section {
+        box-shadow:
+          0 0 0 1px rgba(140, 160, 255, 0.18),
+          0 20px 38px rgba(5, 9, 20, 0.34);
+      }
+
+      body[data-site-theme="royal"] .btn-primary,
+      body[data-site-theme="royal"] .btn-success,
+      body[data-site-theme="royal"] .shop-item button,
+      body[data-site-theme="royal"] .quiz-next-btn {
+        box-shadow: 0 12px 28px rgba(255, 190, 66, 0.28);
+      }
+
+      body[data-site-theme="cyber"] .btn-primary,
+      body[data-site-theme="cyber"] .btn-success,
+      body[data-site-theme="cyber"] .shop-item button,
+      body[data-site-theme="cyber"] .quiz-next-btn {
+        box-shadow:
+          0 0 18px rgba(108, 99, 255, 0.42),
+          0 18px 32px rgba(62, 91, 255, 0.2);
       }
 
       body[data-site-theme="malam"] {
@@ -1067,17 +1166,19 @@
 
       /* Avatar frames (shop cosmetics) */
       .frame-perunggu {
-        border: 4px solid #b87227 !important;
+        border: 4px solid #d8893a !important;
         background: linear-gradient(
           135deg,
-          #ffe5c7,
-          #d58a41 40%,
-          #9f5e20
+          #fff0df,
+          #f0b76f 22%,
+          #d8893a 55%,
+          #7a4218
         ) !important;
         box-shadow:
-          0 0 0 4px rgba(184, 114, 39, 0.18),
-          0 10px 22px rgba(184, 114, 39, 0.25),
-          inset 0 0 18px rgba(255, 255, 255, 0.2) !important;
+          0 0 0 4px rgba(216, 137, 58, 0.18),
+          0 18px 34px rgba(168, 92, 29, 0.32),
+          inset 0 0 20px rgba(255, 255, 255, 0.2),
+          0 0 24px rgba(255, 157, 77, 0.2) !important;
       }
       .frame-perunggu::after,
       .frame-perak::after,
@@ -1089,39 +1190,42 @@
         background: linear-gradient(
           120deg,
           transparent 30%,
-          rgba(255, 255, 255, 0.75) 50%,
+          rgba(255, 255, 255, 0.8) 50%,
           transparent 70%
         );
         transform: translateX(-120%) rotate(12deg);
         animation: frameShine 3.2s ease-in-out infinite;
       }
       .frame-perak {
-        border: 4px solid #c7ccd8 !important;
+        border: 4px solid #dde6f5 !important;
         background: linear-gradient(
           135deg,
-          #f5f9ff,
-          #b9c1d3 45%,
-          #8c9bb7
+          #f9fbff,
+          #dfeafc 25%,
+          #bfccd8 55%,
+          #6e7e94
         ) !important;
         box-shadow:
-          0 0 0 4px rgba(199, 204, 216, 0.2),
-          0 12px 24px rgba(125, 135, 156, 0.28),
-          inset 0 0 18px rgba(255, 255, 255, 0.3) !important;
+          0 0 0 4px rgba(176, 188, 208, 0.18),
+          0 18px 34px rgba(98, 119, 147, 0.3),
+          inset 0 0 20px rgba(255, 255, 255, 0.28),
+          0 0 24px rgba(180, 195, 255, 0.18) !important;
       }
       .frame-emas {
-        border: 4px solid #ffd700 !important;
+        border: 4px solid #ffd54a !important;
         background: linear-gradient(
           135deg,
-          #fffbe1,
-          #ffd95c 35%,
-          #f3b500 70%,
-          #c68900
+          #fffce3,
+          #ffe682 18%,
+          #f7c948 42%,
+          #d08800 70%,
+          #7a5200
         ) !important;
         box-shadow:
-          0 0 0 4px rgba(255, 215, 0, 0.18),
-          0 0 24px rgba(255, 215, 0, 0.38),
-          0 14px 28px rgba(255, 179, 0, 0.28),
-          inset 0 0 18px rgba(255, 255, 255, 0.4) !important;
+          0 0 0 5px rgba(255, 213, 74, 0.18),
+          0 0 28px rgba(255, 208, 74, 0.45),
+          0 20px 42px rgba(201, 135, 0, 0.34),
+          inset 0 0 20px rgba(255, 255, 255, 0.4) !important;
       }
       .frame-pelangi {
         border: 4px solid transparent !important;
@@ -1129,24 +1233,25 @@
           linear-gradient(
             135deg,
             rgba(255, 255, 255, 0.8),
-            rgba(255, 255, 255, 0.15)
+            rgba(255, 255, 255, 0.1)
           ),
           conic-gradient(
             from 0deg,
-            #ff6b9d,
+            #ff5ea8,
             #ffd166,
             #5dd39e,
-            #00c2ff,
+            #21d4fd,
             #6c63ff,
-            #ff6b9d
+            #ff5ea8
           ) !important;
         background-origin: border-box !important;
         background-clip: padding-box, border-box !important;
         box-shadow:
-          0 0 0 4px rgba(168, 85, 247, 0.18),
-          0 0 30px rgba(255, 107, 157, 0.38),
-          0 16px 32px rgba(108, 99, 255, 0.25),
-          inset 0 0 18px rgba(255, 255, 255, 0.35) !important;
+          0 0 0 5px rgba(168, 85, 247, 0.14),
+          0 0 32px rgba(108, 99, 255, 0.45),
+          0 0 52px rgba(34, 211, 238, 0.2),
+          0 16px 34px rgba(255, 107, 157, 0.32),
+          inset 0 0 20px rgba(255, 255, 255, 0.35) !important;
         animation: rainbowspin 4s linear infinite;
       }
       @keyframes rainbowspin {
