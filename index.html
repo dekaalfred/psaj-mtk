@@ -4296,8 +4296,33 @@
             pdf: "pdfs/sma/08_Matriks.pdf",
             content: `
                         <h3>📌 Matriks</h3>
-                        <div class="rumus">det [[a,b],[c,d]] = a×d - b×c</div>
-                        <div class="contoh"><div class="label">Contoh:</div><p><b>det [[1,2],[3,4]] = -2</b></p></div>
+                        <div class="rumus" style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                            det 
+                            <span style="display: inline-flex; align-items: center;">
+                                <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">(</span>
+                                <span style="display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0 12px; text-align: center; padding: 0 4px; font-size: 1rem;">
+                                    <span>a</span><span>b</span>
+                                    <span>c</span><span>d</span>
+                                </span>
+                                <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">)</span>
+                            </span>
+                            = a×d - b×c
+                        </div>
+                        <div class="contoh">
+                            <div class="label">Contoh:</div>
+                            <p style="display: flex; align-items: center; gap: 8px; font-weight: bold; margin-top: 8px; flex-wrap: wrap;">
+                                det 
+                                <span style="display: inline-flex; align-items: center;">
+                                    <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">(</span>
+                                    <span style="display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0 12px; text-align: center; padding: 0 4px; font-size: 1rem;">
+                                        <span>1</span><span>2</span>
+                                        <span>3</span><span>4</span>
+                                    </span>
+                                    <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">)</span>
+                                </span>
+                                = -2
+                            </p>
+                        </div>
                         <div class="tip">💡 <b>Tips:</b> Penjumlahan/pengurangan matriks dilakukan elemen per elemen pada posisi yang sama. Ukuran matriks harus sama.</div>
                     `,
           },
@@ -5059,7 +5084,7 @@
       function generateSoalSMA3() {
         return [
           {
-            q: "det [[1,2],[3,4]] = ?",
+            q: "<span style='display:inline-flex;align-items:center;gap:6px;'>det <span style='display:inline-flex;align-items:center;'><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>(</span><span style='display:inline-grid;grid-template-columns:1fr 1fr;gap:0 10px;text-align:center;padding:0 4px;font-size:0.9rem;'><span>1</span><span>2</span><span>3</span><span>4</span></span><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>)</span></span> = ?</span>",
             o: ["-2", "2", "-1", "1"],
             c: 0,
             exp: "det=1×4-2×3=-2",
@@ -5098,7 +5123,7 @@
             exp: "Matriks identitas 2×2",
           },
           {
-            q: "det [[2,1],[4,3]] = ?",
+            q: "<span style='display:inline-flex;align-items:center;gap:6px;'>det <span style='display:inline-flex;align-items:center;'><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>(</span><span style='display:inline-grid;grid-template-columns:1fr 1fr;gap:0 10px;text-align:center;padding:0 4px;font-size:0.9rem;'><span>2</span><span>1</span><span>4</span><span>3</span></span><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>)</span></span> = ?</span>",
             o: ["1", "2", "3", "4"],
             c: 1,
             exp: "det=2×3-1×4=2",
@@ -5115,7 +5140,7 @@
             exp: "A+B=[[6,8],[10,12]]",
           },
           {
-            q: "det [[5,2],[3,1]] = ?",
+            q: "<span style='display:inline-flex;align-items:center;gap:6px;'>det <span style='display:inline-flex;align-items:center;'><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>(</span><span style='display:inline-grid;grid-template-columns:1fr 1fr;gap:0 10px;text-align:center;padding:0 4px;font-size:0.9rem;'><span>5</span><span>2</span><span>3</span><span>1</span></span><span style='font-size:2rem;font-weight:300;line-height:1;transform:translateY(-2px);'>)</span></span> = ?</span>",
             o: ["-1", "0", "1", "2"],
             c: 0,
             exp: "det=5×1-2×3=-1",
@@ -6121,7 +6146,7 @@
         const q = currentQuestions[quizState.index];
         if (!q) return;
 
-        dom.quizQuestion.textContent = q.q;
+        dom.quizQuestion.innerHTML = q.q;
         dom.quizQNum.textContent = `SOAL ${quizState.index + 1} / ${currentQuestions.length}`;
         dom.quizProgress.style.width = `${((quizState.index + 1) / currentQuestions.length) * 100}%`;
         dom.quizFeedback.textContent = "";
