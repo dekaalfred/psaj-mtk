@@ -6668,7 +6668,7 @@
             // User sudah login → sembunyikan modal
             dom.onboardingOverlay.classList.add("hidden");
             dom.userProfileMenu.style.display = "flex";
-            
+
             // Ambil nama dari Google (displayName) atau dari email
             const userName = user.displayName || user.email.split('@')[0];
             dom.userNameDisplay.textContent = userName;
