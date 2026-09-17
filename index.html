@@ -6668,19 +6668,25 @@
             // User sudah login → sembunyikan modal
             dom.onboardingOverlay.classList.add("hidden");
             dom.userProfileMenu.style.display = "flex";
-            dom.userNameDisplay.textContent = user.displayName || user.email.split('@')[0];
+            
+            // Ambil nama dari Google (displayName) atau dari email
+            const userName = user.displayName || user.email.split('@')[0];
+            dom.userNameDisplay.textContent = userName;
             dom.navLoginCta.style.display = "none";
 
             const cloudState = await loadStateFromLocalStorage();
             if (cloudState) {
               state = { ...state, ...cloudState };
-              updateUI();
             }
+            // Selalu update nama dari akun Firebase (biar sesuai akun yang login)
+            state.name = userName;
+            state.isOnboarded = true;
+            updateUI();
           } else {
             // User belum login → tampilkan modal
             dom.onboardingOverlay.classList.remove("hidden");
             dom.userProfileMenu.style.display = "none";
-            dom.navLoginCta.style.display = "none"; // sudah ada modal, CTA tidak perlu
+            dom.navLoginCta.style.display = "none";
           }
         });
       }
