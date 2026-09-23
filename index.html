@@ -1489,6 +1489,12 @@
       text-align: center;
       transition: all 0.2s;
       cursor: pointer;
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      appearance: none;
+      -webkit-appearance: none;
+      text-decoration: none;
     }
 
     .material-card:hover {
@@ -1614,9 +1620,74 @@
       padding: 16px 20px;
       border-radius: 12px;
       font-family: "Space Mono", monospace;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       text-align: center;
       margin: 12px 0;
+      line-height: 1.9;
+      overflow-x: auto;
+    }
+
+    .materi-section .materi-body .rumus .math {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.18em;
+      white-space: nowrap;
+    }
+
+    .materi-section .materi-body .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      line-height: 1.05;
+      margin: 0 0.12em;
+    }
+
+    .materi-section .materi-body .frac > span:first-child {
+      border-bottom: 1.5px solid currentColor;
+      padding: 0 0.22em 0.08em;
+    }
+
+    .materi-section .materi-body .frac > span:last-child {
+      padding: 0.08em 0.22em 0;
+    }
+
+    .materi-section .materi-body .equation-system {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.1em;
+      text-align: left;
+      font-family: "Space Mono", monospace;
+    }
+
+    .materi-section .materi-body .matrix {
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(1.2em, auto));
+      gap: 0.08em 0.55em;
+      padding: 0.18em 0.55em;
+      margin: 0 0.2em;
+      border-left: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .materi-section .materi-body .pdf-actions {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px dashed var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .materi-section .materi-body .pdf-actions small {
+      width: 100%;
+      color: var(--ink-soft);
     }
 
     .materi-section .materi-body .tip {
@@ -4072,6 +4143,7 @@
     // 2. MATERI & SOAL
     // ================================================================
 
+    // Setiap properti "pdf" harus cocok dengan file PDF yang ada di folder /pdfs.
     const MATERI_DATA = {
       sd: {
         sd1: {
@@ -4083,7 +4155,7 @@
                         <h3>📌 Operasi Bilangan Dasar</h3>
                         <p>Ada 4 operasi dasar: <b>+</b> (penjumlahan), <b>−</b> (pengurangan), <b>×</b> (perkalian), dan <b>÷</b> (pembagian). Urutan pengerjaan mengikuti aturan <b>KaBaTaKuJumKu</b>: Kurung, Pangkat, Kali/Bagi (kiri ke kanan), Jumlah/Kurang (kiri ke kanan).</p>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>25 + 37 = 62</b></p><p><b>8 × 5 − 2 = 38</b> (kalikan dulu: 40, baru kurangi: 38)</p></div>
-                        <div class="rumus">(a + b) × c = a×c + b×c</div>
+                        <div class="rumus"><span class="math">(a + b) × c = a × c + b × c</span></div>
                         <div class="tip">💡 <b>Tips:</b> Perkalian dengan 10 = tambahkan 0 di belakang. Perkalian dengan 100 = tambahkan dua 0.</div>
                         <div class="salah-kaprah">⚠️ <b>Hati-hati:</b> Kalikan/bagi dulu sebelum menjumlah/mengurangi jika tidak ada tanda kurung!</div>
                     `,
@@ -4097,7 +4169,7 @@
                         <h3>📌 Pecahan</h3>
                         <p>Pecahan adalah bagian dari keseluruhan, ditulis <b>a/b</b> di mana a = pembilang, b = penyebut. Untuk menjumlah/mengurangi pecahan, penyebutnya harus sama dulu (samakan dengan KPK).</p>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>1/2 + 1/4 = 2/4 + 1/4 = 3/4</b></p></div>
-                        <div class="rumus">a/b × c/d = (a×c) / (b×d)</div>
+                        <div class="rumus"><span class="math"><span class="frac"><span>a</span><span>b</span></span> × <span class="frac"><span>c</span><span>d</span></span> = <span class="frac"><span>a × c</span><span>b × d</span></span></span></div>
                         <div class="tip">💡 <b>Tips:</b> Samakan penyebut sebelum menjumlahkan atau mengurangkan!</div>
                         <div class="salah-kaprah">⚠️ <b>Hati-hati:</b> Membagi pecahan = kalikan dengan kebalikan (balik pembilang & penyebut pecahan kedua).</div>
                     `,
@@ -4111,7 +4183,7 @@
                         <h3>📌 Persentase</h3>
                         <p>Persentase artinya "per seratus". Rumus: Persentase = (Nilai / Total) × 100%.</p>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>25% dari 80 = 80 × 25/100 = 20</b></p></div>
-                        <div class="rumus">Nilai = Persen/100 × Total</div>
+                        <div class="rumus"><span class="math">Nilai = <span class="frac"><span>Persen</span><span>100</span></span> × Total</span></div>
                         <div class="tip">💡 <b>Tips:</b> 50% = setengah, 25% = seperempat, 10% = geser koma satu angka ke kiri.</div>
                     `,
         },
@@ -4123,9 +4195,9 @@
           content: `
                         <h3>📌 Bangun Ruang</h3>
                         <p>Bangun ruang punya volume (isi ruang) dan luas permukaan (luas seluruh sisi).</p>
-                        <div class="rumus">Kubus: V = s³, Luas Permukaan = 6s²</div>
-                        <div class="rumus">Balok: V = p × l × t</div>
-                        <div class="rumus">Tabung: V = π × r² × t</div>
+                        <div class="rumus"><span class="math">Kubus: V = s<sup>3</sup>, Luas Permukaan = 6s<sup>2</sup></span></div>
+                        <div class="rumus"><span class="math">Balok: V = p × l × t</span></div>
+                        <div class="rumus"><span class="math">Tabung: V = π × r<sup>2</sup> × t</span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Kubus s=4cm → V = 4³ = 64 cm³</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Satuan volume selalu pangkat 3 (cm³, m³), satuan luas pangkat 2 (cm², m²).</div>
                     `,
@@ -4138,7 +4210,7 @@
           content: `
                         <h3>📌 Pengukuran & Satuan</h3>
                         <p>Satuan panjang: km-hm-dam-m-dm-cm-mm (setiap turun 1 tangga ×10). Kecepatan = Jarak ÷ Waktu.</p>
-                        <div class="rumus">Kecepatan (v) = Jarak (s) ÷ Waktu (t)</div>
+                        <div class="rumus"><span class="math">v = <span class="frac"><span>s</span><span>t</span></span></span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Jarak 120 km ditempuh 2 jam → v = 60 km/jam</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> 1 jam = 60 menit, 1 menit = 60 detik. Naik tangga satuan panjang = bagi 10, turun tangga = kali 10.</div>
                     `,
@@ -4153,7 +4225,7 @@
           content: `
                         <h3>📌 Aljabar</h3>
                         <p>Aljabar menggunakan huruf (variabel) untuk mewakili angka yang belum diketahui. Tujuannya adalah mengisolasi variabel di satu sisi.</p>
-                        <div class="rumus">ax + b = c → x = (c - b) / a</div>
+                        <div class="rumus"><span class="math">ax + b = c &nbsp;⟹&nbsp; x = <span class="frac"><span>c − b</span><span>a</span></span></span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>2x + 6 = 16 → 2x = 10 → x = 5</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Apa pun yang dilakukan di satu sisi persamaan, harus dilakukan juga di sisi lain agar tetap seimbang.</div>
                     `,
@@ -4165,9 +4237,9 @@
           pdf: "pdfs/smp/02_Geometri.pdf",
           content: `
                         <h3>📌 Bangun Datar & Ruang</h3>
-                        <div class="rumus">Persegi: L = s², K = 4s</div>
-                        <div class="rumus">Lingkaran: L = πr², K = 2πr</div>
-                        <div class="rumus">Segitiga: L = ½ × alas × tinggi</div>
+                        <div class="rumus"><span class="math">Persegi: L = s<sup>2</sup>, K = 4s</span></div>
+                        <div class="rumus"><span class="math">Lingkaran: L = πr<sup>2</sup>, K = 2πr</span></div>
+                        <div class="rumus"><span class="math">Segitiga: L = <span class="frac"><span>1</span><span>2</span></span> × alas × tinggi</span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Luas persegi s=8cm → 64 cm²</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Gunakan π ≈ 22/7 jika jari-jari kelipatan 7, atau π ≈ 3,14 untuk angka lain.</div>
                     `,
@@ -4192,7 +4264,13 @@
           content: `
                         <h3>📌 Sistem Persamaan Linear Dua Variabel</h3>
                         <p>SPLDV terdiri dari dua persamaan dengan dua variabel (biasanya x dan y) yang diselesaikan bersamaan, menggunakan metode substitusi atau eliminasi.</p>
-                        <div class="rumus">x + y = 7 dan x − y = 1 → x = 4, y = 3</div>
+                        <div class="rumus">
+                          <span class="equation-system">
+                            <span>x + y = 7</span>
+                            <span>x − y = 1</span>
+                          </span>
+                          &nbsp;⟹&nbsp; x = 4, y = 3
+                        </div>
                         <div class="contoh"><div class="label">Contoh (Eliminasi):</div><p><b>Jumlahkan kedua persamaan untuk hilangkan y: 2x = 8 → x = 4</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Pilih metode eliminasi jika koefisien salah satu variabel mudah disamakan atau berlawanan tanda.</div>
                     `,
@@ -4204,7 +4282,11 @@
           pdf: "pdfs/smp/05_Bilangan_Berpangkat_dan_Akar.pdf",
           content: `
                         <h3>📌 Bilangan Berpangkat & Bentuk Akar</h3>
-                        <div class="rumus">aᵐ × aⁿ = aᵐ⁺ⁿ &nbsp;&nbsp; aᵐ ÷ aⁿ = aᵐ⁻ⁿ &nbsp;&nbsp; (aᵐ)ⁿ = aᵐˣⁿ</div>
+                        <div class="rumus"><span class="math">
+                          a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup>
+                          &nbsp;&nbsp; a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m−n</sup>
+                          &nbsp;&nbsp; (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup>
+                        </span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>2³ × 2² = 2⁵ = 32</b></p><p><b>√16 = 4 (karena 4² = 16)</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> a⁰ = 1 untuk semua a ≠ 0. a⁻ⁿ = 1/aⁿ.</div>
                     `,
@@ -4222,7 +4304,11 @@
                         <div class="contoh"><div class="label">Contoh:</div><p><b>f(x)=2x+3, f(5)=13</b></p></div>
                         <h3>📌 Limit</h3>
                         <p>Limit menunjukkan nilai yang didekati fungsi saat x mendekati suatu titik. Jika bentuk 0/0 muncul, faktorkan dulu.</p>
-                        <div class="rumus">lim(x→1) (x²-1)/(x-1) = lim(x→1) (x+1) = 2</div>
+                        <div class="rumus"><span class="math">
+                          lim<sub>x→1</sub>
+                          <span class="frac"><span>x<sup>2</sup> − 1</span><span>x − 1</span></span>
+                          = lim<sub>x→1</sub>(x + 1) = 2
+                        </span></div>
                         <div class="tip">💡 <b>Tips:</b> Substitusi langsung dulu; jika hasilnya 0/0, gunakan pemfaktoran atau L'Hopital.</div>
                     `,
         },
@@ -4234,8 +4320,12 @@
           content: `
                         <h3>📌 Trigonometri</h3>
                         <ul><li><b>sin θ</b> = depan/miring</li><li><b>cos θ</b> = samping/miring</li><li><b>tan θ</b> = depan/samping = sin θ/cos θ</li></ul>
-                        <div class="rumus">sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1</div>
-                        <div class="rumus">sin²θ + cos²θ = 1</div>
+                        <div class="rumus"><span class="math">
+                          sin 30° = <span class="frac"><span>1</span><span>2</span></span>,
+                          cos 60° = <span class="frac"><span>1</span><span>2</span></span>,
+                          tan 45° = 1
+                        </span></div>
+                        <div class="rumus"><span class="math">sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1</span></div>
                         <div class="tip">💡 <b>Tips:</b> Hafalkan nilai sudut istimewa 0°, 30°, 45°, 60°, 90° — ini kunci banyak soal!</div>
                     `,
         },
@@ -4246,31 +4336,25 @@
           pdf: "pdfs/sma/08_Matriks.pdf",
           content: `
                         <h3>📌 Matriks</h3>
-                        <div class="rumus" style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
-                            det 
-                            <span style="display: inline-flex; align-items: center;">
-                                <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">(</span>
-                                <span style="display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0 12px; text-align: center; padding: 0 4px; font-size: 1rem;">
-                                    <span>a</span><span>b</span>
-                                    <span>c</span><span>d</span>
-                                </span>
-                                <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">)</span>
+                        <div class="rumus">
+                          <span class="math">
+                            det
+                            <span class="matrix">
+                              <span>a</span><span>b</span>
+                              <span>c</span><span>d</span>
                             </span>
-                            = a×d - b×c
+                            = a × d − b × c
+                          </span>
                         </div>
                         <div class="contoh">
                             <div class="label">Contoh:</div>
-                            <p style="display: flex; align-items: center; gap: 8px; font-weight: bold; margin-top: 8px; flex-wrap: wrap;">
-                                det 
-                                <span style="display: inline-flex; align-items: center;">
-                                    <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">(</span>
-                                    <span style="display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0 12px; text-align: center; padding: 0 4px; font-size: 1rem;">
-                                        <span>1</span><span>2</span>
-                                        <span>3</span><span>4</span>
-                                    </span>
-                                    <span style="font-size: 2.5rem; font-weight: 300; line-height: 1; transform: translateY(-2px);">)</span>
-                                </span>
-                                = -2
+                            <p style="display:flex; align-items:center; gap:8px; font-weight:bold; margin-top:8px; flex-wrap:wrap;">
+                              det
+                              <span class="matrix">
+                                <span>1</span><span>2</span>
+                                <span>3</span><span>4</span>
+                              </span>
+                              = (1 × 4) − (2 × 3) = −2
                             </p>
                         </div>
                         <div class="tip">💡 <b>Tips:</b> Penjumlahan/pengurangan matriks dilakukan elemen per elemen pada posisi yang sama. Ukuran matriks harus sama.</div>
@@ -4284,10 +4368,10 @@
           content: `
                         <h3>📌 Barisan Aritmetika</h3>
                         <p>Selisih antar suku berurutan selalu sama (disebut beda, b).</p>
-                        <div class="rumus">Un = a + (n-1)b</div>
+                        <div class="rumus"><span class="math">U<sub>n</sub> = a + (n − 1)b</span></div>
                         <h3>📌 Barisan Geometri</h3>
                         <p>Rasio antar suku berurutan selalu sama (disebut rasio, r).</p>
-                        <div class="rumus">Un = a × r⁽ⁿ⁻¹⁾</div>
+                        <div class="rumus"><span class="math">U<sub>n</sub> = a × r<sup>n − 1</sup></span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>2,5,8,11,... → a=2, b=3, U5 = 2+(5-1)3 = 14</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Jika selisih tetap → aritmetika. Jika perbandingan tetap → geometri.</div>
                     `,
@@ -4300,7 +4384,7 @@
           content: `
                         <h3>📌 Peluang</h3>
                         <p>Peluang suatu kejadian A adalah perbandingan banyak kejadian A dengan banyak seluruh kejadian yang mungkin (ruang sampel).</p>
-                        <div class="rumus">P(A) = n(A) / n(S)</div>
+                        <div class="rumus"><span class="math">P(A) = <span class="frac"><span>n(A)</span><span>n(S)</span></span></span></div>
                         <div class="contoh"><div class="label">Contoh:</div><p><b>Peluang dadu muncul angka genap: n(A)=3 {2,4,6}, n(S)=6 → P = 3/6 = 1/2</b></p></div>
                         <div class="tip">💡 <b>Tips:</b> Nilai peluang selalu antara 0 dan 1. P=0 mustahil terjadi, P=1 pasti terjadi.</div>
                     `,
@@ -5488,29 +5572,50 @@
       return kelasData[state.materialId] || null;
     }
 
-    function getMateriPdfUrl(materialId) {
-      const data =
-        (MATERI_DATA[state.kelas] && MATERI_DATA[state.kelas][materialId]) ||
-        {};
-      const rawUrl = data.pdf || `pdfs/${state.kelas}/${materialId}.pdf`;
-      return encodeURI(rawUrl);
-    }
+    // ================================================================
+    // PDF MATERI
+    // Semua path dibuat eksplisit agar cocok dengan folder:
+    // pdfs/sd, pdfs/smp, dan pdfs/sma
+    // ================================================================
+    const PDF_FILES = {
+      sd: {
+        sd1: "pdfs/sd/PDF_1_Operasi_Bilangan.pdf",
+        sd2: "pdfs/sd/PDF_2_Pecahan.pdf",
+        sd3: "pdfs/sd/PDF_3_Persentase.pdf",
+        sd4: "pdfs/sd/PDF_4_Bangun_Ruang.pdf",
+        sd5: "pdfs/sd/PDF_5_Pengukuran_dan_Satuan.pdf",
+      },
+      smp: {
+        smp1: "pdfs/smp/01_Aljabar.pdf",
+        smp2: "pdfs/smp/02_Geometri.pdf",
+        smp3: "pdfs/smp/03_Statistika.pdf",
+        smp4: "pdfs/smp/04_SPLDV.pdf",
+        smp5: "pdfs/smp/05_Bilangan_Berpangkat_dan_Akar.pdf",
+      },
+      sma: {
+        sma1: "pdfs/sma/06_Fungsi_dan_Limit.pdf",
+        sma2: "pdfs/sma/07_Trigonometri.pdf",
+        sma3: "pdfs/sma/08_Matriks.pdf",
+        sma4: "pdfs/sma/09_Barisan_dan_Deret.pdf",
+        sma5: "pdfs/sma/10_Peluang.pdf",
+      },
+    };
 
-    function openMateriPdf() {
-      const data = getCurrentMateriData();
-      if (!data) return false;
-      const pdfUrl = getMateriPdfUrl(state.materialId);
-      if (!pdfUrl || pdfUrl === "#") {
-        showGameToast({
-          icon: "📄",
-          title: "PDF",
-          message: "PDF belum tersedia untuk materi ini.",
-          tone: "warning",
-        });
-        return false;
-      }
-      window.open(pdfUrl, "_blank", "noopener,noreferrer");
-      return true;
+    function getMateriPdfUrl(materialId) {
+      const kelas = state.kelas || "sd";
+      const mappedUrl = PDF_FILES[kelas]?.[materialId];
+
+      // MATERI_DATA tetap menjadi sumber cadangan jika nanti
+      // ada materi baru yang belum dimasukkan ke PDF_FILES.
+      const data = MATERI_DATA[kelas]?.[materialId] || {};
+      const rawUrl =
+        mappedUrl ||
+        data.pdf ||
+        `pdfs/${kelas}/${materialId}.pdf`;
+
+      // encodeURI menangani nama file yang memiliki spasi/karakter khusus
+      // tanpa merusak tanda "/" pada path folder.
+      return encodeURI(`./${String(rawUrl).replace(/^\.\//, "")}`);
     }
 
     function getMateriList() {
@@ -5939,24 +6044,33 @@
         const soalCount = getSoalForMaterial(m.id).length;
         const visited = state.visitedMaterials.includes(m.id) ? " ✓" : "";
         html += `
-                    <div class="material-card ${active}" data-id="${m.id}">
+                    <button type="button" class="material-card ${active}" data-id="${m.id}" aria-pressed="${active ? "true" : "false"}">
                         <div class="icon">${m.icon}</div>
                         <h4>${m.name}${visited}</h4>
                         <p>${m.desc}</p>
                         <span class="badge ${badge}">${label}</span>
                         <p style="font-size:.7rem;color:var(--purple);margin-top:6px;">${soalCount} soal</p>
-                    </div>
+                    </button>
                 `;
       });
       dom.materialGrid.innerHTML = html;
 
       dom.materialGrid.querySelectorAll(".material-card").forEach((el) => {
-        el.addEventListener("click", function () {
+        el.addEventListener("click", function (event) {
+          // Kartu materi hanya memilih materi. Tidak pernah membuka PDF.
+          event.preventDefault();
+          event.stopPropagation();
+
           state.materialId = this.dataset.id;
           renderMaterials();
           loadMateri();
-          openMateriPdf();
           resetQuiz();
+
+          // Tampilkan materi di halaman yang sama.
+          document.getElementById("belajar")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         });
       });
     }
@@ -5976,15 +6090,20 @@
       dom.materiContent.innerHTML = `
                 <div class="materi-header"><div class="icon">${data.icon}</div><h2>${data.name}</h2></div>
                 <div class="materi-body">
-                    <div class="tip" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
-                        <strong>📄 Materi versi PDF</strong>
-                        <p style="margin:0;">Klik tombol di bawah untuk membuka atau mengunduh file PDF materi ini.</p>
-                        <div style="display:flex;flex-wrap:wrap;gap:12px;">
-                            <a class="btn-primary" href="${pdfUrl}" target="_blank" rel="noopener noreferrer" download>⬇️ Download PDF</a>
-                            <a class="btn-secondary" href="${pdfUrl}" target="_blank" rel="noopener noreferrer">📖 Buka PDF</a>
-                        </div>
-                    </div>
                     ${data.content}
+
+                    <div class="pdf-actions">
+                        <strong style="width:100%;">📄 Versi PDF (opsional)</strong>
+                        <span style="width:100%;color:var(--ink-soft);font-size:.9rem;">
+                          PDF hanya akan dibuka atau diunduh jika tombol di bawah diklik.
+                        </span>
+                        <a class="btn-secondary" href="${pdfUrl}" target="_blank" rel="noopener noreferrer">
+                          📖 Buka PDF
+                        </a>
+                        <a class="btn-primary" href="${pdfUrl}" download>
+                          ⬇️ Download PDF
+                        </a>
+                    </div>
                 </div>
             `;
 
